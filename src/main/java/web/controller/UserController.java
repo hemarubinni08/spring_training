@@ -1,4 +1,4 @@
-package com.ust.pos.web.controller;
+package web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,21 +10,21 @@ public class UserController {
 
     @RequestMapping("/login")
     public String login(Model model) {
-        model.addAttribute("name" , "Rohit");
-        return "login.jsp";
+        model.addAttribute("name" , "Shashi");
+        return "login";
 
     }
 
     @RequestMapping("/register")
     public String userRegister(Model model) {
-        model.addAttribute("name" , "Rohit");
-        return "register.jsp";
+        model.addAttribute("name" , "Shashi");
+        return "register";
     }
 
     @RequestMapping("/forgotpassword")
     public String forgotPassword(Model model) {
-        model.addAttribute("name" , "Rohit");
-        return "forgotpassword.jsp";
+        model.addAttribute("name" , "Shashi");
+        return "forgotpassword";
 
     }
 }
