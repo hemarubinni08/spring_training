@@ -2,6 +2,7 @@ package service.impl;
 
 import com.ust.pos.dto.UserDto;
 import com.ust.pos.model.User;
+import com.ust.pos.model.UserRepository;
 import org.springframework.stereotype.Service;
 import service.UserService;
 
@@ -9,29 +10,31 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private UserRepository userrepository;
 
     @Override
     public List<User> findAll() {
-        return List.of();
+        return userrepository.findAll();
     }
 
     @Override
     public UserDto findById(long id) {
-        return null;
+        return userrepository.findById();
+
     }
 
     @Override
     public UserDto findByUserName(String username) {
-        return null;
+        return userrepository.findByUsername();
     }
 
     @Override
     public UserDto update(UserDto userdto) {
-        return null;
+        User presentuser=userrepository.findById(userdto.getId())
     }
 
     @Override
-    public void deleteById(long id) {
-
+    public void deletedById(long id) {
+        userrepository.deleteById();
     }
 }

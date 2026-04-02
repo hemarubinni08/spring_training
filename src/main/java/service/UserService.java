@@ -16,5 +16,5 @@ public interface UserService {
 
     UserDto update(UserDto userdto);
 
-    void deleteById(long id);
+    void deletedById(long id);
 }
