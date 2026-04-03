@@ -1,4 +1,4 @@
-package service.impl;
+package com.ust.pos.service.impl;
 
 import com.ust.pos.dto.UserDto;
 import com.ust.pos.model.User;
@@ -6,7 +6,7 @@ import com.ust.pos.model.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import service.UserService;
+import com.ust.pos.service.UserService;
 
 import java.util.List;
 
@@ -18,6 +18,19 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    public boolean register(UserDto userDto) {
+
+        boolean emailExists = userRepository.existsByEmail(userDto.getEmail());
+
+        if (emailExists) {
+            return false;
+        }
+
+        User user = modelMapper.map(userDto, User.class);
+        userRepository.save(user);
+        return true;
+    }
 
     @Override
     public List<User> findAll() {

@@ -6,7 +6,7 @@
 </head>
 <body>
     <div align="center">
-        <h2>Operation Completed Successfully!</h2>
+        <h2>${message}</h2>
     </div>
 </body>
 </html>

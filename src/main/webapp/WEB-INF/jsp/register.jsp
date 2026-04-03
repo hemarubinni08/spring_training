@@ -7,7 +7,7 @@
 <body>
     <h2>Registration Form</h2>
     <!-- The 'action' attribute points to the processing file or servlet -->
-    <form method="post" model attribute="userDto">
+    <form method="post" modelAttribute="userDto">
         Username: <input type="text" name="userName" required><br><br>
         Email: <input type="email" name="email" required><br><br>
         Password: <input type="password" name="password" required><br><br>

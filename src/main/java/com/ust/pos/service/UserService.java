@@ -1,4 +1,4 @@
-package service;
+package com.ust.pos.service;
 
 import com.ust.pos.dto.UserDto;
 import com.ust.pos.model.User;
@@ -16,4 +16,6 @@ public interface UserService {
     UserDto update(Long id, UserDto userDto);
 
     void deleteById(Long id);
+
+    boolean register(UserDto userDto);
 }
