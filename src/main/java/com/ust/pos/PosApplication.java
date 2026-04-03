@@ -12,7 +12,8 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(
         {
                 "com.ust.pos.web.controller",
-                "com.ust.pos"
+                "com.ust.pos",
+                "com.ust.pos.web.service"
         }
 )
 public class PosApplication {

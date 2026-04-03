@@ -1,44 +1,43 @@
-package web.controller;
+package com.ust.pos.web.controller;
 
 import com.ust.pos.dto.UserDto;
 import com.ust.pos.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import service.impl.UserServiceImpl;
+import org.springframework.web.bind.annotation.*;
+import service.UserService;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UserController {
-    @Autowired
-    UserServiceImpl userService;
 
-    @RequestMapping("/allusers")
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/all")
     public List<User> getAllUsers() {
         return userService.findAll();
     }
 
-    @RequestMapping("/findid")
+    @GetMapping("/{id}")
     public UserDto getById(@PathVariable Long id) {
-        return userService.findById();
+        return userService.findById(id);
     }
 
-    @RequestMapping("/username")
+    @GetMapping("/username/{username}")
     public UserDto getByUserName(@PathVariable String username) {
-        return userService.findByUserName();
+        return userService.findByUserName(username);
     }
 
-    @RequestMapping("/update")
-    public UserDto updateUser(UserDto, @PathVariable Long id) {
-        return userService.update();
+    @PutMapping("/{id}")
+    public UserDto updateUser(@PathVariable Long id, @RequestBody UserDto userDto) {
+        return userService.update(id, userDto);
     }
 
-    @RequestMapping("/delete")
-    public void deleteUser(@PathVariable Long id) {
-        userService.deletedById();
+    @DeleteMapping("/{id}")
+    public String deleteUser(@PathVariable Long id) {
+        userService.deleteById(id);
+        return "Deleted successfully";
     }
 }

@@ -4,42 +4,52 @@ import com.ust.pos.dto.UserDto;
 import com.ust.pos.model.User;
 import com.ust.pos.model.UserRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.boot.webmvc.autoconfigure.WebMvcProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import service.UserService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private UserRepository userrepository;
-private ModelMapper modelMapper;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
     public List<User> findAll() {
-        return userrepository.findAll();
+        return userRepository.findAll();
     }
 
     @Override
-    public UserDto findById(long id) {
-        Optional<User> user= userrepository.findById(id);
-      return  modelMapper.map(user, UserDto.class);
-
+    public UserDto findById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return modelMapper.map(user, UserDto.class);
     }
 
     @Override
     public UserDto findByUserName(String username) {
-        Optional<User> user = Optional.ofNullable(userrepository.findByUsername(username));
-        return modelMapper.map(user,UserDto.class);
+        User user = userRepository.findByUserName(username);
+        return modelMapper.map(user, UserDto.class);
     }
 
     @Override
-    public UserDto update(UserDto userdto,Long id) {
-        User presentuser=userrepository.findById(userdto.getId())
+    public UserDto update(Long id, UserDto userDto) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        modelMapper.map(userDto, user);
+        userRepository.save(user);
+
+        return modelMapper.map(user, UserDto.class);
     }
 
     @Override
-    public void deletedById(long id) {
-        userrepository.deleteById();
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
     }
 }
