@@ -1,5 +1,6 @@
 package com.ust.pos;
 
+import com.ust.pos.dto.UserDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,8 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(
         {
                 "com.ust.pos.web.controller",
-                "com.ust.pos",
-                "com.ust.pos.web.service"
+                "com.ust.pos"
         }
 )
 public class PosApplication {
@@ -21,9 +21,9 @@ public class PosApplication {
     public static void main(String[] args) {
         SpringApplication.run(PosApplication.class, args);
     }
+
     @Bean
     ModelMapper getModelMapper(){
         return new ModelMapper();
     }
-
 }
