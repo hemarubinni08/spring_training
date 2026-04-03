@@ -16,4 +16,7 @@ public interface UserService {
 
     void deleteUser(Long id);
 
+    UserDto register(UserDto userDto);
+
+    boolean emailExists(String email);
 }

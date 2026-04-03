@@ -1,30 +1,51 @@
 package com.ust.pos.web.controller;
 
+import com.ust.pos.dto.UserDto;
+import com.ust.pos.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
-    @RequestMapping("/login")
-    public String login(Model model) {
-        model.addAttribute("name" , "Rohit");
-        return "login.jsp";
+    private final UserService userService;
 
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
-    @RequestMapping("/register")
-    public String userRegister(Model model) {
-        model.addAttribute("name" , "Rohit");
-        return "register.jsp";
+    @GetMapping("/login")
+    public String login() {
+        return "login";
     }
 
-    @RequestMapping("/forgotpassword")
-    public String forgotPassword(Model model) {
-        model.addAttribute("name" , "Rohit");
-        return "forgotpassword.jsp";
+    @GetMapping("/register")
+    public String showRegister(Model model) {
+        model.addAttribute("user", new UserDto());
+        return "register";
+    }
 
+    @PostMapping("/register")
+    public String registerUser(@ModelAttribute("user") UserDto userDto,
+                               Model model) {
+
+        if (userService.emailExists(userDto.getEmail())) {
+            model.addAttribute("errorMessage",
+                    "Email already exists. Please use a different email.");
+            model.addAttribute("user", userDto);
+            return "register";
+        }
+
+        UserDto savedUser = userService.createUser(userDto);
+
+        model.addAttribute("user", savedUser);
+        return "success";
+    }
+
+    @GetMapping("/forgotpassword")
+    public String forgotPassword() {
+        return "forgotpassword";
     }
 }
