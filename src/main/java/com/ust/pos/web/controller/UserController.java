@@ -1,7 +1,9 @@
 package com.ust.pos.web.controller;
 
+import com.ust.pos.dto.UserDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -11,20 +13,20 @@ public class UserController {
     @RequestMapping("/login")
     public String login(Model model) {
         model.addAttribute("name" , "Rohit");
-        return "login.jsp";
+        return "login";
 
     }
 
-    @RequestMapping("/register")
-    public String userRegister(Model model) {
+    @PostMapping("/register")
+    public String userRegister(Model model, UserDto userDto) {
         model.addAttribute("name" , "Rohit");
-        return "register.jsp";
+        return "register";
     }
 
     @RequestMapping("/forgotpassword")
     public String forgotPassword(Model model) {
         model.addAttribute("name" , "Rohit");
-        return "forgotpassword.jsp";
+        return "forgotpassword";
 
     }
 }
