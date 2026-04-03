@@ -10,12 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(
-        {
-                "com.ust.pos.web.controller",
-                "com.ust.pos"
-        }
-)
+@ComponentScan({"com.ust.pos.web.controller", "com.ust.pos"})
 public class PosApplication {
 
     public static void main(String[] args) {
