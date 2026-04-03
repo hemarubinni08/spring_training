@@ -2,6 +2,7 @@ package com.ust.pos.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -10,21 +11,21 @@ public class UserController {
 
     @RequestMapping("/login")
     public String login(Model model) {
-        model.addAttribute("name" , "Rohit");
-        return "login.jsp";
+        model.addAttribute("name" , "Logesh");
+        return "login";
 
     }
 
-    @RequestMapping("/register")
+    @PostMapping ("/register")
     public String userRegister(Model model) {
-        model.addAttribute("name" , "Rohit");
-        return "register.jsp";
+        model.addAttribute("name" , "Logesh");
+        return "register";
     }
 
     @RequestMapping("/forgotpassword")
     public String forgotPassword(Model model) {
-        model.addAttribute("name" , "Rohit");
-        return "forgotpassword.jsp";
+        model.addAttribute("name" , "Logesh");
+        return "forgotpassword";
 
     }
 }
