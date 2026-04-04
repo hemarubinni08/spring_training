@@ -77,6 +77,12 @@
         <label>Email:</label>
         <input type="email" name="email" required/>
 
+        <label>Phone Number:</label>
+        <input type="text" name"phoneNo" required/>
+
+        <label>Age:</label>
+        <input type="number" name="age" required/>
+
         <label>Password:</label>
         <input type="password" name="password" required/>
 

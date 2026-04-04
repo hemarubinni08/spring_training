@@ -55,6 +55,13 @@ public class UserServiceImpl implements UserService {
             userDto.setSuccess(false);
             return userDto;
         }
+    }
+
+    public UserDto login(UserDto userDto)
+    {
+        User user = userRepository.findByEmail(userDto.getEmail());
+        userDto.setSuccess(user != null && user.getPassword().equals(userDto.getPassword()));
+        return userDto;
 
     }
 }

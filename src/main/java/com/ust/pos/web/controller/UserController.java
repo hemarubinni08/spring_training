@@ -17,10 +17,27 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/login")
-    public String login(Model model) {
-        model.addAttribute("name", "Anu");
+    @GetMapping("/login")
+    public String login(Model model)
+    {
         return "login";
+    }
+
+    @PostMapping("/login")
+    public String login(Model model, @ModelAttribute UserDto userDto)
+    {
+        UserDto user = userService.login(userDto);
+        if(user != null && user.isSuccess())
+        {
+            model.addAttribute("message", "Login Successful");
+            return "success";
+        }
+        else
+        {
+            model.addAttribute("message", "Invalid credentials");
+            return "login";
+        }
+
     }
 
     @PostMapping("/register")
@@ -28,7 +45,7 @@ public class UserController {
         UserDto userDto1 = userService.update(userDto);
         model.addAttribute("user", userDto1);
         if (userDto1.isSuccess()) {
-            model.addAttribute("message", "Registeration Successful");
+            model.addAttribute("message", "Registration Successful");
         } else {
             model.addAttribute("message", "Email already exist");
         }
@@ -37,13 +54,13 @@ public class UserController {
 
     @GetMapping("/register")
     public String doRegister(Model model, @ModelAttribute UserDto userDto) {
-        model.addAttribute("name", "Anu");
+        model.addAttribute("name", "Akash");
         return "register";
     }
 
     @RequestMapping("/forgotpassword")
     public String forgotPassword(Model model) {
-        model.addAttribute("name", "Anu");
+        model.addAttribute("name", "Akash");
         return "forgotpassword";
     }
 }
