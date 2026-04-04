@@ -26,14 +26,20 @@ public class UserController {
     @PostMapping("/register")
     public String userRegister(Model model , @ModelAttribute UserDto userDto) {
         UserDto result = userService.save(userDto);
-        if(result.isSuccess()) {
-            model.addAttribute("message", "Registration Successful");
+
+        if (!result.isUserSuccess()) {
+            model.addAttribute("message", "Username Already Exists");
+        }
+        else if (!result.isSuccess()) {
+            model.addAttribute("message", "Email Already Exists");
         }
         else {
-            model.addAttribute("message", "Email Already Exist");
+            model.addAttribute("message", "Registration Successful");
         }
+
         return "success";
     }
+
     @GetMapping("/register")
     public String doRegister(Model model , @ModelAttribute UserDto userDto) {
         model.addAttribute("name" , "Hemanth");
@@ -44,6 +50,5 @@ public class UserController {
     public String forgotPassword(Model model) {
         model.addAttribute("name" , "Rohit");
         return "forgotpassword";
-
     }
 }

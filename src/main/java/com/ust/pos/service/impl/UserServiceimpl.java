@@ -55,7 +55,12 @@ public class UserServiceimpl implements UserService {
         if (userRepository.findByEmail(userDto.getEmail()) != null) {
             userDto.setSuccess(false);
             return userDto;
-        } else {
+        }
+        else if(userRepository.findByUserName(userDto.getUserName()) != null){
+            userDto.setUserSuccess(false);
+            return userDto;
+        }
+        else {
             User user = modelMapper.map(userDto, User.class);
             User savedUser = userRepository.save(user);
             return modelMapper.map(savedUser, UserDto.class);

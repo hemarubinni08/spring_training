@@ -98,7 +98,7 @@
 
         <div class="form-group">
             <label>Email</label>
-            <form:input path="email"/>
+            <form:input path="email" type = "email"/>
         </div>
 
         <div class="form-group">
