@@ -107,7 +107,7 @@
 <div class="register-card shadow">
     <h3 class="text-center mb-4">User Registration</h3>
 
-    <form:form action="/user/register" method="post" modelAttribute="userDto">
+    <form:form action="/user/registerJdbc" method="post" modelAttribute="userDto">
 
         <div class="mb-3">
             <form:label path="name">Full Name</form:label>
