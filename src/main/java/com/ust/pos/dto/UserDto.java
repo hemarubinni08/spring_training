@@ -3,18 +3,19 @@ package com.ust.pos.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
 public class UserDto {
-    private int id;
-    private String name;
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private String username;
     private String email;
-    private String phoneNo;
-    private String userName;
+    private String phoneNumber;
+    private LocalDate dateOfBirth;
+    private Integer age;
     private String password;
-    private int age;
-    private Date dateOfBirth;
 
 }

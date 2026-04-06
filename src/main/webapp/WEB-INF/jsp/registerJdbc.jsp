@@ -112,6 +112,7 @@ button:hover {
     background: #4a2168;
 }
 
+/* ERROR */
 .error {
     color: red;
     text-align: center;
@@ -144,7 +145,7 @@ button:hover {
     <div class="form-box">
         <h2>Register</h2>
 
-        <form action="/user/register" method="post">
+        <form action="/user/registerJdbc" method="post">
 
             <div class="input-group">
                 <input type="text" name="firstName" required>
