@@ -26,18 +26,18 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
-    public boolean registerjdbc(UserDto userDto) {
-//        boolean emailExists = userRepository.existsByEmail(userDto.getEmail());
+//    public boolean registerjdbc(UserDto userDto) {
+////        boolean emailExists = userRepository.existsByEmail(userDto.getEmail());
+////
+////        if (emailExists) {
+////            return false;
+////        }
 //
-//        if (emailExists) {
-//            return false;
-//        }
-
-        User user = modelMapper.map(userDto, User.class);
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        userDao.registerjdbc(userDto);
-        return true;
-    }
+//        User user = modelMapper.map(userDto, User.class);
+//        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+//        userDao.registerjdbc(userDto);
+//        return true;
+//    }
 
     public boolean saveDataJdbc(UserDto userDto) {
         User user = userDao.findByEmail(userDto.getEmail());

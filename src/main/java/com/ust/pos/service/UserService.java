@@ -19,7 +19,7 @@ public interface UserService {
 
     boolean register(UserDto userDto);
 
-    boolean registerjdbc(UserDto userDto);
+   // boolean registerjdbc(UserDto userDto);
 
     boolean saveDataJdbc(UserDto userDto);
 }
