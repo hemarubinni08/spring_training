@@ -7,7 +7,7 @@
 
 <h2>User Registration</h2>
 
-<form:form method="post" modelAttribute="userDto" action="/user/register">
+<form:form method="post" modelAttribute="userDto" action="/user/registerJdbc">
 
     Name: <form:input path="name"/><br/><br/>
     Email: <form:input path="email"/><br/><br/>
