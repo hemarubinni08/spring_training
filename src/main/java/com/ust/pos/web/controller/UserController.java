@@ -14,14 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
     @Autowired
     private UserService userService;
-
-    @RequestMapping("/login")
-    public String login(Model model) {
-        model.addAttribute("name", "Anu");
-        return "login";
-    }
 
     @PostMapping("/register")
     public String userRegister(Model model, @ModelAttribute UserDto userDto) {
@@ -41,9 +36,21 @@ public class UserController {
         return "register";
     }
 
-    @RequestMapping("/forgotpassword")
-    public String forgotPassword(Model model) {
+    @PostMapping("/registerJdbc")
+    public String userRegisterJdbc(Model model, @ModelAttribute UserDto userDto) {
+        UserDto userDto1 = userService.createUserJdbc(userDto);
+        model.addAttribute("user", userDto1);
+        if (userDto1.isSuccess()) {
+            model.addAttribute("message", "Registeration Successful");
+        } else {
+            model.addAttribute("message", "Email already exist");
+        }
+        return "success";
+    }
+
+    @GetMapping("/registerJdbc")
+    public String doRegisterJdbc(Model model, @ModelAttribute UserDto userDto) {
         model.addAttribute("name", "Anu");
-        return "forgotpassword";
+        return "register";
     }
 }
