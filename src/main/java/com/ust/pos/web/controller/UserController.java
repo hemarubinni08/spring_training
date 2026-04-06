@@ -16,10 +16,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
 
     @GetMapping("/register")
     public String showRegister(Model model) {
@@ -39,13 +35,35 @@ public class UserController {
         }
 
         UserDto savedUser = userService.createUser(userDto);
-
         model.addAttribute("user", savedUser);
+
         return "success";
     }
 
-    @GetMapping("/forgotpassword")
-    public String forgotPassword() {
-        return "forgotpassword";
+
+    @GetMapping("/registerJdbc")
+    public String showRegisterJdbc(Model model) {
+        model.addAttribute("user", new UserDto());
+        return "registerJdbc";
     }
+
+    @PostMapping("/registerJdbc")
+    public String registerJdbcUser(@ModelAttribute("user") UserDto userDto,
+                                   Model model) {
+
+        if (userService.emailExistsJdbc(userDto.getEmail())) {
+            model.addAttribute("errorMessage",
+                    "Email already exists. Please use a different email.");
+            model.addAttribute("user", userDto);
+            return "registerJdbc";
+        }
+
+        userService.createUserJdbc(userDto);
+
+        model.addAttribute("successMessage",
+                "User registered successfully using JDBC");
+
+        return "success";
+    }
+
 }

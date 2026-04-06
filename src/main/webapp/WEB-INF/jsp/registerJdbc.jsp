@@ -127,7 +127,6 @@
 <div class="container">
     <h2>User Registration</h2>
 
-    <!-- ✅ ERROR MESSAGE FROM CONTROLLER -->
     <c:if test="${not empty errorMessage}">
         <div class="error">
             ${errorMessage}
