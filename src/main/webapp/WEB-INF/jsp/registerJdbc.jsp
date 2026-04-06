@@ -53,11 +53,11 @@
 </head>
 <body>
 <h2>Registeration Page</h2>
-<a href="/user/register">Go to Voter Search</a>
+<a href="/user/registerJdbc">Go to Voter Search</a>
 <div class="register-container" modelAttribute="userDto">
 
 
-    <form : form method="post" modelAttribute="userDto" action="/user/register">
+    <form : form method="post" modelAttribute="userDto" action="/user/registerJdbc">
         <label for="name">Full Name</label>
         <input type="text" id="name" name="name" required>
 
@@ -72,6 +72,7 @@
 
         <label for="phoneNumber">phone no</label>
         <input type="text" id="username" name="phoneNo" required>
+
 
         <button type="submit" value="Register">Create Account</button>
     </form>
