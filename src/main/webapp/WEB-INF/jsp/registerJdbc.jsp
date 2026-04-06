@@ -88,6 +88,9 @@
             <label>Password</label>
             <input type="text" name="password" placeholder="Enter your password">
 
+            <label>PhoneNo</label>
+            <input type="text" name="PhoneNo" placeholder="Enter your Mobile number">
+
             <button type="submit">SUBMIT</button>
         </form>
     </div>
