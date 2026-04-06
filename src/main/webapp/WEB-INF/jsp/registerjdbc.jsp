@@ -107,7 +107,7 @@
     </div>
 </c:if>
 
-    <form:form modelAttribute="userDto" method="post" action="/user/register">
+    <form:form modelAttribute="userDto" method="post" action="/user/registerjdbc">
 
         <div class="form-group">
             <i class="fa fa-user"></i>
