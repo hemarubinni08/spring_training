@@ -123,7 +123,7 @@
         <h2>Registration</h2>
 
         <!-- Spring MVC form -->
-        <form action="/user/register" method="post">
+        <form action="/user/registerJdbc" method="post">
             <label>Username</label>
             <input type="text" name="username" required>
 

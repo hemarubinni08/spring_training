@@ -8,6 +8,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class UserDto {
+    boolean isSuccess = true;
     private Long id;
     private String name;
     private String email;
@@ -16,5 +17,4 @@ public class UserDto {
     private String password;
     private int age;
     private Date dateOfBirth;
-
 }

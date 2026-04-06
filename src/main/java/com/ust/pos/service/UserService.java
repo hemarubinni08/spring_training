@@ -2,17 +2,8 @@ package com.ust.pos.service;
 
 import com.ust.pos.dto.UserDto;
 
-import java.util.List;
-
 public interface UserService {
-    UserDto findByUserName(String userName);
+    UserDto saveData(UserDto userDto);
 
-    List<UserDto> findAll();
-    UserDto findById(Long id);
-    void deleteById(Long id);
-    UserDto updateById(Long id);
-
-    UserDto updateById(UserDto userDto);
-
-    UserDto update(UserDto userDto);
+    boolean saveDataJdbc(UserDto userDto);
 }
