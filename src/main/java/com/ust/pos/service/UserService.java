@@ -18,4 +18,5 @@ public interface UserService {
     void deleteById(Long id);
 
     boolean register(UserDto userDto);
+    boolean registerjdbc(UserDto userDto);
 }

@@ -22,22 +22,40 @@ public class UserController {
         return "login";
 
     }
+//
+//    @PostMapping("/register")
+//    public String register(Model model, @ModelAttribute UserDto userDto) {
+//        boolean flag = userService.register(userDto);
+//        if (flag) {
+//            model.addAttribute("message", "Success");
+//        } else {
+//            model.addAttribute("message", "Failure");
+//        }
+//        return "success";
+//    }
+//
+//    @GetMapping("/register")
+//    public String userRegister(Model model, @ModelAttribute UserDto userDto) {
+//        model.addAttribute("name", "Shashi");
+//        return "register";
+//    }
 
-    @PostMapping("/register")
-    public String register(Model model, @ModelAttribute UserDto userDto) {
-        boolean flag = userService.register(userDto);
+
+    @GetMapping("/registerjdbc")
+    public String registerjdbc(Model model) {
+        model.addAttribute("name", "Shashi");
+        return "registered";
+    }
+
+    @PostMapping("/registerjdbc")
+    public String registerjdbc(Model model, @ModelAttribute UserDto userDto) {
+        boolean flag = userService.registerjdbc(userDto);
         if (flag) {
             model.addAttribute("message", "Success");
         } else {
             model.addAttribute("message", "Failure");
         }
         return "success";
-    }
-
-    @GetMapping("/register")
-    public String userRegister(Model model, @ModelAttribute UserDto userDto) {
-        model.addAttribute("name", "Shashi");
-        return "register";
     }
 
     @RequestMapping("/forgotpassword")
