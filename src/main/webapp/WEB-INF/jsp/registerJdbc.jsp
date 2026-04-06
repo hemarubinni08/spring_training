@@ -15,7 +15,7 @@
         }
 
         form {
-            background-color: olive;
+            background-color: #ff8fab;
             padding: 25px 30px;
             border-radius: 8px;
             width: 300px;
@@ -35,7 +35,8 @@
         input[type="text"],
         input[type="text"],
         input[type="password"]
-        input[type="text"]{
+        input[type="text"]
+        input[type="date"]{
             width: 100%;
             padding: 8px;
             margin-top: 5px;
@@ -68,8 +69,7 @@
 </head>
 
 <body>
-
-    <form action="/user/register" method="POST" modelAttribute="userDto">
+    <form action="/user/registerJdbc" method="POST" modelAttribute="userDto">
         <h2>Register</h2>
 
         <label for="name">Name</label><br>
@@ -84,8 +84,10 @@
         <label for="age">Age</label><br>
         <input type="text" id="age" name="age"  placeholder ="Enter your age" required<br><br>
         <br>
+        <label for="phoneNo">Phone No</label>
+        <input type="text" id="phoneNo" name="phoneNo" placeholder="Enter your phone no" required><br><br>
+        <br>
         <button type="submit">Submit</button>
     </form>
-
 </body>
 </html>

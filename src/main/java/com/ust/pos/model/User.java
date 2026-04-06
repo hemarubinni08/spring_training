@@ -1,14 +1,12 @@
 package com.ust.pos.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
+@Table
 @Entity
 @Getter
 @Setter
@@ -22,5 +20,5 @@ public class User {
     private String userName;
     private String password;
     private int age;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 }
