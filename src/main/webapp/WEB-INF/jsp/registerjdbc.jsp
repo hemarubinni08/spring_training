@@ -17,7 +17,7 @@
         }
 
         .register-container {
-            background: #ffffff;
+            background: #fff;
             padding: 30px 35px;
             width: 380px;
             border-radius: 10px;
@@ -99,7 +99,7 @@
     </div>
     -->
 
-    <form action="/user/register" method="post">
+    <form action="/user/register_jdbc" method="post">
 
         <div class="form-group">
             <label>Name</label>
@@ -108,7 +108,7 @@
 
         <div class="form-group">
             <label>Username</label>
-            <input type="text" name="userName" required>
+            <input type="text" name="userName">
         </div>
 
         <div class="form-group">
