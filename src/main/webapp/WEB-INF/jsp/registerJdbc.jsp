@@ -94,7 +94,7 @@
 <div class="register-card">
     <h2>User Registration</h2>
 
-    <form:form action="register" method="post" modelAttribute="userDto">
+    <form:form action="registerJdbc" method="post" modelAttribute="userDto">
 
         <div class="form-group">
             <label>Name</label>

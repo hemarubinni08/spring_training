@@ -3,14 +3,9 @@ package com.ust.pos.model;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
-import java.util.List;
-
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findByUsername(String userName);
-    User findByDateOfBirth(Date dateOfBirth);
-    List<User> findByAge(int age);
-    void deleteByUserName(String userName);
-    void deleteById(String id);
+    User findByUserName(String userName);
+
+    User findByEmail(String email);
 }
