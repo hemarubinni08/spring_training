@@ -8,12 +8,5 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-
-    User findByUserName(String userName);
-
-    List<User> findByAge(int age);
-
-    User findByDateOfBirth(Date dateOfBirth);
-
     boolean existsByEmail(String email);
 }

@@ -19,31 +19,6 @@ public class UserDaoImpl implements UserDao {
     PasswordEncoder passwordEncoder;
 
     @Override
-    public List<User> findAll() {
-        return List.of();
-    }
-
-    @Override
-    public User findById(Long id) {
-        return null;
-    }
-
-    @Override
-    public User findByUserName(String username) {
-        return null;
-    }
-
-    @Override
-    public User update(Long id, UserDto userDto) {
-        return null;
-    }
-
-    @Override
-    public void deleteById(Long id) {
-
-    }
-
-    @Override
     public boolean registerjdbc(UserDto userDto) {
         //String sql = "insert into user values(?,?,?,?)";
         //no need to do it twice once is enough
