@@ -41,5 +41,4 @@ public class UserController {
         model.addAttribute("status", resultDto.getMessage());
         return "success";
     }
-
 }

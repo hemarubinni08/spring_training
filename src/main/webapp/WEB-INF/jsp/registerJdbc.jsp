@@ -76,10 +76,7 @@
 
         <button type="submit" value="Register">Create Account</button>
     </form>
-
 </div>
-
 </body>
 </html>
 
-For this code add phone no email  age dob
