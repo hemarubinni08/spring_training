@@ -4,11 +4,11 @@ import com.ust.pos.dao.UserDao;
 import com.ust.pos.dto.UserDto;
 import com.ust.pos.model.User;
 import com.ust.pos.model.UserRepository;
+import com.ust.pos.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.ust.pos.service.UserService;
 
 import java.util.List;
 
@@ -26,17 +26,27 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
-    public boolean registerjdbc(UserDto userDto){
-        boolean emailExists = userRepository.existsByEmail(userDto.getEmail());
-
-        if (emailExists) {
-            return false;
-        }
+    public boolean registerjdbc(UserDto userDto) {
+//        boolean emailExists = userRepository.existsByEmail(userDto.getEmail());
+//
+//        if (emailExists) {
+//            return false;
+//        }
 
         User user = modelMapper.map(userDto, User.class);
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userDao.registerjdbc(userDto);
         return true;
+    }
+
+    public boolean saveDataJdbc(UserDto userDto) {
+        User user = userDao.findByEmail(userDto.getEmail());
+        if (user == null) {
+            userDao.registerjdbc(userDto);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean register(UserDto userDto) {
