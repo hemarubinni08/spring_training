@@ -1,7 +1,6 @@
 package com.ust.pos.web.controller;
 
 import com.ust.pos.dto.UserDto;
-import com.ust.pos.model.User;
 import com.ust.pos.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

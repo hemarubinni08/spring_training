@@ -1,12 +1,9 @@
 package com.ust.pos;
 
-import com.ust.pos.dto.UserDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.security.autoconfigure.SecurityAutoConfiguration;
-import org.springframework.boot.security.autoconfigure.actuate.web.servlet.ManagementWebSecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
@@ -33,17 +30,17 @@ public class PosApplication {
     }
 
     @Bean
-    ModelMapper getModelMapper(){
+    ModelMapper getModelMapper() {
         return new ModelMapper();
     }
 
     @Bean
-    public JdbcTemplate jdbcTemplate(){
+    public JdbcTemplate jdbcTemplate() {
         return new JdbcTemplate(getDataSource());
     }
 
     @Bean
-    DataSource getDataSource(){
+    DataSource getDataSource() {
         DriverManagerDataSource ds = new DriverManagerDataSource();
         ds.setUrl(environment.getProperty("spring.datasource.url"));
         ds.setUsername(environment.getProperty("spring.datasource.username"));
@@ -53,7 +50,7 @@ public class PosApplication {
     }
 
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
