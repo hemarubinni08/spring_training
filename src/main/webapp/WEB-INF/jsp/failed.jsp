@@ -1,12 +1,11 @@
 <html>
 <head>
-    <title>Success</title>
+    <title>failed</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f2f6fc;
         }
-
         .success-box {
             width: 350px;
             margin: 100px auto;
@@ -32,12 +31,11 @@
 
 <body>
 
-<div class="success-box">
-    <h2>failed</h2>
+<div class="failed">
+    <h2>${message}</h2>
 
     <p><strong>Name:</strong> ${userDto.name}</p>
     <p><strong>Email:</strong> ${userDto.email}</p>
 </div>
-
 </body>
 </html>
