@@ -16,5 +16,4 @@ public class UserDto {
     private String password;
     private int age;
     private Date dateOfBirth;
-
 }
