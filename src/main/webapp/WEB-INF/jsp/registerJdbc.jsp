@@ -76,7 +76,7 @@
     <h2>User Registration</h2>
 
     ✅ Method & action added here
-    <form action="register" method="post">
+    <form action="registerJdbc" method="post">
 
         <label>User Name</label>
         <input type="text" name="userName" required>
@@ -96,8 +96,10 @@
 
         <label>Date of Birth</label>
         <input type="date" name="dob" required>
+
         <button type="submit">Register</button>
     </form>
 </div>
+
 </body>
 </html>

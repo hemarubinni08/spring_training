@@ -1,13 +1,14 @@
-package com.ust.pos.service;
+package com.ust.pos.dao;
 
 import com.ust.pos.dto.UserDto;
+import com.ust.pos.model.User;
 
-public interface UserService {
+public interface UserDao {
     boolean UpdateByUserName(UserDto userDto);
 
     boolean registerJdbc(UserDto userDto);
 
     boolean existsByEmail(String email);
 
-    boolean createUserJdbc(UserDto userDto);
+    User existsByEmailJdbc(String userDto);
 }
