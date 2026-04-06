@@ -18,5 +18,4 @@ public class UserDto {
     private Date dateOfBirth;
     private boolean isSuccess=true;
     private boolean userSuccess=true;
-
 }

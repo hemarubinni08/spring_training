@@ -7,6 +7,6 @@
 <body>
     <h2>${message}</h2>
 
-    <a href="register">Register another user</a>
+    <a href="registerJdbc">Register another user</a>
 </body>
 </html>
