@@ -119,7 +119,7 @@
             </div>
         </c:if>
 
-        <form action="/user/register" method="POST">
+        <form action="/user/registerJdbc" method="POST">
             <div class="form-grid">
                 <div class="form-group full-width">
                     <label>Full Name</label>
