@@ -183,7 +183,7 @@
             <div class="msg msg-error">✕ &nbsp;${errorMessage}</div>
         </c:if>
 
-        <form:form action="register" method="post" modelAttribute="userDto" id="regForm">
+        <form:form action="registerJdbc" method="post" modelAttribute="userDto" id="regForm">
             <div class="form-grid">
 
                 <div class="field full">
