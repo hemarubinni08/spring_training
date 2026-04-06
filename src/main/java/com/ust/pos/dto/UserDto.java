@@ -8,6 +8,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class UserDto {
+    boolean isSuccess = true;
     private Long id;
     private String name;
     private String email;

@@ -7,42 +7,46 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/login")
-    public String login(Model model) {
-        model.addAttribute("name" , "Navaneeth");
-        return "login";
-
+    @PostMapping("/register")
+    public String userRegister(Model model, @ModelAttribute UserDto userDto) {
+        UserDto userDto1 = userService.saveData(userDto);
+        if (userDto1.isSuccess()) {
+            model.addAttribute("message", "Success ");
+        } else {
+            model.addAttribute("message", "! Email already exists");
+        }
+        return "success";
     }
 
-    @RequestMapping("/register")
+    @GetMapping("/register")
     public String userRegister(Model model) {
-        model.addAttribute("name" , "Navaneeth");
+        model.addAttribute("name", "Navaneeth");
         return "register";
     }
 
-    @RequestMapping("/forgotpassword")
-    public String forgotPassword(Model model) {
-        model.addAttribute("name" , "Navaneeth");
-        return "forgotpassword";
-
+    @PostMapping("/registerJdbc")
+    public String userRegisterJdbc(Model model, @ModelAttribute UserDto userDto) {
+        boolean state = userService.saveDataJdbc(userDto);
+        if (state) {
+            return "Success";
+        } else {
+            return "! Email already exists";
+        }
     }
 
-    @GetMapping("/getById")
-    public String getById(Model model, @RequestParam Long id){
-        UserDto userDto = userService.getById(id);
-        model.addAttribute("userDto",userDto);
-        return "user";
+    @GetMapping("/registerJdbc")
+    public String userRegisterJdbc(Model model) {
+        model.addAttribute("name", "Navaneeth");
+        return "register";
     }
-
 }

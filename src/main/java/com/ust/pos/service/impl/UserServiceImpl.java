@@ -1,48 +1,49 @@
 package com.ust.pos.service.impl;
 
-import ch.qos.logback.core.model.Model;
+import com.ust.pos.dao.UserDao;
 import com.ust.pos.dto.UserDto;
 import com.ust.pos.model.User;
 import com.ust.pos.model.UserRepository;
 import com.ust.pos.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    UserDao userDao;
 
     @Autowired
+    PasswordEncoder passwordEncoder;
+    @Autowired
     ModelMapper modelMapper;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
-    public List<UserDto> getAllUsers() {
-        List<User> users = userRepository.findAll();
-        modelMapper.map(users, UserDto.class);
-        return ;
+    public UserDto saveData(UserDto userDto) {
+        if (userRepository.findByEmail(userDto.getEmail()) != null) {
+            userDto.setSuccess(false);
+            return userDto;
+        } else {
+            User user = modelMapper.map(userDto, User.class);
+            user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            User saveduser = userRepository.save(user);
+            return modelMapper.map(saveduser, UserDto.class);
+        }
     }
 
     @Override
-    public UserDto getById(Long id) {
-        User user = userRepository.findById(id).get();
-        UserDto userDto = new UserDto();
-        modelMapper.map(user, userDto);
-        return userDto;
-    }
-
-    @Override
-    public void deleteUserById(Long id) {
-        userRepository.deleteById(id);
-    }
-
-    @Override
-    public UserDto updateUser(UserDto userDto) {
-        userRepository.save(modelMapper.map(userDto,User.class));
-        return userDto;
+    public boolean saveDataJdbc(UserDto userDto) {
+        User user = userDao.findByEmail(userDto.getEmail());
+        if (user == null) {
+            userDao.saveData(userDto);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -86,7 +86,7 @@
     <div class="container">
         <h2>Registration Form</h2>
 
-        <form action="/user/register" method="post" modelAttribute="userDto">
+        <form action="/user/registerJdbc" method="post" modelAttribute="userDto">
 
             <label>Name:</label>
             <input type="text" name="name">
