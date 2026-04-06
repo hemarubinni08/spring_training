@@ -18,9 +18,7 @@ import javax.sql.DataSource;
 @ComponentScan(
         {
                 "com.ust.pos.web.controller",
-                "com.ust.pos",
-                "com.ust.pos.service.impl",
-                "com.ust.pos.dao.impl"
+                "com.ust.pos"
         }
 )
 public class PosApplication {
