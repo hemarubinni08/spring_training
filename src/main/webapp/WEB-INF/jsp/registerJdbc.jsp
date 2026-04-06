@@ -57,7 +57,7 @@
 <div class="container">
     <h2>User Registration</h2>
 
-    <form action="/user/register" method="POST">
+    <form action="/user/registerJdbc" method="POST">
         <label>Name</label>
         <input type="text" name="name" required>
 
