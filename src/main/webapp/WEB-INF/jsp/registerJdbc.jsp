@@ -90,7 +90,7 @@
 
     <h2>Create Account</h2>
 
-    <form action="${pageContext.request.contextPath}/user/register" method="post">
+    <form action="${pageContext.request.contextPath}/user/registerJdbc" method="post">
 
         <label>Full Name</label>
         <input type="text" name="name" required>
