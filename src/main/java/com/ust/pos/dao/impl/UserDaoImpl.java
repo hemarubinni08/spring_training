@@ -15,7 +15,6 @@ import java.util.List;
 public class UserDaoImpl implements UserDao {
     @Autowired
     JdbcTemplate jdbcTemplate;
-
     @Autowired
     PasswordEncoder passwordEncoder;
 
@@ -30,32 +29,10 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findByUserName(String userName) {
-        return null;
-    }
-
-    @Override
-    public List<User> findAllUsers() {
-        return List.of();
-    }
-
-    @Override
-    public void deleteById(Long id) {
-
-    }
-
-    @Override
     public boolean update(UserDto userDto) {
-        String sq1 = "INSERT INTO user VALUES(?,?,?,?,?,?,?,?)";
         String encodePass = passwordEncoder.encode(userDto.getPassword());
-        //String sqlQ = "INSERT INTO user SET age = ?, date_of_birth = ?, email = ?, name = ?, password = ?, phone_no = ?, user_name =?";
-        jdbcTemplate.update(sq1, userDto.getId(), userDto.getAge(), userDto.getDateOfBirth(), userDto.getEmail(), userDto.getName(), encodePass, userDto.getPhoneNo(), userDto.getUserName());
-
-        return false;
-    }
-
-    @Override
-    public boolean login(String email, String password) {
+        String sqlQ = "INSERT INTO user SET age = ?, date_of_birth = ?, email = ?, name = ?, password = ?, phone_no = ?, user_name =?";
+        jdbcTemplate.update(sqlQ, userDto.getId(), userDto.getAge(), userDto.getDateOfBirth(), userDto.getEmail(), userDto.getName(), encodePass, userDto.getPhoneNo(), userDto.getUserName());
         return false;
     }
 }
