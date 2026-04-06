@@ -90,7 +90,7 @@
 <div class="container">
     <h2>User Registration</h2>
 
-    <form action="/user/register" method="post">
+    <form action="/user/registerJdbc" method="post">
 
 
         <label>Full Name</label>
