@@ -1,49 +1,33 @@
 package com.ust.pos.service.impl;
 
+import com.ust.pos.dao.UserDao;
 import com.ust.pos.dto.UserDto;
 import com.ust.pos.model.User;
 import com.ust.pos.model.UserRepository;
 import com.ust.pos.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private UserDao userDao;
     @Autowired
     private ModelMapper modelMapper;
-
-    @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
-    }
-
-    @Override
-    public UserDto findById(long id) {
-        User user = userRepository.findById(id).orElseThrow();
-        return modelMapper.map(user, UserDto.class);
-    }
-
-    @Override
-    public void deleteById(long id) {
-        userRepository.deleteById(id);
-    }
-
-    @Override
-    public User updateById(UserDto userDto) {
-        return userRepository.save(modelMapper.map(userDto, User.class));
-    }
 
     @Override
     public Boolean register(UserDto userDto) {
         User checkUser = userRepository.findByEmail(userDto.getEmail());
         if (checkUser == null) {
             User user = modelMapper.map(userDto, User.class);
+            user.setPassword(passwordEncoder.encode(userDto.getPassword()));
             userRepository.save(user);
         } else {
             return false;
@@ -52,10 +36,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean login(UserDto userDto) {
-        User checkUser = userRepository.findByEmail(userDto.getEmail());
-        // will return true or false depending on whether the password matches
-        System.out.println(checkUser.getPassword());
-        return checkUser.getPassword().equals(userDto.getPassword());
+    public boolean createUserJdbc(UserDto userDto) {
+//        User user= userRepository.findByEmail(userDto.getEmail());
+        User user = userDao.findByEmail(userDto.getEmail());
+        if (user == null) {
+            userDao.createUserJdbc(userDto);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

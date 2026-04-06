@@ -37,7 +37,7 @@
 
         <h3 class="text-center mb-4">Create Account</h3>
 
-        <form action="/user/register" method="post" modelAttribute="userDto">
+        <form action="/user/registerjdbc" method="post" modelAttribute="userDto">
 
             <div class="form-group">
                 <label>Name</label>
@@ -55,6 +55,11 @@
             </div>
 
             <div class="form-group">
+                <label>Phone</label>
+                <input type="phone" class="form-control" name="phoneNo" placeholder="Enter your phone no" required>
+            </div>
+
+            <div class="form-group">
                 <label>Username</label>
                 <input type="text" class="form-control" name="userName" placeholder="Choose a username" required>
             </div>
@@ -65,7 +70,6 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Register</button>
-
         </form>
 
         <div class="login-link">

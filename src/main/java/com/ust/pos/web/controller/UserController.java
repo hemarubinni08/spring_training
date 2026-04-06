@@ -1,7 +1,7 @@
 package com.ust.pos.web.controller;
 
+import com.ust.pos.dao.UserDao;
 import com.ust.pos.dto.UserDto;
-import com.ust.pos.model.User;
 import com.ust.pos.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,22 +17,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/login")
-    public String login(Model model) {
-        return "login";
-    }
-
-    @PostMapping("/login")
-    public String login(Model model, @ModelAttribute UserDto userDto) {
-        boolean loginSuccess = userService.login(userDto);
-        if (!loginSuccess) {
-            model.addAttribute("message", "Wrong credentials");
-            return "login";
-        } else {
-            model.addAttribute("email", userDto.getEmail());
-            return "index";
-        }
-    }
+    @Autowired
+    private UserDao userDao;
 
     @GetMapping("/register")
     public String register(Model model) {
@@ -50,14 +36,19 @@ public class UserController {
         return "registerstatus";
     }
 
-    @GetMapping("/index")
-    public String index(Model model) {
-        return "index";
+    @GetMapping("/registerjdbc")
+    public String registerjdbc(Model model) {
+        return "registerjdbc";
     }
 
-    @RequestMapping("/forgotpassword")
-    public String forgotPassword(Model model) {
-        model.addAttribute("name", "Aron");
-        return "forgotpassword";
+    @PostMapping("/registerjdbc")
+    public String registerjdbc(Model model, @ModelAttribute UserDto userDto) {
+        boolean registerSuccess = userService.createUserJdbc(userDto);
+        if (!registerSuccess) {
+            model.addAttribute("statusMessage", userDto.getEmail() + " already exists. Try with a different email.");
+        } else {
+            model.addAttribute("statusMessage", userDto.getEmail() + " registration success");
+        }
+        return "registerstatus";
     }
 }
