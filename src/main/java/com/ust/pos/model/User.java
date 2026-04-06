@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -22,5 +22,5 @@ public class User {
     private String userName;
     private String password;
     private int age;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 }

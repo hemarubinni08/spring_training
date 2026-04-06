@@ -12,12 +12,17 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())       // disable CSRF
-                .authorizeHttpRequests(auth ->
-                        auth.anyRequest().permitAll()   // allow all endpoints
+                // ✅ Disable CSRF so POST requests from JSP/HTML work
+                .csrf(csrf -> csrf.disable())
+
+                // ✅ Allow ALL requests (GET, POST, PUT, DELETE)
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/**").permitAll()
                 )
+                // ✅ Disable default login mechanisms
                 .httpBasic(Customizer.withDefaults())
-                .formLogin(form -> form.disable()); // disable Spring login page
+                .formLogin(form -> form.disable());
+
         return http.build();
     }
 }

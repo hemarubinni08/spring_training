@@ -95,7 +95,7 @@
 <div class="register-container">
     <h2>Create Account</h2>
 
-    <form action="/user/register" method="post">
+    <form action="registerJdbc" method="post">
 
         <div class="form-group">
             <label for="name">Username</label>
