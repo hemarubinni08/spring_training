@@ -31,9 +31,22 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User fundByEmail(String email) {
         String s1 = "select * from user where email = ?" ;
-        String s2 = "select Count(*) from user where email = ?" ;
-        Integer count  = jdbcTemplate.queryForObject(s2, Integer.class,email);
-        List<User> user = jdbcTemplate.query(s1 , new  Object[]{email} , new BeanPropertyRowMapper(User.class));
-        return user.isEmpty()?null : user.get(0);
+        //String s2 = "select Count(*) from user where email = ?" ;
+        //Integer count  = jdbcTemplate.queryForObject(s2, Integer.class,email);
+        List<User> user = jdbcTemplate.query(s1 , new  Object[]{email} , new BeanPropertyRowMapper<>(User.class));
+        return user.get(0);
+    }
+
+    @Override
+    public List<User> getData() {
+        String s1 = "select * from user";
+        List<User> user = jdbcTemplate.query(s1,new BeanPropertyRowMapper<>(User.class));
+        return user;
+    }
+
+    @Override
+    public void deleteUserJdbc(String email) {
+        String s1 = "delete from user where email = ?";
+        jdbcTemplate.update(s1,email);
     }
 }

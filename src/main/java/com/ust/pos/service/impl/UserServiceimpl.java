@@ -5,12 +5,16 @@ import com.ust.pos.dto.UserDto;
 import com.ust.pos.model.User;
 import com.ust.pos.model.UserRepository;
 import com.ust.pos.service.UserService;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
+@Transactional
 public class UserServiceimpl implements UserService {
 
     @Autowired
@@ -34,7 +38,7 @@ public class UserServiceimpl implements UserService {
         } else {
             User user = modelMapper.map(userDto, User.class);
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-            User savedUser = userRepository.save(user);
+            User savedUser = userRepository.findByUserName(user.getUserName());
 
             return modelMapper.map(savedUser, UserDto.class);
         }
@@ -48,5 +52,37 @@ public class UserServiceimpl implements UserService {
         } else {
             return false;
         }
+    }
+    @Override
+    public List<UserDto> getData() {
+        List<User> users = userRepository.findAll();
+        return users.stream().map(user -> modelMapper.map(user,UserDto.class)).toList();
+    }
+
+    @Override
+    public List<UserDto> getDataJdbc() {
+        return userDao.getData().stream().map(user -> modelMapper.map(user,UserDto.class)).toList();
+    }
+
+    @Override
+    public UserDto getUserDetailsJdbc(String email) {
+        User user = userDao.fundByEmail(email);
+        return modelMapper.map(user , UserDto.class);
+    }
+
+    @Override
+    public UserDto getUserDetails(String email) {
+        User user = userRepository.findByEmail(email);
+        return modelMapper.map(user , UserDto.class);
+    }
+
+    @Override
+    public void deleteUser(String email) {
+        userRepository.deleteByEmail(email);
+    }
+
+    @Override
+    public void deleteUserJdbc(String email) {
+        userDao.deleteUserJdbc(email);
     }
 }

@@ -3,12 +3,12 @@ package com.ust.pos.web.controller;
 import com.ust.pos.dto.UserDto;
 import com.ust.pos.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.cache.SpringCacheBasedUserCache;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 
@@ -65,5 +65,40 @@ public class UserController {
 
             return "success";
         }
+    }
+    @GetMapping("/listOfUsers")
+    public  String listOfUsers(Model model){
+        List<UserDto> userDtos = userService.getData();
+
+        model.addAttribute("users" ,userDtos);
+        return("userList");
+    }
+    @GetMapping("/listOfUsersJdbc")
+    public  String listOfUsersJdbc(Model model){
+        List<UserDto> userDtos = userService.getDataJdbc();
+        model.addAttribute("users" ,userDtos);
+        return("userListJdbc");
+    }
+    @GetMapping("/userDetailsJdbc")
+    public String userDetailsJdbc(Model model, @RequestParam String email){
+        UserDto userDto = userService.getUserDetailsJdbc(email);
+        model.addAttribute("user" , userDto);
+        return("userDetailsJdbc");
+    }
+    @GetMapping("/userDetails/{email}")
+    public String userDetails(Model model, @PathVariable String email){
+        UserDto userDto = userService.getUserDetails(email);
+        model.addAttribute("user" , userDto);
+        return("userDetails");
+    }
+    @GetMapping("/deleteUser/{email}")
+    public  String deleteEmail(Model model , @PathVariable String email){
+        userService.deleteUser(email);
+        return("redirect:/user/listOfUsers");
+    }
+    @GetMapping("/deleteUserJdbc")
+    public String deleteUser(Model model, @RequestParam String email){
+        userService.deleteUserJdbc(email);
+        return("redirect:/user/listOfUsersJdbc");
     }
 }
