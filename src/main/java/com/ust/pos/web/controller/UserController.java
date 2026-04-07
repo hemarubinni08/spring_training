@@ -47,7 +47,7 @@ public class UserController {
             return "registerJdbc";
         }
 
-        model.addAttribute("name", "Mamtha");
+        model.addAttribute("name", "Deepshika");
         model.addAttribute("message", "Registration successful");
         return "success";
     }
