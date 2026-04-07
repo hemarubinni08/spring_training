@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceimpl implements UserService {
     @Autowired
@@ -43,5 +45,31 @@ public class UserServiceimpl implements UserService {
             return userDto;
         }
         return userDto;
+    }
+
+    @Override
+    public List<UserDto> getUsersJpa() {
+        List<User> usersList = userRepository.findAll();
+        List<UserDto> userDtoList = usersList.stream().map(user -> modelMapper.map(user, UserDto.class)).toList();
+        return userDtoList;
+    }
+
+    @Override
+    public List<UserDto> getUsersJdbc() {
+        List<User> usersList = userDao.findAllUsersDao();
+        List<UserDto> userDtoList = usersList.stream().map(user -> modelMapper.map(user, UserDto.class)).toList();
+        return userDtoList;
+    }
+
+    @Override
+    public UserDto getUserByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        return modelMapper.map(user, UserDto.class);
+    }
+
+    @Override
+    public UserDto getUserByEmailJdbc(String email) {
+        User user = userDao.findByEmail(email);
+        return modelMapper.map(user, UserDto.class);
     }
 }

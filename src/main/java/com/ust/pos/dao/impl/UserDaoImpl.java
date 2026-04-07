@@ -40,4 +40,12 @@ public class UserDaoImpl implements UserDao {
                 new BeanPropertyRowMapper(User.class));
         return userList.isEmpty() ? null : userList.get(0);
     }
+
+    @Override
+    public List<User> findAllUsersDao() {
+        String sqlQuery = "SELECT * FROM USER";
+        List<User> userList = jdbcTemplate.query(sqlQuery, new BeanPropertyRowMapper(User.class));
+        return userList;
+    }
+
 }
