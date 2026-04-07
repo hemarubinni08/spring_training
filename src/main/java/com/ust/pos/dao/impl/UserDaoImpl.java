@@ -22,10 +22,26 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean register(UserDto userDto) {
-        String sql = "INSERT INTO user VALUES(?,?,?,?,?,?,?)";
-        String encoderPass = passwordEncoder.encode(userDto.getPassword());
-        String sqlQ = "INSERT INTO user SET age=?,email=?,password=?,phone_no=?, date_Of_Birth=?, name=?,";
-        int count = jdbcTemplate.update(sqlQ, userDto.getAge(), userDto.getEmail(), userDto.getDateOfBirth(), encoderPass, userDto.getFullName(), userDto.getPhoneNumber(), userDto.getUsername());
+
+        String sql = """
+                INSERT INTO user
+                (username, full_name, age, email, password, phone_no, date_of_birth)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+                """;
+
+        String encodedPass = passwordEncoder.encode(userDto.getPassword());
+
+        int count = jdbcTemplate.update(
+                sql,
+                userDto.getUsername(),
+                userDto.getFullName(),
+                userDto.getAge(),
+                userDto.getEmail(),
+                encodedPass,
+                userDto.getPhoneNumber(),
+                userDto.getDateOfBirth()
+        );
+
         return count > 0;
     }
 
