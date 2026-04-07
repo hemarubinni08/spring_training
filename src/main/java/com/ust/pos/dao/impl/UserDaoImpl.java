@@ -32,7 +32,7 @@ public class UserDaoImpl implements UserDao {
     public boolean update(UserDto userDto) {
         String encodePass = passwordEncoder.encode(userDto.getPassword());
         String sqlQ = "INSERT INTO user SET age = ?, date_of_birth = ?, email = ?, name = ?, password = ?, phone_no = ?, user_name =?";
-        jdbcTemplate.update(sqlQ, userDto.getId(), userDto.getAge(), userDto.getDateOfBirth(), userDto.getEmail(), userDto.getName(), encodePass, userDto.getPhoneNo(), userDto.getUserName());
+        jdbcTemplate.update(sqlQ, userDto.getAge(), userDto.getDateOfBirth(), userDto.getEmail(), userDto.getName(), encodePass, userDto.getPhoneNo(), userDto.getUserName());
         return false;
     }
 }
