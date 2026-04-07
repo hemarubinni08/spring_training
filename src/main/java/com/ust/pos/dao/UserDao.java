@@ -9,5 +9,7 @@ public interface UserDao {
     boolean registerjdbc(UserDto userDto);
 
     User findByEmail(String email);
+    List<User> printAllUsersJdbc();
+    void deleteByEmailJdbc(String email);
 
 }

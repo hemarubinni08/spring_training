@@ -9,4 +9,16 @@ public interface UserService {
     boolean register(UserDto userDto);
 
     boolean saveDataJdbc(UserDto userDto);
+
+    List<UserDto> printAllUsers();
+
+    List<UserDto> printAllUsersJdbc();
+
+    UserDto getProfile(String email);
+
+    UserDto getProfileJdbc(String email);
+
+    void deleteByEmail(String email);
+
+    void deleteByEmailJdbc(String email);
 }
