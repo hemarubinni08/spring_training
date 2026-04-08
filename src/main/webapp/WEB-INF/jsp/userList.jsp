@@ -21,17 +21,12 @@
 
     <c:forEach var="user" items="${users}">
         <tr>
-            <td>${user.id}</td>
+            <td><a href="/user/userById/${user.id}">${user.id}</a></td>
             <td>${user.name}</td>
-
-            <!-- User details link -->
             <td>
-                <a href="/user/userDetails/${user.email}">
                     ${user.email}
-                </a>
             </td>
-
-            <!-- ✅ Delete link -->
+            <td>${user.phoneNo}</td>
             <td>
                 <a href="/user/deleteUser/${user.email}"
                    onclick="return confirm('Are you sure you want to delete this user?');">
@@ -40,8 +35,6 @@
             </td>
         </tr>
     </c:forEach>
-
 </table>
-
 </body>
 </html>

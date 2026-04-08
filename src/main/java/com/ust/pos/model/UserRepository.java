@@ -8,7 +8,7 @@ import org.yaml.snakeyaml.events.Event;
 import java.util.List;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Event.ID> {
+public interface UserRepository extends JpaRepository<User , Long> {
     User findByUserName(String userName);
     User findByEmail(String email);
     void deleteByEmail(String email);

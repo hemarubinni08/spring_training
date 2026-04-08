@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -27,7 +28,7 @@ public class UserServiceimpl implements UserService {
     UserDao userDao;
 
     @Override
-    public UserDto save(UserDto userDto) {
+    public UserDto createUser(UserDto userDto) {
 
         if (userRepository.findByEmail(userDto.getEmail()) != null) {
             userDto.setSuccess(false);
@@ -38,8 +39,7 @@ public class UserServiceimpl implements UserService {
         } else {
             User user = modelMapper.map(userDto, User.class);
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-            User savedUser = userRepository.findByUserName(user.getUserName());
-
+            User savedUser = userRepository.save(user);
             return modelMapper.map(savedUser, UserDto.class);
         }
     }
@@ -84,5 +84,47 @@ public class UserServiceimpl implements UserService {
     @Override
     public void deleteUserJdbc(String email) {
         userDao.deleteUserJdbc(email);
+    }
+
+    @Override
+    public UserDto getUserDetailsById(Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if(userOptional.isPresent()) {
+            return modelMapper.map(userOptional.get(), UserDto.class);
+        }
+        else{return null;}
+    }
+    @Override
+    public UserDto getUserDetailsByIdJdbc(Long id) {
+        User user = userDao.findById(id);
+        return modelMapper.map(user , UserDto.class);
+    }
+
+    @Override
+    public UserDto updaterUserJdbc(UserDto userDto) {
+            User user = modelMapper.map(userDto, User.class);
+            User updateUser = userDao.updateUserJdbc(user);
+            return modelMapper.map(updateUser, UserDto.class);
+        }
+
+    @Override
+    public UserDto updateUserJpa(UserDto userDto) {
+        Optional<User> existingUserOptional = userRepository.findById(userDto.getId());
+        if(existingUserOptional.isPresent()){
+            User existingUser = existingUserOptional.get();
+            if(!existingUser.getEmail().equals(userDto.getEmail())){
+                User user = userRepository.findByEmail(userDto.getEmail());
+                if(user==null){
+                    modelMapper.map(userDto, existingUser);
+                    userDto.setSuccess(true);
+                    userRepository.save(existingUser);
+                    return userDto;
+                }else{
+                    userDto.setSuccess(false);
+                    return userDto;
+                }
+            }
+        }
+        return userDto;
     }
 }

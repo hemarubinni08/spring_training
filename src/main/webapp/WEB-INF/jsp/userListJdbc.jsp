@@ -15,19 +15,21 @@
         <th>ID</th>
         <th>Name</th>
         <th>Email</th>
+        <th>Phone Number</th>
     </tr>
 
     <c:forEach var="user" items="${users}">
         <tr>
-            <td>${user.id}</td>
+            <td><<a href="/user/userByIdJdbc?id=${user.id}">${user.id}</a></td>
             <td>${user.name}</td>
             <td><a href="/user/userDetailsJdbc?email=${user.email}"> ${user.email} </a></td>
             <td><a href="/user/deleteUserJdbc?email=${user.email}" onclick = "Are you sure you want to delete this user;">
                             delete</a></td>
+            <td>${user.phoneNo}</td>
+
         </tr>
     </c:forEach>
 
 </table>
-
 </body>
 </html>

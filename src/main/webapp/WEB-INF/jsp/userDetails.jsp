@@ -4,29 +4,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>User Details</title>
+    <title>Update User</title>
 </head>
 <body>
 
-<h2>User Details</h2>
+<h2>Update User Details</h2>
 
-<table border="1" cellpadding="5">
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Email</th>
-    </tr>
+<form action="/user/updateUserJpa" method="post">
 
-        <tr>
-            <td>${user.id}</td>
-            <td>${user.name}</td>
-            <td>${user.email}</td>
-        </tr>
+    <!-- User ID (Readonly, but submitted) -->
+    <label>User ID:</label><br>
+    <input type="text" name="id" value="${user.id}" readonly /><br><br>
 
-</table>
+    <!-- Name -->
+    <label>Name:</label><br>
+    <input type="text" name="Name" value="${user.name}" required /><br><br>
+
+    <!-- Email -->
+    <label>Email:</label><br>
+    <input type="email" name="email" value="${user.email}" required /><br><br>
+
+    <!-- Phone Number (MATCHES DTO: phoneNo) -->
+    <label>Phone Number:</label><br>
+    <input type="text" name="phoneNo" value="${user.phoneNo}" required /><br><br>
+
+    <!-- Submit -->
+    <button type="submit">Update</button>
+
+</form>
 
 <br>
-<a href="/user/userLis">Back to User List</a>
+<a href="/user/listOfUsersJdbc">
+    Back to User List
+</a>
 
 </body>
 </html>

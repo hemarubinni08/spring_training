@@ -28,7 +28,7 @@ public class UserController {
     @PostMapping("/register")
 
     public String userRegister(Model model, @ModelAttribute UserDto userDto) {
-        UserDto result = userService.save(userDto);
+        UserDto result = userService.createUser(userDto);
 
         if (!result.isUserSuccess()) {
             model.addAttribute("message", "Username Already Exists");
@@ -56,7 +56,6 @@ public class UserController {
     @PostMapping("/registerJdbc")
     public String userRegisterJdbc1(Model model, @ModelAttribute UserDto userDto) {
         boolean check = userService.createUserJdbc(userDto);
-
         if (check) {
             model.addAttribute("message", "Successfully registered");
             return "success";
@@ -100,5 +99,35 @@ public class UserController {
     public String deleteUser(Model model, @RequestParam String email){
         userService.deleteUserJdbc(email);
         return("redirect:/user/listOfUsersJdbc");
+    }
+    @GetMapping("/userById/{id}")
+    public String getUsersById(Model model , @PathVariable Long id){
+        UserDto userDto = userService.getUserDetailsById(id);
+        model.addAttribute("user" , userDto);
+        return("userDetails");
+    }
+    @GetMapping("/userByIdJdbc")
+    public String getUsersByIdJdbc(Model model, @RequestParam Long id){
+        UserDto userDto = userService.getUserDetailsByIdJdbc(id);
+        model.addAttribute("user", userDto);
+        return ("userDetailsJdbc");
+    }
+    @PostMapping("/updateUserJdbc")
+    public String updateUserJdbc(Model model , @ModelAttribute UserDto userDto) {
+        UserDto updatedUser = userService.updaterUserJdbc(userDto);
+        model.addAttribute("user", updatedUser);
+        return "redirect:/user/listOfUsersJdbc";
+    }
+    @PostMapping("/updateUserJpa")
+    public String updateUserJpa(Model model , @ModelAttribute UserDto userDto) {
+        UserDto updatedUser = userService.updaterUserJdbc(userDto);
+        if(updatedUser.isSuccess()){
+            model.addAttribute("user", updatedUser);
+            model.addAttribute("Message","Updates Successfull");
+        }
+        else{
+            model.addAttribute("message", "Email Already Exists");
+        }
+        return "redirect:/user/listOfUsers";
     }
 }

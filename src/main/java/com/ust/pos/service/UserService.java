@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public interface UserService{
 
-    UserDto save(UserDto userDto);
+    UserDto createUser(UserDto userDto);
     boolean createUserJdbc(UserDto userDto);
     List<UserDto> getData();
     List<UserDto> getDataJdbc();
@@ -16,4 +16,8 @@ public interface UserService{
     UserDto getUserDetails(String email);
     void deleteUser(String email);
     void deleteUserJdbc(String email);
+    UserDto getUserDetailsById(Long id);
+    UserDto getUserDetailsByIdJdbc(Long id);
+    UserDto updaterUserJdbc(UserDto userDto);
+    UserDto updateUserJpa(UserDto userDto);
 }

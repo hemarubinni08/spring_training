@@ -10,4 +10,6 @@ public interface UserDao {
     User fundByEmail(String email);
     List<User> getData();
     void deleteUserJdbc(String email);
+    User findById(Long id);
+    User updateUserJdbc(User user);
 }
