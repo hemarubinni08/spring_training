@@ -17,5 +17,4 @@ public class UserDto {
     private int age;
     private Date dateOfBirth;
     private boolean isSuccess;
-
 }
