@@ -109,7 +109,13 @@ public class UserServiceimpl implements UserService {
 
     @Override
     public UserDto updateUserJpa(UserDto userDto) {
-        Optional<User> existingUserOptional = userRepository.findById(userDto.getId());
+        User existingUserWithEmail = userRepository.findByEmail(userDto.getEmail());
+        if(existingUserWithEmail != null && existingUserWithEmail.getId()!= userDto.getId()){
+            userDto.setSuccess(false);
+        }
+        return userDto;
+
+        /*Optional<User> existingUserOptional = userRepository.findById(userDto.getId());
         if(existingUserOptional.isPresent()){
             User existingUser = existingUserOptional.get();
             if(!existingUser.getEmail().equals(userDto.getEmail())){
@@ -126,5 +132,6 @@ public class UserServiceimpl implements UserService {
             }
         }
         return userDto;
+         */
     }
 }
