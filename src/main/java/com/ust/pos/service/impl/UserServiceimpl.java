@@ -112,8 +112,14 @@ public class UserServiceimpl implements UserService {
         User existingUserWithEmail = userRepository.findByEmail(userDto.getEmail());
         if(existingUserWithEmail != null && existingUserWithEmail.getId()!= userDto.getId()){
             userDto.setSuccess(false);
+            return userDto;
         }
-        return userDto;
+        else{
+            modelMapper.map(userDto, existingUserWithEmail);
+            userDto.setSuccess(true);
+            userRepository.save(existingUserWithEmail);
+            return userDto;
+        }
 
         /*Optional<User> existingUserOptional = userRepository.findById(userDto.getId());
         if(existingUserOptional.isPresent()){
@@ -134,4 +140,5 @@ public class UserServiceimpl implements UserService {
         return userDto;
          */
     }
+
 }

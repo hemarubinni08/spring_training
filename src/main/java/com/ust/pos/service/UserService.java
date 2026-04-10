@@ -1,11 +1,12 @@
 package com.ust.pos.service;
 import com.ust.pos.dto.UserDto;
 import com.ust.pos.model.User;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Component
 public interface UserService{
 
     UserDto createUser(UserDto userDto);
@@ -20,4 +21,5 @@ public interface UserService{
     UserDto getUserDetailsByIdJdbc(Long id);
     UserDto updaterUserJdbc(UserDto userDto);
     UserDto updateUserJpa(UserDto userDto);
+
 }

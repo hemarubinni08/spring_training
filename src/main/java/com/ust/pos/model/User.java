@@ -10,11 +10,8 @@ import java.util.Date;
 @Getter
 @Setter
 @Table
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private String name;
+
+public class User extends CommonData{
     private String email;
     private String phoneNo;
     private String userName;

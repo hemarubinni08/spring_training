@@ -1,0 +1,99 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Role List</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #1f4037, #99f2c8);
+            min-height: 100vh;
+        }
+        .card {
+            border-radius: 16px;
+        }
+        .card-header {
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+        }
+        table th {
+            background-color: #0d6efd;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4 class="mb-0">List of Roles</h4>
+                </div>
+
+                <div class="card-body">
+
+                    <!-- No data case -->
+                    <c:if test="${empty role}">
+                        <div class="alert alert-warning text-center">
+                            No roles found
+                        </div>
+                    </c:if>
+
+                    <!-- Roles list -->
+                    <c:if test="${not empty role}">
+                        <table class="table table-bordered table-hover text-center align-middle">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Role</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="r" items="${role}">
+                                    <tr>
+                                        <td>
+                                            <a href="/role/roleDetails/${r.id}"
+                                               class="text-decoration-none fw-semibold">
+                                                ${r.id}
+                                            </a>
+                                        </td>
+                                        <td>${r.name}</td>
+                                        <td>
+                                            <a href="/role/deleteById?id=${r.id}"
+                                               class="btn btn-danger btn-sm"
+                                               onclick="return confirm('Are you sure you want to delete this role?');">
+                                                Delete
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </c:if>
+
+                </div>
+
+                <div class="card-footer text-center bg-light">
+                    <a href="/role/addRoleJdbc" class="btn btn-success">
+                        + Add New Role
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
