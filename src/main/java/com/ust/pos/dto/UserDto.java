@@ -10,7 +10,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class UserDto {
-    private Long id;
+    private long id;
     private String name;
     private String email;
     private String phoneNo;
@@ -19,4 +19,5 @@ public class UserDto {
     private int age;
     private Date dateOfBirth;
     private boolean isSuccess;
+
 }
