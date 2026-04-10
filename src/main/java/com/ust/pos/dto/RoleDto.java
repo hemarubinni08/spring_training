@@ -10,4 +10,5 @@ import lombok.Setter;
 public class RoleDto {
     private long id;
     private String name;
+    private String message;
 }

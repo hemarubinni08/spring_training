@@ -19,9 +19,14 @@ public class RoleController {
     private RoleService roleService;
 
     @PostMapping("/addrole")
-    public String roleAdd(Model model, @ModelAttribute RoleDto roleDto, RedirectAttributes redirectAttributes)
+    public String roleAdd(Model model, @ModelAttribute RoleDto roleDto)
     {
         RoleDto roleDto1 = roleService.add(roleDto);
+        if(roleDto1.getMessage() != null)
+        {
+            model.addAttribute("role", roleDto1);
+            return "addrole";
+        }
         model.addAttribute("role", roleDto1);
         return "redirect:/role/displayrole";
     }
@@ -29,7 +34,7 @@ public class RoleController {
     @GetMapping("/addrole")
     public String doAddition(Model model, @ModelAttribute RoleDto roleDto)
     {
-        model.addAttribute("role", "manager");
+        model.addAttribute("role", roleDto);
         return "addrole";
     }
 
@@ -38,6 +43,7 @@ public class RoleController {
     {
         List<RoleDto> listOfRoles = roleService.display();
         model.addAttribute("roles", listOfRoles);
+
         return "displayrole";
     }
 
@@ -53,6 +59,11 @@ public class RoleController {
     public String updaterole(Model model, @ModelAttribute RoleDto roleDto)
     {
         RoleDto roleDto1 = roleService.update(roleDto);
+        if(roleDto1.getMessage() != null)
+        {
+            model.addAttribute("role", roleDto1);
+            return "updaterole";
+        }
         model.addAttribute("role", roleDto1);
         return "redirect:/role/displayrole";
     }

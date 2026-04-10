@@ -4,6 +4,17 @@
     <title>Add Role Form</title>
 
     <style>
+    .error-input{
+                border: 1px solid red;
+                border-bottom: 3px solid red;
+                outline: none;
+            }
+            .error-text
+            {
+                color: red;
+                font-size: 12px;
+                margin-top: 5px;
+            }
         body {
             margin: 0;
             padding: 0;
@@ -72,6 +83,10 @@
     <form action="${pageContext.request.contextPath}/role/addrole" method="post" modelAttribute="roleDto">
         <label>Name:</label>
         <input type="text" name="name" required/>
+        <class="${not empty role.message ? 'error-input' : ''}"/>
+                        <c:if test="${not empty role.message}">
+                            <div class="error-text">${role.message}</div>
+                        </c:if>
         <button type="submit">Register</button>
     </form>
 </div>

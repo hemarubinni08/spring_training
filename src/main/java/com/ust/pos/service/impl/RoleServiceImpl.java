@@ -23,8 +23,16 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleDto add(RoleDto roleDto) {
-        Role role = modelMapper.map(roleDto, Role.class);
-        roleRepository.save(role);
+        Role role = roleRepository.findByName(roleDto.getName());
+        if(role==null) {
+                Role role1 = modelMapper.map(roleDto, Role.class);
+                roleRepository.save(role1);
+                return roleDto;
+            }
+        else{
+        roleDto.setMessage("Role already exists");
+        }
+
         return roleDto;
     }
 
@@ -41,15 +49,24 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleDto update(RoleDto roleDto) {
-        Role role = modelMapper.map(roleDto, Role.class);
-        roleRepository.save(role);
+        Optional<Role> roleOptional = roleRepository.findById(roleDto.getId());
+        Role role = roleOptional.get();
+        if(roleDto.getName().equalsIgnoreCase(role.getName()))
+        {
+            roleDto.setMessage("Role already exists");
+        }
+        else
+        {
+            modelMapper.map(roleDto, role);
+            roleRepository.save(role);
+        }
         return roleDto;
     }
 
     @Override
     public RoleDto findId(long id) {
-        Optional<Role> roleDto = roleRepository.findById(id);
-        RoleDto role = modelMapper.map(roleDto, RoleDto.class);
+        Optional<Role> roleOptional = roleRepository.findById(id);
+        RoleDto role = modelMapper.map(roleOptional.get(), RoleDto.class);
         return role;
     }
 }

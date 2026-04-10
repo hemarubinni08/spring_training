@@ -22,7 +22,11 @@
 
                 <input type="hidden" name="id" value="${role.id}"/>
                 <label>Name:</label>
-                <input type="text" name="name" value="${role.name}"/>
+                <input type="text" name="name" value="${role.name}"
+                class="${not empty role.message ? 'error-input' : ''}"/>
+                <c:if test="${not empty role.message}">
+                    <div class="error-text">${role.message}</div>
+                </c:if>
                 <button class="button-style" type="submit">Save</button>
             </form>
 
@@ -32,6 +36,17 @@
     </div>
 
     <style>
+        .error-input{
+            border: 1px solid red;
+            border-bottom: 3px solid red;
+            outline: none;
+        }
+        .error-text
+        {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
         .button-style {
             display: inline-block;
             padding: 10px 20px;

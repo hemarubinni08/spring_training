@@ -1,75 +1,151 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Show All Users</title>
+    <meta charset="UTF-8">
+    <title>Role Management</title>
     <style>
+        :root {
+            --primary: #4361ee;
+            --danger: #ef233c;
+            --bg-gradient: radial-gradient(circle, #ffffff 0%, #e0e7ff 35%, #4361ee 100%);
+            --glass: rgba(255, 255, 255, 0.95);
+        }
+
         body {
-                    margin: 0;
-                    padding: 0;
-                    font-family: "Segoe UI", Arial, sans-serif;
-                    height: 100vh;
-                    background: radial-gradient(
-                                    circle,
-                                    #ffffff 0%,
-                                    #b8b4ff 35%,
-                                    #1900c1 100%
-                                );
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                }
-        .register-card {
-                    background: #ffffff;
-                    width: 420px;
-                    padding: 30px 35px;
-                    border-radius: 12px;
-                    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-                }
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            background: var(--bg-gradient);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: var(--glass);
+            width: 90%;
+            max-width: 800px;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #2b2d42;
+            font-weight: 600;
+            border-left: 5px solid var(--primary);
+            padding-left: 15px;
+            margin-bottom: 25px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden; /* Ensures corners are rounded */
+        }
+
+        thead {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #edf2f7;
+        }
+
+        th {
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: #64748b;
+            padding: 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            color: #334155;
+            font-size: 0.95rem;
+        }
+
+        tr:hover {
+            background-color: #f1f5ff;
+            transition: 0.2s;
+        }
+
+        /* Action Links */
+        .id-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .delete-link {
+            color: var(--danger);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .delete-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Add Button */
+        .button-style {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(67, 97, 238, 0.3);
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        .button-style:hover {
+            background-color: #3046c9;
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 
 <body>
-<div class="table">
-<h2> Registered Roles </h2>
-    <table border=1>
+<div class="container">
+    <h2>Registered Roles</h2>
+
+    <table>
         <thead>
             <tr>
-                <th>ID </th>
-                <th>Name</th>
-                <th>Action</th>
+                <th>ID</th>
+                <th>Role Name</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <c:forEach items="${roles}" var="role">
                 <tr>
-                    <td><a href="/role/updaterole?id=${role.id}"</a>${role.id}</td>
+                    <td>
+                        <a class="id-link" href="/role/updaterole?id=${role.id}">${role.id}</a>
+                    </td>
                     <td>${role.name}</td>
-                    <td><a href="/role/deleterole?id=${role.id}"onclick="return confirm('Are you sure you want to delete this profile?');">Delete</a></td
+                    <td>
+                        <a class="delete-link" href="/role/deleterole?id=${role.id}"
+                           onclick="return confirm('Delete this role permanently?');">Delete</a>
+                    </td>
                 </tr>
             </c:forEach>
         </tbody>
     </table>
+
+    <a class="button-style" href="/role/addrole">+ Add New Role</a>
 </div>
-<a class="button-style" href="/role/addrole">Add Role</a>
-<style>
-        .button-style {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-        .button-style:hover {
-            background-color: #0056b3;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-</style>
+
 <c:if test="${not empty msg}">
     <script type="text/javascript">
         alert("${msg}");
