@@ -14,5 +14,27 @@ public interface UserService {
 
     void createUserJdbc(UserDto userDto);
 
+    List<UserDto> getUsers();
+
+    List<UserDto> getUsersJpa();
+
+    UserDto getUserByEmail(String email);
+
+    UserDto getUserByEmailJdbc(String email);
+
+    void deleteUserByEmail(String email);
+
+    void deleteUserByEmailJpa(String email);
+
+    UserDto getUserById(Long id);
+
+    UserDto getUserByIdJdbc(Long id);
+
+    UserDto updateUser(UserDto userDto);
+
+    boolean updateUserJdbc(UserDto user);
+
+    boolean updateUserJpa(UserDto user);
+
 
 }

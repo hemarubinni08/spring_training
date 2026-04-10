@@ -1,0 +1,22 @@
+${AnsiColor.CYAN}
+
+
+      :::::::::   ::::::::  :::::::::                               ::::::::
+     :+:    :+: :+:    :+: :+:    :+:                             :+:    :+:
+    +:+    +:+ +:+    +:+ +:+    +:+                             +:+
+   +#++:++#+  +#+    +:+ +#+    +:+        +#++:++#++:++        +#++:++#+
+  +#+        +#+    +#+ +#+    +#+                             +#+    +#+
+ #+#        #+#    #+# #+#    #+#                             #+#    #+#
+###         ########  #########                               ########
+
+
+${AnsiColor.GREEN}Spring Boot Application Started 🚀
+${AnsiColor.YELLOW}Environment: ${spring.profiles.active:default}
+${AnsiColor.BLUE}Java Version: ${java.version}
+
+
+
+
+
+
+

@@ -1,5 +1,6 @@
 package com.ust.pos.model;
 
+import com.ust.pos.dto.UserDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,4 +16,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByAge(int age);
 
     boolean existsByEmail(String email);
+
+    User findByEmail(String email);
+
+    void deleteByEmail(String email);
+
+
+    boolean existsByEmailAndIdNot(String email, Long id);
 }
