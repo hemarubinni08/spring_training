@@ -11,4 +11,7 @@ public interface RoleService {
     void deleteRole(long id);
     RoleDto update(RoleDto roleDto);
     RoleDto findId(long id);
+    RoleDto addRoleJDBC(RoleDto roleDto);
+    List<RoleDto> displayjdbc();
+
 }

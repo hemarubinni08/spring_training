@@ -1,5 +1,6 @@
 package com.ust.pos.service.impl;
 
+import com.ust.pos.dao.RoleDao;
 import com.ust.pos.dto.RoleDto;
 import com.ust.pos.model.Role;
 import com.ust.pos.model.RoleRepository;
@@ -20,6 +21,8 @@ public class RoleServiceImpl implements RoleService {
     private RoleRepository roleRepository;
     @Autowired
     ModelMapper modelMapper;
+    @Autowired
+    RoleDao roleDao;
 
     @Override
     public RoleDto add(RoleDto roleDto) {
@@ -32,7 +35,6 @@ public class RoleServiceImpl implements RoleService {
         else{
         roleDto.setMessage("Role already exists");
         }
-
         return roleDto;
     }
 
@@ -68,5 +70,24 @@ public class RoleServiceImpl implements RoleService {
         Optional<Role> roleOptional = roleRepository.findById(id);
         RoleDto role = modelMapper.map(roleOptional.get(), RoleDto.class);
         return role;
+    }
+
+    @Override
+    public RoleDto addRoleJDBC(RoleDto roleDto) {
+        Role role = roleRepository.findByName(roleDto.getName());
+        if(role==null) {
+            roleDao.addrole(roleDto);
+            return roleDto;
+        }
+        else{
+            roleDto.setMessage("Role already exists");
+        }
+        return roleDto;
+    }
+
+    @Override
+    public List<RoleDto> displayjdbc() {
+        List<Role> listOfRoles = roleDao.displayrole();
+        return listOfRoles.stream().map(role -> modelMapper.map(role, RoleDto.class)).collect(Collectors.toList());
     }
 }
