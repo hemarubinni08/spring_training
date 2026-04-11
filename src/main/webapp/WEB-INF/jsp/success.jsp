@@ -84,9 +84,6 @@
 
     <h3>${message}</h3>
 
-    <p>
-        ${message}
-    </p>
 
     <a href="login" class="btn btn-primary">
         Go to Login

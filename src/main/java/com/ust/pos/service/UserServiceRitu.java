@@ -9,8 +9,11 @@ public interface UserServiceRitu {
     UserDto register(UserDto userDto);
 
     UserDto registerJdbc(UserDto userDto);
+
     UserDto updateJdbc(UserDto userDto);
+
     UserDto updateJpa(UserDto userDto);
+
     List<UserDto> fetchAllUsers();
 
     List<UserDto> fetchAllUsersJdbc();

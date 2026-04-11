@@ -65,6 +65,7 @@ public class UserServiceImpl implements UserServiceRitu {
 
     @Override
     public UserDto updateJpa(UserDto userDto) {
+
         User user = modelMapper.map(userDto, User.class);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         User updateUser = userRepository.save(user);
@@ -109,6 +110,7 @@ public class UserServiceImpl implements UserServiceRitu {
 
     @Override
     public void deleteByEmailJdbc(String email) {
+
         userDao.deleteUserByEmail(email);
     }
 

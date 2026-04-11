@@ -1,0 +1,69 @@
+package com.ust.pos.web.controller;
+
+import com.ust.pos.dto.NodeDto;
+import com.ust.pos.dto.RoleDto;
+import com.ust.pos.service.NodeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+@RequestMapping("/node")
+public class NodeController {
+
+    @Autowired
+    private NodeService nodeService;
+
+    @GetMapping("/addNode")
+    public String addNode(Model model, @ModelAttribute NodeDto nodeDto) {
+        model.addAttribute("name", new NodeDto());
+        return "addNode";
+    }
+
+    @PostMapping("/addNode")
+    public String addingNode(Model model, @ModelAttribute NodeDto nodeDto) {
+        NodeDto nodeDto1 = nodeService.addNode(nodeDto);
+        model.addAttribute("node", nodeDto1);
+        if (nodeDto1.isSuccess()) {
+            model.addAttribute("name", "Add node Successful");
+        } else {
+            model.addAttribute("name", "Node Already existed");
+        }
+        return "successNode";
+    }
+
+    @GetMapping("/update")
+    public String updateNode(Model model, @RequestParam Long id, String path) {
+        NodeDto  nodes= nodeService.getNode(id);
+        model.addAttribute("nodeDto", new NodeDto());
+        model.addAttribute("node", nodes);
+        return "updateNode";
+    }
+
+    @PostMapping("/updateNode")
+    public String updateNode(Model model,@ModelAttribute NodeDto nodeDto) {
+//        System.out.println("------------ : "+roleDto.getId()+" "+roleDto.getName());
+        NodeDto nodeDto1 = nodeService.updateNode(nodeDto);
+        model.addAttribute("node", nodeDto1);
+        model.addAttribute("node", nodeDto1);
+        if (nodeDto1.isSuccess()) {
+            model.addAttribute("name", "Add node Successful");
+        } else {
+            model.addAttribute("name", "Node Already existed");
+        }
+        return "redirect:/node/allNode";
+    }
+
+    @GetMapping("/allNode")
+    public String allNode(Model model) {
+        model.addAttribute("node", nodeService.findAllNode());
+        return "ListNode";
+    }
+
+    @GetMapping("/deleteNode")
+    public String deleteNode(Model model, @RequestParam Long id) {
+        nodeService.deleteNode(id);
+        return "redirect:/node/allNode";
+    }
+}
