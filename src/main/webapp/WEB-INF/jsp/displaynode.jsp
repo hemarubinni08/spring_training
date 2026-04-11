@@ -124,6 +124,7 @@
             <tr>
                 <th>ID</th>
                 <th>Node Name</th>
+                <th>Path</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -134,6 +135,7 @@
                         <a class="id-link" href="/node/updatenode?id=${node.id}">${node.id}</a>
                     </td>
                     <td>${node.name}</td>
+                    <td>${node.path}</td>
                     <td>
                         <a class="delete-link" href="/node/deletenode?id=${node.id}"
                            onclick="return confirm('Delete this node permanently?');">Delete</a>

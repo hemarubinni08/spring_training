@@ -87,6 +87,12 @@
                         <c:if test="${not empty node.message}">
                             <div class="error-text">${node.message}</div>
                         </c:if>
+        <label>Path:</label>
+                <input type="text" name="path" required/>
+                <class="${not empty node.message ? 'error-input' : ''}"/>
+                                <c:if test="${not empty node.message}">
+                                    <div class="error-text">${node.message}</div>
+                                </c:if>
         <button type="submit">Register</button>
     </form>
 </div>
