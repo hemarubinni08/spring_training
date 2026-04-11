@@ -1,42 +1,54 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Success</title>
+
     <style>
         body {
+            background: linear-gradient(135deg, #667eea, #764ba2); /* ✅ changed */
             font-family: Arial, sans-serif;
-            background-color: #f2f6fc;
-        }
-
-        .success-box {
-            width: 350px;
-            margin: 100px auto;
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
 
+        .box {
+            margin-top: 150px;
+            background: white;
+            display: inline-block;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+        }
+
         h2 {
-            color: #27ae60;
-            margin-bottom: 15px;
+            color: #4a3aff; /* ✅ changed */
         }
 
         p {
-            color: #34495e;
-            font-size: 16px;
-            margin: 6px 0;
+            margin-top: 10px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #4a3aff, #6a5cff); /* ✅ changed */
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        a:hover {
+            background: linear-gradient(135deg, #372bdb, #5749ff); /* ✅ changed */
         }
     </style>
 </head>
 
 <body>
 
-<div class="success-box">
-    <h2>${message}</h2>
-
-    <p><strong>Name:</strong> ${userDto.name}</p>
-    <p><strong>Email:</strong> ${userDto.email}</p>
+<div class="box">
+    <h2> Registration Successful!</h2>
+    <p>Your account has been created successfully.</p>
 </div>
 
 </body>

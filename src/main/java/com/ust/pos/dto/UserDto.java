@@ -1,14 +1,12 @@
 package com.ust.pos.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.Date;
 
-@Getter
-@Setter
+@Data
 public class UserDto {
-    private int id;
+    private Long id;
     private String name;
     private String email;
     private String phoneNo;

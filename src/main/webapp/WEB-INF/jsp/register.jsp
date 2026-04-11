@@ -1,134 +1,126 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>User Registration</title>
 
     <style>
+        /* ✅ Fix alignment issue globally */
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', sans-serif;
         }
 
         body {
-            height: 100vh;
-            background: linear-gradient(120deg, #4facfe, #00f2fe); /* smoother gradient */
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
         }
 
-        .container {
-            width: 340px; /* reduced size */
+        .container-box {
+            width: 360px;
             background: #ffffff;
-            padding: 22px; /* reduced padding */
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            padding: 25px; /* equal padding for perfect alignment */
+            border-radius: 14px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
 
         h2 {
             text-align: center;
-            margin-bottom: 18px;
-            color: #333;
-            font-size: 20px;
-        }
-
-        .input-group {
-            margin-bottom: 14px; /* tighter spacing */
+            margin-bottom: 20px;
+            color: #4a3aff;
+            font-size: 24px;
         }
 
         label {
-            font-size: 13px;
-            color: #555;
+            font-weight: 600;
+            color: #333;
             margin-bottom: 4px;
             display: block;
+            font-size: 14px;
         }
 
-        input {
-            width: 100%;
-            padding: 8px; /* smaller inputs */
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            outline: none;
-            font-size: 13px;
-        }
-
-        input:focus {
-            border-color: #4facfe;
-            box-shadow: 0 0 4px rgba(79, 172, 254, 0.4);
-        }
-
-        .btn {
+        .form-control {
             width: 100%;
             padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background: linear-gradient(120deg, #4facfe, #00c6ff);
+            margin-bottom: 14px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #4a3aff;
+            box-shadow: 0 0 5px rgba(74, 58, 255, 0.3);
+            outline: none;
+        }
+
+        .btn-register {
+            width: 100%;
+            padding: 11px;
+            background: linear-gradient(135deg, #4a3aff, #6a5cff);
             color: white;
+            border: none;
+            border-radius: 6px;
             font-size: 14px;
             font-weight: bold;
             cursor: pointer;
+            transition: 0.3s ease;
         }
 
-        .btn:hover {
-            transform: scale(1.02);
+        .btn-register:hover {
+            background: linear-gradient(135deg, #372bdb, #5749ff);
         }
 
-        .footer-text {
+        .error {
+            background: #ffe6e6;
+            color: #cc0000;
+            padding: 8px;
+            border-radius: 5px;
             text-align: center;
-            margin-top: 10px;
-            font-size: 12px;
-            color: #777;
+            margin-bottom: 12px;
+            font-size: 13px;
         }
-
-        .footer-text a {
-            color: #007bff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
     </style>
 </head>
 
 <body>
 
-<div class="container">
-    <h2>Create Account</h2>
+<div class="container-box">
+    <h2>Register</h2>
 
-    <form action="register" method="post">
+    <c:if test="${not empty error}">
+        <p class="error">${error}</p>
+    </c:if>
 
-        <div class="input-group">
-            <label>Name</label>
-            <input type="text" name="name" required />
-        </div>
+    <form method="post">
 
-        <div class="input-group">
-            <label>Email</label>
-            <input type="email" name="email" required />
-        </div>
+        <label>Name</label>
+        <input type="text" name="name" class="form-control" required>
 
-        <div class="input-group">
-            <label>Password</label>
-            <input type="password" name="password" required />
-        </div>
+        <label>Email</label>
+        <input type="email" name="email" class="form-control" required>
 
-        <div class="input-group">
-            <label>Age</label>
-            <input type="number" name="age" required />
-        </div>
+        <label>Phone Number</label>
+        <input type="text" name="phoneNo" class="form-control" required>
 
-        <div class="input-group">
-            <label>Phone Number</label>
-            <input type="text" name="phoneNo" required />
-        </div>
+        <label>Username</label>
+        <input type="text" name="userName" class="form-control" required>
 
-        <input type="submit" value="Register" class="btn" />
+        <label>Password</label>
+        <input type="password" name="password" class="form-control" required>
 
-        <div class="footer-text">
-            Already have an account? <a href="#">Login</a>
-        </div>
+        <label>Age</label>
+        <input type="number" name="age" class="form-control" required>
+
+        <button type="submit" class="btn-register">Create Account</button>
 
     </form>
 </div>
