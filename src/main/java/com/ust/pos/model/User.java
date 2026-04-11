@@ -1,14 +1,11 @@
 package com.ust.pos.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 import java.util.Date;
 
 @Entity
-public class User extends commonField {
+public class User extends CommonField {
     private String email;
     private String phoneNo;
     private String userName;

@@ -1,4 +1,4 @@
-package com.ust.pos.model;
+package com.ust.pos.dto;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -6,7 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class commonField {
+public class CommonDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
