@@ -70,7 +70,7 @@
                                         </td>
                                         <td>${r.name}</td>
                                         <td>
-                                            <a href="/role/deleteById?id=${r.id}"
+                                            <a href="/role/deleteByIdJdbc?id=${r.id}"
                                                class="btn btn-danger btn-sm"
                                                onclick="return confirm('Are you sure you want to delete this role?');">
                                                 Delete

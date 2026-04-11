@@ -5,8 +5,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Edit Role</title>
-    https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css
+    <title>Edit Node</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
     <style>
         body {
             background: linear-gradient(135deg, #2193b0, #6dd5ed);
@@ -29,45 +33,60 @@
 
             <div class="card shadow-lg">
                 <div class="card-header bg-primary text-white text-center">
-                    <h4 class="mb-0">Edit Role</h4>
+                    <h4 class="mb-0">Edit Node</h4>
                 </div>
+
                 <div class="card-body">
-                    <c:if test="${empty role}">
+
+                    <c:if test="${empty node}">
                         <div class="alert alert-danger text-center">
-                            Role not found
+                            Node not found
                         </div>
                     </c:if>
-                    <c:if test="${not empty role}">
+
+                    <c:if test="${not empty node}">
                         <form:form method="post"
-                                   action="/role/updateByJdbc"
-                                   modelAttribute="role">
+                                   action="${pageContext.request.contextPath}/node/updateNode"
+                                   modelAttribute="node">
+
+                            <!-- Hidden ID -->
                             <form:hidden path="id"/>
+
                             <div class="mb-3">
-                                <label class="label">Role ID</label>
+                                <label class="label">Node ID</label>
                                 <input type="text"
                                        class="form-control"
-                                       value="${role.id}"
-                                       readonly/>
+                                       value="${node.id}"
+                                       readonly>
                             </div>
+
                             <div class="mb-3">
-                                <label class="label">Role Name</label>
+                                <label class="label">Node Name</label>
                                 <form:input path="name"
-                                            cssClass="form-control"/>
+                                            cssClass="form-control"
+                                            required="true"/>
                             </div>
+
+                            <div class="mb-3">
+                                <label class="label">Node Path</label>
+                                <form:input path="path"
+                                            cssClass="form-control"
+                                            required="true"/>
+                            </div>
+
                             <div class="d-flex justify-content-between">
-                                <a href="/role/listOfRoles"
+                                <a href="${pageContext.request.contextPath}/node/listOfNodes"
                                    class="btn btn-secondary">
                                     Cancel
                                 </a>
 
                                 <button type="submit"
                                         class="btn btn-success">
-                                    Update Role
+                                    Update Node
                                 </button>
                             </div>
 
                         </form:form>
-
                     </c:if>
 
                 </div>

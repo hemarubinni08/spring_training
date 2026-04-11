@@ -1,5 +1,6 @@
 package com.ust.pos.web.controller;
 
+import org.eclipse.tags.shaded.org.apache.xpath.operations.Mod;
 import org.springframework.ui.Model;
 import com.ust.pos.dto.RoleDto;
 import com.ust.pos.service.RoleService;
@@ -16,7 +17,7 @@ import java.util.List;
 public class RoleController {
     @Autowired
     RoleService roleService;
-    @PostMapping("addRole")
+    @PostMapping("/addRole")
     public String addRole(Model model , @ModelAttribute RoleDto roleDto){
         roleService.addRole(roleDto);
         if(roleDto.isSuccess()) {
@@ -27,15 +28,15 @@ public class RoleController {
         }
         return "successRole";
     }
-    @GetMapping("addRole")
+    @GetMapping("/addRole")
     public String addRole1(Model model ,@ModelAttribute RoleDto roleDto){
         model.addAttribute("role", "Add Role");
         return "addRole";
     }
     @PostMapping("/addRoleJdbc")
     public String addRoleJdbc(Model model, @ModelAttribute RoleDto roleDto){
-        boolean check = roleService.addRoleJdbc(roleDto);
-        if(check){
+        roleService.addRoleJdbc(roleDto);
+        if(roleDto.isSuccess()){
             model.addAttribute("role", "Added Successfull");
         }
         else{
@@ -75,5 +76,28 @@ public class RoleController {
             model.addAttribute("role" , "Role Already Exists");
         }
         return("redirect:/role/listOfRoles");
+    }
+    @GetMapping("/listOfRolesJdbc")
+    public String listOfRolesJdbc(Model model){
+        List<RoleDto> roleDtos = roleService.getAllRolesJdbc();
+        model.addAttribute("role",roleDtos);
+        return ("AllRoles");
+    }
+    @GetMapping("/deleteByIdJdbc")
+    public String deleteByIdJdbc(Model model, @RequestParam long id){
+        roleService.deleteByIdJdbc(id);
+        model.addAttribute("role","Deleted Successfuly");
+        return("redirect:/role/listOfRolesJdbc");
+    }
+    @PostMapping("/updateByJdbc")
+    public String updateByJdbc(Model model, @ModelAttribute RoleDto roleDto){
+        roleService.updateByJdbc(roleDto);
+        if(roleDto.isSuccess()){
+            model.addAttribute("role", "Updated Successfully");
+        }
+        else{
+            model.addAttribute("role" , "Role Already Exists");
+        }
+        return("redirect:/role/listOfRolesJdbc");
     }
 }

@@ -2,6 +2,7 @@ package com.ust.pos.service.impl;
 
 import com.ust.pos.dao.RoleDao;
 import com.ust.pos.dto.RoleDto;
+import com.ust.pos.dto.UserDto;
 import com.ust.pos.model.Role;
 import com.ust.pos.model.RoleRepository;
 import com.ust.pos.model.User;
@@ -60,19 +61,25 @@ public class RoleServiceImpl implements RoleService {
             roleDto.setSuccess(false);
             return roleDto;
         }
-        existingRole.setName(roleDto.getName());
-        Role savedRole = roleRepository.save(existingRole);
-        roleDto.setSuccess(true);
-        return modelMapper.map(savedRole, RoleDto.class);
+        else {
+            existingRole.setName(roleDto.getName());
+            Role savedRole = roleRepository.save(existingRole);
+            roleDto.setSuccess(true);
+            return modelMapper.map(savedRole, RoleDto.class);
+        }
     }
 
     @Override
-    public boolean addRoleJdbc(RoleDto roleDto) {
+    public RoleDto addRoleJdbc(RoleDto roleDto) {
         if(roleDao.findByName(roleDto.getName()) == null){
             roleDao.addRole(roleDto);
-            return true;
+            roleDto.setSuccess(true);
+            return roleDto;
         }
-        else{return false;}
+        else{
+            roleDto.setSuccess(false);
+            return roleDto;
+        }
     }
 
     @Override
@@ -83,4 +90,30 @@ public class RoleServiceImpl implements RoleService {
         }
         else{return null;}
     }
+
+    @Override
+    public List<RoleDto> getAllRolesJdbc() {
+        List<Role> roleDtos = roleDao.findAll();
+        return roleDtos.stream().map(role -> modelMapper.map(role , RoleDto.class)).toList();
+    }
+
+    @Override
+    public void deleteByIdJdbc(long id) {
+        roleDao.deleteByIdJdbc(id);
+    }
+
+    @Override
+    public RoleDto updateByJdbc(RoleDto roleDto) {
+        Role existingRole = roleDao.findByName(roleDto.getName());
+        if(existingRole != null && existingRole.getId() != roleDto.getId()){
+            roleDto.setSuccess(false);
+            return roleDto;
+        }
+        else{
+            roleDao.updateByJdbc(roleDto);
+            roleDto.setSuccess(true);
+            return roleDto;
+        }
+    }
+
 }

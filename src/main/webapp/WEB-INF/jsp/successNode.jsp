@@ -7,9 +7,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Role Status</title>
+    <title>Node Status</title>
 
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
           rel="stylesheet">
 
@@ -32,21 +31,21 @@
             <div class="card-body p-4">
 
                 <c:choose>
-                    <c:when test="${role eq 'Added Successfull'}">
+                    <c:when test="${node eq 'Node Added Successfully'}">
                         <div class="alert alert-success">
-                            <p class="mb-0">${role}</p>
+                            ${node}
                         </div>
                     </c:when>
                     <c:otherwise>
                         <div class="alert alert-danger">
-                            <p class="mb-0">${role}</p>
+                            ${node}
                         </div>
                     </c:otherwise>
                 </c:choose>
 
-                <a href="${pageContext.request.contextPath}/role/addRoleJdbc"
+                <a href="/node/addNode"
                    class="btn btn-primary mt-3">
-                    Add Another Role
+                    Add Another Node
                 </a>
 
             </div>

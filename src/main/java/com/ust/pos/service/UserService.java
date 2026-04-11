@@ -21,5 +21,4 @@ public interface UserService{
     UserDto getUserDetailsByIdJdbc(Long id);
     UserDto updaterUserJdbc(UserDto userDto);
     UserDto updateUserJpa(UserDto userDto);
-
 }

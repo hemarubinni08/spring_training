@@ -11,6 +11,9 @@ public interface RoleService {
     void deleteRole(long id);
     List<RoleDto> getAllRoles();
     RoleDto updateRole(RoleDto roleDto);
-    boolean addRoleJdbc(RoleDto roleDto);
+    RoleDto addRoleJdbc(RoleDto roleDto);
     RoleDto roleDetails(long id);
+    List<RoleDto> getAllRolesJdbc();
+    void deleteByIdJdbc(long id);
+    RoleDto updateByJdbc(RoleDto roleDto);
 }

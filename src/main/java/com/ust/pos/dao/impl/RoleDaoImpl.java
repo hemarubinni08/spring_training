@@ -29,8 +29,27 @@ public class RoleDaoImpl implements RoleDao {
 
     @Override
     public Role findByName(String name) {
-        String s1 = "select * from role where name =?";
+        String s1 = "select * from role where name = ?";
         List<Role> role = jdbcTemplate.query(s1, new Object[]{name}, new BeanPropertyRowMapper<>(Role.class));
         return role.isEmpty()?null : role.get(0);
+    }
+
+    @Override
+    public List<Role> findAll() {
+        String s1 = "select * from role";
+        List<Role> roles = jdbcTemplate.query(s1,new BeanPropertyRowMapper<>(Role.class));
+        return roles;
+    }
+
+    @Override
+    public void deleteByIdJdbc(long id) {
+        String s1 = "delete from role where id = ? " ;
+        jdbcTemplate.update(s1,id);
+    }
+
+    @Override
+    public void updateByJdbc(RoleDto roleDto) {
+        String s1 = "update role set name = ? where id =?";
+        jdbcTemplate.update(s1,roleDto.getName(),roleDto.getId());
     }
 }
