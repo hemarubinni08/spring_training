@@ -24,8 +24,8 @@ public class UserDaoImpl implements UserDao {
     public boolean createUser(UserDto userDto) {
 //      String sq1 = "INSERT INTO user VALUES(?,?,?,?,?,?)";
         String encodedPass = passwordEncoder.encode(userDto.getPassword());
-        String sqlQ = "INSERT INTO user SET age = ? , email = ? , name = ? , password = ? , phone_no = ?";
-        int count = jdbcTemplate.update(sqlQ, userDto.getAge(), userDto.getEmail(), userDto.getName(), encodedPass, userDto.getPhoneNo());
+        String sqlQ = "INSERT INTO user SET age = ? , email = ? , name = ? , password = ? , phone_no = ?, user_name = ?";
+        int count = jdbcTemplate.update(sqlQ, userDto.getAge(), userDto.getEmail(), userDto.getName(), encodedPass, userDto.getPhoneNo(), userDto.getUserName());
         if (count > 0) {
             return true;
         }
@@ -41,4 +41,36 @@ public class UserDaoImpl implements UserDao {
                 new BeanPropertyRowMapper(User.class));
         return userList.isEmpty() ? null : userList.get(0);
     }
+
+    @Override
+    public List<UserDto> getAllUser() {
+        String s1 = "select * from user";
+        List<UserDto> userDtoList = jdbcTemplate.query(s1,new BeanPropertyRowMapper(UserDto.class));
+        return userDtoList;
+    }
+
+    @Override
+    public void deleteUserByEmail(String email) {
+        String s1 = "DELETE FROM user WHERE email = ?";
+        jdbcTemplate.update(s1,email);
+    }
+
+    @Override
+    public User findById(Long id) {
+        String sq1 = "SELECT * FROM user WHERE id = ?";
+        List<User> userList = jdbcTemplate.query(sq1,new Object[]{id},new BeanPropertyRowMapper(User.class));
+        return userList.isEmpty() ? null: userList.get(0);
+    }
+
+    @Override
+    public boolean updateUser(UserDto userDto) {
+        String sq1 = "UPDATE user set age = ?, name = ?, phone_no = ?, user_name = ?, email = ?, password = ? where id = ?";
+        String encodedPass = passwordEncoder.encode(userDto.getPassword());
+        int count  = jdbcTemplate.update(sq1, userDto.getAge(), userDto.getName(), userDto.getPhoneNo(), userDto.getUserName(), userDto.getEmail(), encodedPass, userDto.getId());
+        if (count>0){
+            return true;
+        }
+        return false;
+    }
+
 }
