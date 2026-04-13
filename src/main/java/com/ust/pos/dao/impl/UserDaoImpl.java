@@ -38,7 +38,37 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User findByEmail(String email) {
         String sq1 = "SELECT * from USER WHERE email = ?";
-        List<User> userList = jdbcTemplate.query(sq1, new Object[]{email}, new BeanPropertyRowMapper<>(User.class));
+        List<User> userList = jdbcTemplate.query(sq1, new BeanPropertyRowMapper<>(User.class), email);
         return userList.isEmpty() ? null : userList.get(0);
     }
+
+    @Override
+    public User findById(long id) {
+        String sq1 = "SELECT * from USER WHERE id = ?";
+        List<User> userList = jdbcTemplate.query(sq1, new BeanPropertyRowMapper<>(User.class), id);
+        return userList.isEmpty() ? null : userList.get(0);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        String sql = "SELECT * FROM USER";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class));
+    }
+
+    @Override
+    public void deleteByEmail(String email) {
+        String sql = "DELETE from USER where EMAIL = ?";
+        jdbcTemplate.update(sql, email);
+    }
+
+    @Override
+    public boolean updateUserDetails(UserDto userDto) {
+        String sql = "UPDATE user SET age = ?, date_of_birth = ?, email = ?, name = ?, phone_no = ?, user_name = ? WHERE id = ?";
+        int count = jdbcTemplate.update(sql, userDto.getAge(), userDto.getDateOfBirth(),userDto.getEmail(), userDto.getName(), userDto.getPhoneNo(), userDto.getUserName(), userDto.getId());
+        if (count > 0) {
+            return true;
+        }
+        return false;
+    }
 }
+

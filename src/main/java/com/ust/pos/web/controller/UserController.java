@@ -5,10 +5,8 @@ import com.ust.pos.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/user")
@@ -16,6 +14,7 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    private RedirectAttributes redirectAttributes;
 
     // Using JPA Repo
     @GetMapping("/register")
@@ -47,5 +46,62 @@ public class UserController {
         userService.createUserUsingDao(userDto);
         model.addAttribute("userDto", userDto);
         return "success";
+    }
+
+    @GetMapping("/usersDetailsJpa")
+    public String showUsersDetailsUsingJpa(Model model){
+        model.addAttribute("usersDetailsList", userService.getAllUsersDetailsUsingJpa());
+        return "usersList";
+    }
+
+    @GetMapping("/usersDetailsJdbc")
+    public String showUsersDetailsUsingJdbc(Model model){
+        model.addAttribute("usersDetailsList",userService.getAllUsersDetailsUsingJdbc());
+        return "usersList";
+    }
+
+    @GetMapping("/userProfileJdbc")
+    public String showUserDetailsUsingJdbc(@RequestParam String email, Model model){
+        model.addAttribute("userDetailsDto",userService.getUserDetailsUsingJdbc(email));
+        return "userProfile";
+    }
+    @GetMapping("/userProfileJpa/{email}")
+    public String showUserDetailsUsingJpa(@PathVariable String email, Model model){
+        model.addAttribute("userDetailsDto", userService.getUserDetailsUsingJpa(email));
+        return "userProfile";
+    }
+
+    @GetMapping("/userProfileJdbcById")
+    public String showUserDetailsUsingJdbcById(@RequestParam long id, Model model) {
+        model.addAttribute("userDetailsDto",userService.getUserDetailsUsingJdbcByid(id));
+        return "userProfile";
+    }
+
+    @GetMapping("/userProfileJpaById/{id}")
+    public String showUserDetailsUsingJpaById(@PathVariable long id, Model model){
+        model.addAttribute("userDetailsDto", userService.getUserDetailsUsingJpaByid(id));
+        return "userProfile";
+    }
+
+    @GetMapping("/userDelete/{email}")
+    public String deleteUserDetailsUsingJdbc(@PathVariable String email, Model model, RedirectAttributes redirectAttributes){
+        userService.deleteUserDetailsUsingJdbc(email);
+        redirectAttributes.addFlashAttribute("message", "User deleted successfully");
+        return "redirect:/user/usersDetailsJdbc";
+    }
+
+
+    @PostMapping("/updateUserJdbc")
+    public String updateUserDetailsUsingJdbc(@ModelAttribute UserDto userDto, Model model) {
+        UserDto responseDto = userService.updateUserDetailsUsingJdbc(userDto);
+        model.addAttribute("userDetailsDto", responseDto);
+        return "userProfile";
+    }
+
+    @PostMapping("/updateUserJpa")
+    public String updateUserDetailsUsingJpa(@ModelAttribute UserDto userDto, Model model) {
+        UserDto responseDto = userService.updateUserDetailsUsingJpa(userDto);
+        model.addAttribute("userDetailsDto", responseDto);
+        return "userProfile";
     }
 }

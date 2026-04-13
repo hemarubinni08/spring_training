@@ -10,7 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 @Service
+
 public class UserServieImpl implements UserService {
 
     @Autowired
@@ -61,4 +66,121 @@ public class UserServieImpl implements UserService {
         return false;
     }
 
+    @Override
+    public List<UserDto> getAllUsersDetailsUsingJdbc() {
+        List<User> userDetailsList = userDao.getAllUsers();
+        //userDetailsList.forEach(System.out::println);
+        List<UserDto> userDtoDetailsList = new ArrayList<>();
+        for(User user :userDetailsList){
+            userDtoDetailsList.add(modelMapper.map(user, UserDto.class));
+        }
+        return userDtoDetailsList;
+    }
+
+    @Override
+    public List<UserDto> getAllUsersDetailsUsingJpa() {
+        List<User> userDetailsList = userRepository.findAll();
+        List<UserDto> userDtoDetailsList = new ArrayList<>();
+        for(User user :userDetailsList){
+            userDtoDetailsList.add(modelMapper.map(user, UserDto.class));
+        }
+        return userDtoDetailsList;
+    }
+
+    @Override
+    public UserDto getUserDetailsUsingJdbc(String email) {
+        User user=userDao.findByEmail(email);
+        return modelMapper.map(user, UserDto.class);
+    }
+
+    @Override
+    public UserDto getUserDetailsUsingJpa(String email) {
+        User user=userRepository.findByEmail(email);
+        return modelMapper.map(user, UserDto.class);
+    }
+
+    @Override
+    public UserDto getUserDetailsUsingJdbcByid(long id){
+        User user = userDao.findById(id);
+        if(user != null){
+            return modelMapper.map(user, UserDto.class);
+        }
+        return new UserDto();
+    }
+
+    @Override
+    public UserDto getUserDetailsUsingJpaByid(long id){
+        Optional<User> user = userRepository.findById(id);
+        if(user.isPresent()) {
+            return modelMapper.map(user.get(), UserDto.class);
+        }
+        return new UserDto();
+    }
+
+    @Override
+    public void deleteUserDetailsUsingJdbc(String email) {
+        userDao.deleteByEmail(email);
+    }
+
+    @Override
+    public void deleteUserDetailsUsingJpa(String email) {
+        userRepository.deleteByEmail(email);
+    }
+
+    @Override
+    public UserDto updateUserDetailsUsingJdbc(UserDto userDto){
+        User existingUserWithEmail = userDao.findByEmail(userDto.getEmail());
+
+        if (existingUserWithEmail != null &&
+                existingUserWithEmail.getId() != userDto.getId()) {
+            userDto=getUserDetailsUsingJdbcByid(userDto.getId());
+            userDto.setMessage("Email already exists. Please use a different email.");
+            userDto.setColour("red");
+            return userDto;
+        }
+        boolean updated = userDao.updateUserDetails(userDto);
+
+        if(updated){
+            userDto.setMessage("User details updated successfully!");
+            userDto.setColour("green");
+        }
+        else{
+            userDto.setMessage("User not found. Update failed.");
+            userDto.setColour("red");
+        }
+        return userDto;
+    }
+
+    @Override
+    public UserDto updateUserDetailsUsingJpa(UserDto userDto){
+        boolean emailExists = userRepository.existsByEmailAndIdNot(userDto.getEmail(), userDto.getId());
+        if (emailExists) {
+            userDto.setMessage("Email already exists. Please use a different email.");
+            userDto.setColour("red");
+            return userDto;
+        }
+
+        // ✅ Fetch existing user
+        Optional<User> userOpt = userRepository.findById(userDto.getId());
+
+        if (userOpt.isEmpty()) {
+            userDto.setMessage("User not found. Update failed.");
+            userDto.setColour("red");
+            return userDto;
+        }
+
+        User user = userOpt.get();
+
+        // ✅ Update fields
+        user.setEmail(userDto.getEmail());
+        user.setName(userDto.getName());
+        // set other fields
+
+        userRepository.save(user);
+
+        userDto.setMessage("User details updated successfully!");
+        userDto.setColour("green");
+
+        return userDto;
+    }
 }
