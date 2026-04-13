@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
+
+<!DOCTYPE html>
 <html>
 <head>
     <title>All Users JDBC</title>
@@ -57,70 +59,58 @@
             text-decoration: underline;
         }
 
-        .delete-jpa {
-            background-color: #e74c3c;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 5px;
+        .delete-icon {
+            font-size: 18px;
         }
-
-        .delete-jdbc {
-            background-color: #f39c12;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 5px;
-        }
-
-        .delete-jpa:hover {
-            background-color: #c0392b;
-        }
-
-        .delete-jdbc:hover {
-            background-color: #d68910;
-        }
-
     </style>
 </head>
 
 <body>
 
-<h2>All Users (JDBC)</h2>
+<h2>All Users</h2>
 
 <table>
     <tr>
-        <th>ID(Jpa)</th>
-        <th>Age</th>
-        <th>Email</th>
+        <th>ID (JPA)</th>
         <th>Name</th>
-        <th>Password</th>
+        <th>Email</th>
+        <th>Age</th>
         <th>Phone No</th>
         <th>Username</th>
-        <th>Delete (JPA)</th>
+        <th>Role</th>
+        <th>Roles</th>
+        <th>Delete</th>
     </tr>
 
     <c:forEach items="${user}" var="user">
         <tr>
-            <td><a href="/user/detail/by-idJpa/${user.id}">${user.id}</td>
-            <td>${user.age}</td>
-
             <td>
-                <a href="/user/detail?email=${user.email}">
-                    ${user.email}
+                <a href="/user/detail/by-idJpa/${user.id}">
+                    ${user.id}
                 </a>
             </td>
+
+
 
             <td>${user.name}</td>
-            <td>${user.password}</td>
+            <td>
+                <a href="/user/detail?email=${user.email}">
+                     ${user.email}
+                </a>
+             </td>
+            <td>${user.age}</td>
             <td>${user.phoneNo}</td>
             <td>${user.userName}</td>
+            <td>${user.role}</td>
+            <td>${user.roles}</td>
 
             <td>
-                <a class="delete-jpa"
-                   href="/user/deleteByEmailJpa/${user.email}">
-                    DELETE
+                <a href="/user/deleteByEmailJpa/${user.email}"
+                   title="Delete"
+                   onclick="return confirm('Are you sure you want to delete this user?');">
+                    🗑️
                 </a>
             </td>
-
         </tr>
     </c:forEach>
 </table>

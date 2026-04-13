@@ -63,13 +63,23 @@ public class RoleController {
 //        System.out.println("------------ : "+roleDto.getId()+" "+roleDto.getName());
         RoleDto roleDto1 = roleService.updateRoleJpa(roleDto);
         model.addAttribute("role", roleDto1);
-        return "redirect:/role/allRolesJdbc";
+        if (roleDto1.isSuccess()) {
+            model.addAttribute("name", "Add role Successful");
+        } else {
+            model.addAttribute("name", "Role Already existed");
+        }
+        return "redirect:/role/allRolesJpa";
     }
 
     @GetMapping("/update/by-idJdbc/{id}")
     public String updateJdbc(Model model, @PathVariable Long id) {
         RoleDto role = roleService.getRolesByIdJdbc(id);
         model.addAttribute("role", role);
+        if (role.isSuccess()) {
+            model.addAttribute("name", "Add role Successful");
+        } else {
+            model.addAttribute("name", "Role Already existed");
+        }
         return "updateRoles";
     }
 
@@ -77,6 +87,11 @@ public class RoleController {
     public String updateJdbc(Model model,@ModelAttribute RoleDto roleDto) {
         RoleDto roleDto1 = roleService.updateRoleJdbc(roleDto);
         model.addAttribute("user", roleDto1);
+        if (roleDto1.isSuccess()) {
+            model.addAttribute("name", "Add role Successful");
+        } else {
+            model.addAttribute("name", "Role Already existed");
+        }
         return "redirect:/role/allRolesJdbc";
     }
 

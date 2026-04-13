@@ -21,7 +21,9 @@ public interface RoleService {
     List<RoleDto> findAllRoles();
 
     List<RoleDto> findAllRolesJdbc();
+
     RoleDto getRolesByIdJpa(Long id);
+
     RoleDto getRolesByIdJdbc(Long id);
 
 

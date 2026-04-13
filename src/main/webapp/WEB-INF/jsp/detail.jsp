@@ -1,73 +1,92 @@
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Details of each user</title>
+    <title>User Details</title>
 
     <style>
         body {
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: "Inter", "Segoe UI", Arial, sans-serif;
             background-color: #f4f6f9;
             margin: 0;
-            padding: 20px;
+            padding: 40px;
         }
 
         h2 {
             text-align: center;
             color: #2c3e50;
+            margin-bottom: 30px;
+            font-weight: 600;
         }
 
         .user-card {
             background-color: #ffffff;
-            padding: 20px;
-            margin: 15px auto;
-            width: 60%;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 720px;
+            margin: auto;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
         }
 
-        .user-card label {
-            font-weight: bold;
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px 24px;
+        }
+
+        label {
+            font-size: 13px;
+            color: #6c757d;
+            margin-bottom: 6px;
             display: block;
-            margin-top: 10px;
-            color: #2c3e50;
+            font-weight: 600;
         }
 
-        .user-card input {
+        input,
+        select {
             width: 100%;
-            padding: 8px;
-            margin-top: 4px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            padding: 10px 12px;
+            border: 1px solid #dcdfe3;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        input[readonly] {
+            background-color: #f1f3f5;
+            color: #6c757d;
+        }
+
+        select[multiple] {
+            height: 120px;
+        }
+
+        .button-group {
+            grid-column: span 2;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
         }
 
         .save-button {
-            margin-top: 15px;
-            padding: 8px 20px;
-            background-color: #2ecc71;
-            color: white;
+            padding: 10px 26px;
+            background-color: #198754;
+            color: #ffffff;
             border: none;
-            border-radius: 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
-        }
-
-        .save-button:hover {
-            background-color: #27ae60;
         }
 
         .back-button {
-            display: block;
-            margin: 30px auto;
-            padding: 10px 25px;
-            font-size: 16px;
-            background-color: #3498db;
-            color: white;
+            padding: 10px 26px;
+            background-color: #6c757d;
+            color: #ffffff;
             border: none;
-            border-radius: 25px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
-        }
-
-        .back-button:hover {
-            background-color: #2980b9;
         }
     </style>
 </head>
@@ -76,38 +95,76 @@
 
 <h2>User Details</h2>
 
+<form action="/user/updateJpa" method="post">
+    <div class="user-card">
 
-    <form action="/user/updateJpa" method="post">
+        <div class="form-grid">
 
-        <div class="user-card">
+            <!-- Readonly ID -->
+            <div>
+                <label>User ID</label>
+                <input type="text" name="id" value="${user.id}" readonly />
+            </div>
 
-            <!-- Hidden ID (IMPORTANT for update) -->
-            <input type="hidden" name="id" value="${user.id}" />
+            <div>
+                <label>Age</label>
+                <input type="text" name="age" value="${user.age}" />
+            </div>
 
-            <label>Age</label>
-            <input type="text" name="age" value="${user.age}" />
+            <div>
+                <label>Name</label>
+                <input type="text" name="name" value="${user.name}" />
+            </div>
 
-            <label>Name</label>
-            <input type="text" name="name" value="${user.name}" />
+            <div>
+                <label>Email</label>
+                <input type="text" name="email" value="${user.email}" />
+            </div>
 
-            <label>Email</label>
-            <input type="text" name="email" value="${user.email}" />
+            <div>
+                <label>Phone No</label>
+                <input type="text" name="phoneNo" value="${user.phoneNo}" />
+            </div>
 
-            <label>Phone No</label>
-            <input type="text" name="phoneNo" value="${user.phoneNo}" />
+            <div>
+                <label>Username</label>
+                <input type="text" name="userName" value="${user.userName}" />
+            </div>
 
-             <label>Password</label>
-                        <input type="password" name="password" value="${user.password}" />
+            <!-- ✅ SINGLE ROLE DROPDOWN -->
+            <div>
+                <label>Role</label>
+                <select name="role">
+                    <c:forEach var="r" items="${roles}">
+                        <option value="${r.name}"
+                            <c:if test="${r.name == user.role}">selected</c:if>>
+                            ${r.name}
+                        </option>
+                    </c:forEach>
+                </select>
+            </div>
 
-            <label>User Name</label>
-            <input type="text" name="userName" value="${user.userName}" />
+            <!-- ✅ MULTI ROLE DROPDOWN -->
+            <div>
+                <label>Roles</label>
+                <select name="roles" multiple>
+                    <c:forEach var="r" items="${roles}">
+                        <option value="${r.name}"
+                            <c:if test="${user.roles.contains(r.name)}">selected</c:if>>
+                            ${r.name}
+                        </option>
+                    </c:forEach>
+                </select>
+            </div>
 
-            <button class="save-button" type="submit">SUBMIT</button>
-            <button class="back-button" type="button" onclick="history.back()">Back</button>
+            <div class="button-group">
+                <button class="save-button" type="submit">Save Changes</button>
+                <button class="back-button" type="button" onclick="history.back()">Back</button>
+            </div>
 
         </div>
-    </form>
-
+    </div>
+</form>
 
 </body>
 </html>

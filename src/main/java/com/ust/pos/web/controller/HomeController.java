@@ -1,0 +1,29 @@
+package com.ust.pos.web.controller;
+
+
+import com.ust.pos.service.NodeService;
+import com.ust.pos.service.RoleService;
+import com.ust.pos.service.UserServiceRitu;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/")
+public class HomeController {
+
+    @Autowired
+    private NodeService nodeService;
+
+    @GetMapping()
+    public String home(Model model) {
+        model.addAttribute("node",nodeService.findAllNode());
+        return "home";
+    }
+
+
+
+
+}

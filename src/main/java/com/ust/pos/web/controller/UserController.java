@@ -1,6 +1,8 @@
 package com.ust.pos.web.controller;
 
+import com.ust.pos.dto.RoleDto;
 import com.ust.pos.dto.UserDto;
+import com.ust.pos.service.RoleService;
 import com.ust.pos.service.UserServiceRitu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
@@ -17,6 +19,17 @@ public class UserController {
     @Autowired
     private UserServiceRitu userService;
 
+    @Autowired
+    private RoleService roleService;
+
+    @GetMapping("/register")
+    public String register(Model model, @ModelAttribute UserDto userDto) {
+        List<RoleDto> roles=roleService.findAllRoles();
+        model.addAttribute("name", "Ritu");
+        model.addAttribute("userDto", new UserDto());
+        model.addAttribute("role", roles);
+        return "register";
+    }
     @PostMapping("/register")
     public String userRegister(Model model, @ModelAttribute UserDto userDto) {
         UserDto userDto1 = userService.register(userDto);
@@ -27,6 +40,12 @@ public class UserController {
             model.addAttribute("message", "Email already exist");
         }
         return "success";
+    }
+
+    @GetMapping("/registerJdbc")
+    public String registerJdbc(Model model, @ModelAttribute UserDto userDto) {
+        model.addAttribute("name", "Ritu");
+        return "register";
     }
 
     @PostMapping("/registerJdbc")
@@ -41,31 +60,24 @@ public class UserController {
         return "success";
     }
 
+
+    @PostMapping("/updateJpa")
+    public String updateJpa(Model model,@ModelAttribute UserDto userDto) {
+        UserDto userDto1 = userService.updateJpa(userDto);
+        model.addAttribute("user", userDto1);
+        if (userDto1.isSuccess()) {
+            model.addAttribute("name", "Add user Successful");
+        } else {
+            model.addAttribute("name", "User Already existed");
+        }
+        return "redirect:/user/allUsers";
+    }
+
     @PostMapping("/updateJdbc")
     public String updateJdbc(Model model,@ModelAttribute UserDto userDto) {
         UserDto userDto1 = userService.updateJdbc(userDto);
         model.addAttribute("user", userDto1);
         return "redirect:/user/allUsersJdbc";
-    }
-    @PostMapping("/updateJpa")
-    public String updateJpa(Model model,@ModelAttribute UserDto userDto) {
-
-        UserDto userDto1 = userService.updateJpa(userDto);
-        model.addAttribute("user", userDto1);
-        return "redirect:/user/allUsersJdbc";
-    }
-
-    @GetMapping("/register")
-    public String register(Model model, @ModelAttribute UserDto userDto) {
-        model.addAttribute("name", "Ritu");
-        return "register";
-    }
-
-
-    @GetMapping("/registerJdbc")
-    public String registerJdbc(Model model, @ModelAttribute UserDto userDto) {
-        model.addAttribute("name", "Ritu");
-        return "register";
     }
 
     @GetMapping("/allUsers")
@@ -90,7 +102,8 @@ public class UserController {
     @GetMapping("/detail/by-idJpa/{id}")
     public String getProfileByIdJdbc(Model model, @PathVariable Long id) {
         UserDto users = userService.getUserByIdJpa(id);
-        model.addAttribute("users", users);
+        model.addAttribute("user", users);
+        model.addAttribute("roles", roleService.findAllRoles());
         return "detail";
     }
 
@@ -104,7 +117,7 @@ public class UserController {
     @GetMapping("/deleteByEmailJpa/{email}")
     public String deletebyEmailJpa(Model model, @PathVariable String email) {
         userService.deleteByEmailJpa(email);
-        return "redirect:/user/allUsersJdbc";
+        return "redirect:/user/allUsers";
     }
 
     @GetMapping("/deleteByEmailJdbc/{email}")

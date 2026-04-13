@@ -3,10 +3,13 @@ package com.ust.pos.web.controller;
 import com.ust.pos.dto.NodeDto;
 import com.ust.pos.dto.RoleDto;
 import com.ust.pos.service.NodeService;
+import com.ust.pos.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/node")
@@ -15,10 +18,17 @@ public class NodeController {
     @Autowired
     private NodeService nodeService;
 
+    @Autowired
+    private RoleService roleService;
+
     @GetMapping("/addNode")
     public String addNode(Model model, @ModelAttribute NodeDto nodeDto) {
-        model.addAttribute("name", new NodeDto());
+        List<RoleDto> roles = roleService.findAllRoles();
+        model.addAttribute("name", "Ritu");
+        model.addAttribute("nodeDto", new NodeDto());
+        model.addAttribute("role", roles);
         return "addNode";
+
     }
 
     @PostMapping("/addNode")
@@ -45,7 +55,6 @@ public class NodeController {
     public String updateNode(Model model,@ModelAttribute NodeDto nodeDto) {
 //        System.out.println("------------ : "+roleDto.getId()+" "+roleDto.getName());
         NodeDto nodeDto1 = nodeService.updateNode(nodeDto);
-        model.addAttribute("node", nodeDto1);
         model.addAttribute("node", nodeDto1);
         if (nodeDto1.isSuccess()) {
             model.addAttribute("name", "Add node Successful");

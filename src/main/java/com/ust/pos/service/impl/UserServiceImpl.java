@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,11 +64,18 @@ public class UserServiceImpl implements UserServiceRitu {
 
     @Override
     public UserDto updateJpa(UserDto userDto) {
+        User existingUserWithEmail = userRepository.findByEmail(userDto.getEmail());
+        if(existingUserWithEmail != null && existingUserWithEmail.getId()!= userDto.getId()){
+            userDto.setSuccess(false);
+            return userDto;
+        }
+        else{
+            modelMapper.map(userDto, existingUserWithEmail);
+            userDto.setSuccess(true);
+            userRepository.save(existingUserWithEmail);
+            return userDto;
+        }
 
-        User user = modelMapper.map(userDto, User.class);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        User updateUser = userRepository.save(user);
-        return modelMapper.map(updateUser, UserDto.class);
     }
 
     @Override
@@ -99,7 +105,10 @@ public class UserServiceImpl implements UserServiceRitu {
     @Override
     public UserDto getUserByIdJpa(Long id) {
         Optional<User> user2 = userRepository.findById(id);
-        return modelMapper.map(user2, UserDto.class);
+        if (user2.isPresent()) {
+            return modelMapper.map(user2.get(), UserDto.class);
+        }
+        else{return null;}
     }
 
     @Override

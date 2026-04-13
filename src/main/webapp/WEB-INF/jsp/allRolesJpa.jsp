@@ -13,10 +13,38 @@
             padding: 20px;
         }
 
+        /* Header row (title + add button) */
+        .header {
+            width: 60%;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
         h2 {
-            text-align: center;
             color: #2c3e50;
-            margin-bottom: 20px;
+            margin: 0;
+        }
+
+        .add-btn {
+            width: 32px;
+            height: 32px;
+            background-color: #27ae60;
+            color: white;
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: bold;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        .add-btn:hover {
+            background-color: #1e8449;
         }
 
         table {
@@ -55,27 +83,32 @@
             color: #2980b9;
             font-weight: 500;
         }
+        .edit {
+                    text-decoration: none;
+                    font-size: 18px;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                }
 
-        a:hover {
-            text-decoration: underline;
-        }
+                .edit:hover {
+                    opacity: 0.7;
+                }
 
-        .delete {
-            background-color: #e74c3c;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 5px;
-        }
-
-        .delete:hover {
-            background-color: #c0392b;
-        }
+                .edit {
+                    color: #3498db;
+                }
     </style>
 </head>
 
 <body>
 
-<h2>All Roles JPA</h2>
+<!-- HEADER WITH ADD BUTTON -->
+<div class="header">
+    <h2>All Roles JPA</h2>
+    <a href="/role/addRoleJpa" class="add-btn" title="Add Role">+</a>
+</div>
 
 <table>
     <tr>
@@ -89,13 +122,17 @@
         <tr>
             <td>${role.id}</td>
             <td>${role.name}</td>
+
             <td>
-                  <a class="delete" href="/role/update/by-idJpa/${role.id}">
-                         Edit
-                            </a>
-                        </td>
+                <a class="edit" href="/role/update/by-idJpa/${role.id}">
+                    ✏️
+                </a>
+            </td>
+
             <td>
-                <a  href="/role/deleteByIdJpa/${role.id}">
+                <a href="/role/deleteByIdJpa/${role.id}"
+                   onclick="return confirm('Are you sure you want to delete this role?');"
+                   title="Delete">
                     🗑️
                 </a>
             </td>

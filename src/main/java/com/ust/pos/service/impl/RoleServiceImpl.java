@@ -62,10 +62,17 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleDto updateRoleJpa(RoleDto roleDto) {
-        Role role = roleRepository.findById(roleDto.getId()).orElseThrow();
-        modelMapper.map(roleDto, role);
-        Role updateRole = roleRepository.save(role);
-        return modelMapper.map(updateRole, RoleDto.class);
+        Role role1 = roleRepository.findById(roleDto.getId()).orElseThrow();
+        if (role1 != null) {
+            roleDto.setSuccess(false);
+            return roleDto;
+        }
+        else {
+            Role role = modelMapper.map(roleDto, Role.class);
+            roleRepository.save(role);
+            roleDto.setSuccess(true);
+            return roleDto;
+        }
     }
 
     @Override

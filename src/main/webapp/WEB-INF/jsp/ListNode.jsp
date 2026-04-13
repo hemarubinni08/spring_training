@@ -13,10 +13,39 @@
             padding: 20px;
         }
 
+        /* Header (title + add icon) */
+        .header {
+            width: 70%;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
         h2 {
-            text-align: center;
             color: #2c3e50;
-            margin-bottom: 20px;
+            margin: 0;
+        }
+
+        .add-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #27ae60;
+            color: #ffffff;
+            font-size: 22px;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        .add-icon:hover {
+            background-color: #1e8449;
         }
 
         table {
@@ -34,9 +63,18 @@
             text-align: left;
         }
 
+        th.icon-header {
+            text-align: center;
+        }
+
         td {
             padding: 10px;
             border-bottom: 1px solid #ddd;
+        }
+
+        td.icon-cell {
+            text-align: center;
+            vertical-align: middle;
         }
 
         tr:nth-child(even) {
@@ -47,43 +85,44 @@
             background-color: #f1f7ff;
         }
 
-        .btn {
-            padding: 5px 12px;
-            border-radius: 4px;
-            color: white;
+        .icon-link {
             text-decoration: none;
-            font-size: 13px;
+            font-size: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
         }
 
-        .edit {
-            background-color: #3498db;
+        .icon-link:hover {
+            opacity: 0.7;
         }
 
-        .delete {
-            background-color: #e74c3c;
+        .edit-icon {
+            color: #3498db;
         }
 
-        .delete:hover {
-            background-color: #c0392b;
-        }
-
-        .edit:hover {
-            background-color: #2c80b4;
+        .delete-icon {
+            color: #e74c3c;
         }
     </style>
 </head>
 
 <body>
 
-<h2>All Nodes</h2>
+<!-- HEADER WITH ADD ICON -->
+<div class="header">
+    <h2>All Nodes</h2>
+    <a href="/node/add" class="add-icon" title="Add Node">+</a>
+</div>
 
 <table>
     <tr>
         <th>ID</th>
         <th>Node Name</th>
         <th>Path</th>
-        <th>Update</th>
-        <th>Delete</th>
+        <th class="icon-header">Update</th>
+        <th class="icon-header">Delete</th>
     </tr>
 
     <c:forEach items="${node}" var="node">
@@ -92,15 +131,20 @@
             <td>${node.name}</td>
             <td>${node.path}</td>
 
-            <td>
-                <a class="btn edit" href="/node/update?id=${node.id}">Edit</a>
+            <td class="icon-cell">
+                <a href="/node/update?id=${node.id}"
+                   class="icon-link edit-icon"
+                   title="Edit">
+                    ✏️
+                </a>
             </td>
 
-            <td>
-                <a class="btn delete"
-                   href="/node/deleteNode?id=${node.id}"
+            <td class="icon-cell">
+                <a href="/node/deleteNode?id=${node.id}"
+                   class="icon-link delete-icon"
+                   title="Delete"
                    onclick="return confirm('Are you sure?');">
-                    Delete
+                    🗑️
                 </a>
             </td>
         </tr>
