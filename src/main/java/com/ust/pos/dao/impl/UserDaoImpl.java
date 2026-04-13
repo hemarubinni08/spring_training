@@ -39,14 +39,33 @@ public class UserDaoImpl implements UserDao {
         // return jdbcTemplate.queryForObject(sqlQ,User.class,email);
         return userList.isEmpty() ? null : userList.get(0);
     }
-    public List<User> printAllUsersJdbc(){
-        String sqlQ="select * from user";
-        List<User> userl=jdbcTemplate.query(
-                sqlQ,new BeanPropertyRowMapper(User.class));
+
+    public User findById(Long id) {
+        String sqlQ = "select * from user where id=?";
+        List<User> userList = jdbcTemplate.query(sqlQ, new Object[]{id}, new BeanPropertyRowMapper(User.class));
+        return userList.isEmpty() ? null : userList.get(0);
+    }
+
+    public List<User> printAllUsersJdbc() {
+        String sqlQ = "select * from user";
+        List<User> userl = jdbcTemplate.query(
+                sqlQ, new BeanPropertyRowMapper(User.class));
         return userl;
     }
-    public void deleteByEmailJdbc(String email){
-        String sqlQ="delete from user where email=?";
+
+    public void deleteByEmailJdbc(String email) {
+        String sqlQ = "delete from user where email=?";
         jdbcTemplate.update(sqlQ, new Object[]{email});
+    }
+
+    public boolean updateUserJdbc(UserDto userDto) {
+        String sqlQ = "update user set name=?, user_name=?, password=?, email=?, age=? where id=?";
+        String encodePassword = passwordEncoder.encode(userDto.getPassword());
+
+        jdbcTemplate.update(
+                sqlQ, userDto.getName(), userDto.getUserName(),encodePassword,userDto.getEmail(),
+                userDto.getAge(),userDto.getId()
+        );
+        return true;
     }
 }

@@ -7,9 +7,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class UserDto {
-    private Long id;
-    private String name;
+public class UserDto extends CommonDto {
     private String email;
     private String phoneNo;
     private String userName;

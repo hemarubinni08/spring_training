@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -103,4 +104,52 @@ public class UserServiceImpl implements UserService {
         UserDto userProfile = modelMapper.map(user1, UserDto.class);
         return userProfile;
     }
+//    public UserDto findById(Long id){
+//        Optional<User> user1=userRepository.findById(id);
+//        UserDto userProfile=modelMapper.map(user1,UserDto.class);
+//        return userProfile;
+//    }
+    public UserDto findById(Long id){
+        Optional<User> user1 = userRepository.findById(id);
+        if (user1.isPresent()) {
+            return modelMapper.map(user1.get(), UserDto.class);
+        }
+        return null;
+    }
+
+    public UserDto findByIdJdbc(Long id){
+        User user1=userDao.findById(id);
+        UserDto userProfile=modelMapper.map(user1,UserDto.class);
+        return userProfile;
+    }
+
+    public boolean updateUser(UserDto userDto) {
+        Optional<User> user = userRepository.findById(userDto.getId());
+        if (user.isPresent()) {
+            User existingUser = user.get();
+            if(!existingUser.getEmail().equalsIgnoreCase(userDto.getEmail())){
+                if(userRepository.findByEmail(userDto.getEmail())==null){
+                    modelMapper.map(userDto, existingUser);
+                    userRepository.save(existingUser);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public boolean updateUserJdbc(UserDto userDto){
+        Optional<User> user = Optional.ofNullable(userDao.findById(userDto.getId()));
+        if(user.isPresent()) {
+            User exstingUser=user.get();
+            if(!exstingUser.getEmail().equalsIgnoreCase(userDto.getEmail())){
+                if(userDao.findByEmail(userDto.getEmail())==null){
+                    modelMapper.map(userDto,exstingUser);
+                    userDao.updateUserJdbc(userDto);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }

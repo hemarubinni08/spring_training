@@ -21,4 +21,12 @@ public interface UserService {
     void deleteByEmail(String email);
 
     void deleteByEmailJdbc(String email);
+
+    UserDto findById(Long id);
+
+    UserDto findByIdJdbc(Long id);
+
+    boolean updateUser(UserDto userDto);
+    boolean updateUserJdbc(UserDto userDto);
+
 }

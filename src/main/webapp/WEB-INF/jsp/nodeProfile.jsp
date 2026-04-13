@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Update User</title>
+    <title>Update Node</title>
 
     <!-- Bootstrap 5 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -24,62 +24,45 @@
         }
     </style>
 </head>
+
 <body>
 
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-    <div class="card shadow p-4" style="width: 480px;">
+    <div class="card shadow p-4" style="width: 450px;">
 
-        <h3 class="text-center fw-bold mb-4">Update User</h3>
+        <h3 class="text-center mb-4 fw-bold">Update Node</h3>
 
-        <form action="/user/updateUser" method="post">
+        <form action="/node/updatenode" method="post">
 
-            <!-- ID (readonly + hidden submit) -->
+            <!-- ID (readonly, hidden for submit) -->
             <div class="mb-3">
-                <label class="form-label">User ID</label>
+                <label class="form-label">Node ID</label>
                 <input type="text"
                        class="form-control"
-                       value="${userDetails.id}"
+                       value="${node.id}"
                        readonly>
-                <input type="hidden" name="id" value="${userDetails.id}">
+                <input type="hidden" name="id" value="${node.id}">
             </div>
 
             <!-- Name -->
             <div class="mb-3">
-                <label class="form-label">Name</label>
+                <label class="form-label">Node Name</label>
                 <input type="text"
                        class="form-control"
                        name="name"
-                       value="${userDetails.name}"
+                       value="${node.name}"
+                       placeholder="Enter node name"
                        required>
             </div>
 
-            <!-- Age -->
-            <div class="mb-3">
-                <label class="form-label">Age</label>
-                <input type="number"
-                       class="form-control"
-                       name="age"
-                       value="${userDetails.age}"
-                       required>
-            </div>
-
-            <!-- Email -->
-            <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="email"
-                       class="form-control"
-                       name="email"
-                       value="${userDetails.email}"
-                       required>
-            </div>
-
-            <!-- Phone -->
+            <!-- ✅ Path -->
             <div class="mb-4">
-                <label class="form-label">Phone</label>
+                <label class="form-label">Path</label>
                 <input type="text"
                        class="form-control"
-                       name="phoneNo"
-                       value="${userDetails.phoneNo}"
+                       name="path"
+                       value="${node.path}"
+                       placeholder="Enter path"
                        required>
             </div>
 
@@ -88,7 +71,7 @@
                 <button type="submit" class="btn btn-primary w-100">
                     Update & Save
                 </button>
-                <a href="/user/listallusers" class="btn btn-outline-secondary w-100">
+                <a href="/node/list" class="btn btn-outline-secondary w-100">
                     Cancel
                 </a>
             </div>
