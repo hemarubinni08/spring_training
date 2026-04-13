@@ -4,6 +4,7 @@ package com.ust.pos.web.controller;
 import com.ust.pos.dto.NodeDto;
 import com.ust.pos.dto.RoleDto;
 import com.ust.pos.service.NodeService;
+import com.ust.pos.service.RoleService;
 import com.ust.pos.service.impl.NodeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,8 @@ import java.util.List;
 public class NodeController {
     @Autowired
     NodeService nodeService;
+    @Autowired
+    RoleService roleService;
     @PostMapping("/addNode")
     public String addNode(Model model, @ModelAttribute NodeDto nodeDto){
         NodeDto nodeDto1 = nodeService.addNode(nodeDto);
@@ -30,7 +33,7 @@ public class NodeController {
     }
     @GetMapping("/addNode")
     public String addNode1(Model model , @ModelAttribute NodeDto nodeDto){
-        model.addAttribute("node","Add Node");
+        model.addAttribute("roles",roleService.getAllRoles());
         return("addNode");
     }
     @GetMapping("/listOfNodes")

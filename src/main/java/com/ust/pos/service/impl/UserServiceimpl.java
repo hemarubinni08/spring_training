@@ -109,36 +109,16 @@ public class UserServiceimpl implements UserService {
 
     @Override
     public UserDto updateUserJpa(UserDto userDto) {
-        User existingUserWithEmail = userRepository.findByEmail(userDto.getEmail());
-        if(existingUserWithEmail != null && existingUserWithEmail.getId()!= userDto.getId()){
+        User userWithSameEmail = userRepository.findByEmail(userDto.getEmail());
+        if (userWithSameEmail != null && userWithSameEmail.getId() != (userDto.getId())) {
             userDto.setSuccess(false);
             return userDto;
         }
-        else{
-            modelMapper.map(userDto, existingUserWithEmail);
-            userDto.setSuccess(true);
-            userRepository.save(existingUserWithEmail);
-            return userDto;
-        }
-
-        /*Optional<User> existingUserOptional = userRepository.findById(userDto.getId());
-        if(existingUserOptional.isPresent()){
-            User existingUser = existingUserOptional.get();
-            if(!existingUser.getEmail().equals(userDto.getEmail())){
-                User user = userRepository.findByEmail(userDto.getEmail());
-                if(user==null){
-                    modelMapper.map(userDto, existingUser);
-                    userDto.setSuccess(true);
-                    userRepository.save(existingUser);
-                    return userDto;
-                }else{
-                    userDto.setSuccess(false);
-                    return userDto;
-                }
-            }
-        }
-        return userDto;
-         */
+        else {
+            User user = modelMapper.map(userDto, User.class);
+        userRepository.save(user);
+        userDto.setSuccess(true);
+        return modelMapper.map(user, UserDto.class);
     }
-
+    }
 }

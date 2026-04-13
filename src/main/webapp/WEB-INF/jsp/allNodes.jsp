@@ -44,6 +44,8 @@
                             <th>ID</th>
                             <th>Node Name</th>
                             <th>Path</th>
+                            <th>Role</th>
+                            <th>Roles</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -53,6 +55,8 @@
                                 <td>${n.id}</td>
                                 <td>${n.name}</td>
                                 <td>${n.path}</td>
+                                <td>${n.role}</td>
+                                <td>${n.roles}</td>
                                 <td>
                                     <!-- UPDATE -->
                                     <a href="/node/updateNode?id=${n.id}"

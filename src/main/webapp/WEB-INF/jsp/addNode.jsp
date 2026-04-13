@@ -1,5 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java"
+    contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %>
+
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
@@ -7,61 +11,103 @@
     <meta charset="UTF-8">
     <title>Add Node</title>
 
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-          rel="stylesheet">
+          rel="stylesheet"/>
 
     <style>
         body {
-            background: linear-gradient(135deg, #1d976c, #93f9b9);
             min-height: 100vh;
+            background: linear-gradient(135deg, #1d976c, #93f9b9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .card {
             border-radius: 15px;
         }
+        select[multiple] {
+            height: 120px;
+        }
     </style>
 </head>
+
 <body>
 
-<div class="container d-flex justify-content-center align-items-center mt-5">
-    <div class="col-md-5">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
 
-        <div class="card shadow-lg">
-            <div class="card-body p-4">
-                <h4 class="text-center mb-4">${node}</h4>
+            <div class="card shadow-lg">
+                <div class="card-body p-4">
 
-                <form action="/node/addNode"
-                      method="post">
+                    <h4 class="text-center mb-4">Add Node</h4>
 
-                    <div class="mb-3">
-                        <label class="form-label">Node Name</label>
-                        <input type="text"
-                               class="form-control"
-                               name="name"
-                               required>
-                    </div>
+                    <!-- ✅ SPRING FORM (OPEN TAG IS REQUIRED) -->
+                    <form:form
+                        action="/node/addNode"
+                        method="post"
+                        modelAttribute="nodeDto">
 
-                    <div class="mb-3">
-                        <label class="form-label">Node Path</label>
-                        <input type="text"
-                               class="form-control"
-                               name="path"
-                               required>
-                    </div>
+                        <!-- Node Name -->
+                        <div class="mb-3">
+                            <label class="form-label">Node Name</label>
+                            <form:input path="name"
+                                        cssClass="form-control"
+                                        required="true"/>
+                        </div>
 
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">
-                            Add Node
-                        </button>
-                    </div>
+                        <!-- Node Path -->
+                        <div class="mb-3">
+                            <label class="form-label">Node Path</label>
+                            <form:input path="path"
+                                        cssClass="form-control"
+                                        required="true"/>
+                        </div>
 
-                </form>
+                        <!-- Primary Role -->
+                        <div class="mb-3">
+                            <label class="form-label">Primary Role</label>
+                            <form:select path="role" cssClass="form-control">
+                                <form:option value="" label="-- Select Primary Role --"/>
+                                <form:options items="${roles}"
+                                              itemValue="name"
+                                              itemLabel="name"/>
+                            </form:select>
+                        </div>
+
+                        <!-- Additional Roles -->
+                        <div class="mb-3">
+                            <label class="form-label">Additional Roles</label>
+                            <form:select path="roles"
+                                         multiple="true"
+                                         cssClass="form-control">
+                                <form:options items="${roles}"
+                                              itemValue="name"
+                                              itemLabel="name"/>
+                            </form:select>
+                            <small class="text-muted">
+                                Hold Ctrl (Windows/Linux) or Cmd (Mac) to select multiple
+                            </small>
+                        </div>
+
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary">
+                                Add Node
+                            </button>
+                        </div>
+
+                    </form:form>
+                    <!-- ✅ SPRING FORM (CLOSE TAG) -->
+
+                </div>
+
+                <div class="card-footer text-muted text-center small">
+                    POS Management System
+                </div>
             </div>
 
-            <div class="card-footer text-muted text-center small">
-                POS Management System
-            </div>
         </div>
-
     </div>
 </div>
 

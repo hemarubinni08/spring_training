@@ -1,6 +1,7 @@
 package com.ust.pos.web.controller;
 
 import com.ust.pos.dto.UserDto;
+import com.ust.pos.service.RoleService;
 import com.ust.pos.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.cache.SpringCacheBasedUserCache;
@@ -17,6 +18,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    RoleService roleService;
 
     @RequestMapping("/login")
     public String login(Model model) {
@@ -42,8 +46,8 @@ public class UserController {
     }
 
     @GetMapping("/register")
-    public String doRegister(Model model, @ModelAttribute UserDto userDto) {
-        model.addAttribute("name", "Hemanth");
+    public String doRegister(Model model,@ModelAttribute UserDto userDto) {
+        model.addAttribute("roles", roleService.getAllRoles());
         return "register";
     }
 
@@ -87,6 +91,7 @@ public class UserController {
     @GetMapping("/userDetails/{email}")
     public String userDetails(Model model, @PathVariable String email){
         UserDto userDto = userService.getUserDetails(email);
+        model.addAttribute("roles",roleService.getAllRoles());
         model.addAttribute("user" , userDto);
         return("userDetails");
     }
@@ -104,6 +109,7 @@ public class UserController {
     public String getUsersById(Model model , @PathVariable Long id){
         UserDto userDto = userService.getUserDetailsById(id);
         model.addAttribute("user" , userDto);
+        model.addAttribute("roles",roleService.getAllRoles());
         return("userDetails");
     }
     @GetMapping("/userByIdJdbc")
@@ -120,7 +126,7 @@ public class UserController {
     }
     @PostMapping("/updateUserJpa")
     public String updateUserJpa(Model model , @ModelAttribute UserDto userDto) {
-        UserDto updatedUser = userService.updaterUserJdbc(userDto);
+        UserDto updatedUser = userService.updateUserJpa(userDto);
         if(updatedUser.isSuccess()){
             model.addAttribute("user", updatedUser);
             model.addAttribute("Message","Updates Successfull");

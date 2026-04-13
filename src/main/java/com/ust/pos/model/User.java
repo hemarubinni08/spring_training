@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,4 +19,6 @@ public class User extends CommonData{
     private String password;
     private int age;
     private Date dateOfBirth;
+    private String role;
+    private List<String> roles;
 }

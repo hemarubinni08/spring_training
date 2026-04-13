@@ -1,89 +1,84 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
+<!DOCTYPE html>
 <html>
 <head>
     <title>User Registration</title>
 
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
     <style>
         body {
             margin: 0;
-            padding: 0;
-            font-family: "Segoe UI", Arial, sans-serif;
-            height: 100vh;
-            background: linear-gradient(#ffffff);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
         .register-card {
-            background: #ffffff;
-            width: 420px;
-            padding: 30px 35px;
-            border-radius: 12px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            width: 430px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 35px 40px;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
         }
 
         h2 {
             text-align: center;
-            margin-bottom: 25px;
-            color: #0078D4;
+            margin-bottom: 30px;
+            color: #4b6cb7;
+            font-weight: 600;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 16px;
         }
 
         label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 5px;
+            font-size: 13px;
+            font-weight: 500;
             color: #333;
+            margin-bottom: 6px;
+            display: block;
         }
 
-        input {
+        input, select {
             width: 100%;
-            padding: 10px 12px;
+            padding: 11px 14px;
+            border-radius: 8px;
             border: 1px solid #ccc;
-            border-radius: 6px;
             font-size: 14px;
-            outline: none;
         }
 
-        input:focus {
-            border-color: #0078D4;
-            box-shadow: 0 0 5px rgba(0, 120, 212, 0.3);
+        select[multiple] {
+            height: 130px; /* ✅ MAKES MULTI-SELECT CLEAR */
+        }
+
+        small {
+            color: #666;
+            font-size: 11px;
         }
 
         .btn-submit {
+            margin-top: 10px;
             width: 100%;
-            padding: 12px;
-            background: #0078D4;
-            color: #fff;
+            padding: 13px;
+            background: linear-gradient(135deg, #4b6cb7, #182848);
+            color: white;
+            border: none;
+            border-radius: 10px;
             font-size: 16px;
             font-weight: 600;
-            border: none;
-            border-radius: 8px;
             cursor: pointer;
-            margin-top: 10px;
-            transition: background 0.3s ease;
-        }
-
-        .btn-submit:hover {
-            background: #005A9E;
-        }
-
-        .footer-text {
-            text-align: center;
-            font-size: 13px;
-            color: #777;
-            margin-top: 15px;
         }
     </style>
-
 </head>
+
 <body>
 
 <div class="register-card">
@@ -91,31 +86,53 @@
 
     <form:form action="register" method="post" modelAttribute="userDto">
 
+        <!-- Name -->
         <div class="form-group">
             <label>Name</label>
             <form:input path="name"/>
         </div>
 
+        <!-- Email -->
         <div class="form-group">
             <label>Email</label>
-            <form:input path="email" type = "email"/>
+            <form:input path="email" type="email"/>
         </div>
 
+        <!-- ✅ PRIMARY ROLE (SINGLE) -->
+        <div class="form-group">
+            <label>Primary Role</label>
+            <form:select path="role">
+                <form:option value="" label="-- Select Primary Role --"/>
+                <form:options items="${roles}" itemValue="name" itemLabel="name"/>
+            </form:select>
+        </div>
+
+        <div class="form-group">
+            <label>Additional Roles</label>
+            <form:select path="roles" multiple="true">
+                <form:options items="${roles}" itemValue="name" itemLabel="name"/>
+            </form:select>
+        </div>
+
+        <!-- Phone -->
         <div class="form-group">
             <label>Phone Number</label>
             <form:input path="phoneNo"/>
         </div>
 
+        <!-- Username -->
         <div class="form-group">
             <label>Username</label>
             <form:input path="userName"/>
         </div>
 
+        <!-- Password -->
         <div class="form-group">
             <label>Password</label>
             <form:password path="password"/>
         </div>
 
+        <!-- Age -->
         <div class="form-group">
             <label>Age</label>
             <form:input path="age"/>
@@ -125,9 +142,6 @@
 
     </form:form>
 
-    <div class="footer-text">
-        © 2026 POS Application
-    </div>
 </div>
 
 </body>
