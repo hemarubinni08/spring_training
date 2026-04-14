@@ -4,12 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
-public class UserDto {
-    private long id;
-    private String name;
+public class UserDto extends CommonDto {
     private String email;
     private String phoneNo;
     private String userName;
@@ -17,4 +16,6 @@ public class UserDto {
     private int age;
     private Date dateOfBirth;
     private boolean Success = true;
+    private String role;
+    private List<String> roles;
 }

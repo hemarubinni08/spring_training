@@ -1,20 +1,20 @@
 package com.ust.pos.web.controller;
 
 import com.ust.pos.dto.UserDto;
-import com.ust.pos.service.UserService;
+import com.ust.pos.service.impl.RoleService;
+import com.ust.pos.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
     @Autowired
     UserService userService;
+    @Autowired
+    RoleService roleService;
 
     @PostMapping("/register")
     public String userRegister(Model model, @ModelAttribute UserDto userDto) {
@@ -29,7 +29,7 @@ public class UserController {
 
     @GetMapping("/register")
     public String register(Model model, @ModelAttribute UserDto userDto) {
-        model.addAttribute("name", "Rohit");
+        model.addAttribute("roles", roleService.findAllRoles());
         return "register";
     }
 
@@ -50,9 +50,65 @@ public class UserController {
         return "register";
     }
 
-    @RequestMapping("/forgotpassword")
-    public String forgotPassword(Model model) {
-        model.addAttribute("name", "Rohit");
-        return "forgotpassword";
+    @GetMapping("/registeruserList")
+    public String userList(Model model) {
+        model.addAttribute("users", userService.findAllUser());
+        return "userList";
+    }
+
+    @GetMapping("/registeruserListJpa")
+    public String userListJpa(Model model) {
+        model.addAttribute("users", userService.findAllUsersJpa());
+        return "userList";
+    }
+
+    @GetMapping("/getprofile")
+    public String profile(Model model, @RequestParam String email) {
+        UserDto userDto2 = userService.findByEmail(email);
+        model.addAttribute("user", userDto2);
+        return "getProfile";
+    }
+
+    @GetMapping("/getprofile/{email}")
+    public String profileJpa(Model model, @PathVariable String email) {
+        UserDto userDto2 = userService.findByEmailJpa(email);
+        model.addAttribute("user", userDto2);
+        return "getProfile";
+    }
+
+    @GetMapping("/deleteProfile/{email}")
+    public String deleteUserJpa(Model model, @PathVariable String email) {
+        userService.deleteUser(email);
+        return "redirect:/user/registeruserList";
+    }
+
+    @GetMapping("/getprofileById/{id}")
+    public String findUserByIdJpa(Model model, @PathVariable Long id) {
+        UserDto userDto = userService.findByIdJpa(id);
+        model.addAttribute("user", userDto);
+        model.addAttribute("roles", roleService.findAllRoles());
+        return "getProfile";
+    }
+
+    @GetMapping("/getprofileByIdJdbc/{id}")
+    public String findUserById(Model model, @PathVariable Long id) {
+        UserDto userDto = userService.findById(id);
+        model.addAttribute("user", userDto);
+        model.addAttribute("roles", roleService.findAllRoles());
+        return "getProfile";
+    }
+
+    @PostMapping("/updateUserJdbc")
+    public String updateUserJdbc(Model model, @ModelAttribute UserDto userDto) {
+        UserDto updateUser = userService.UpdateData(userDto);
+        model.addAttribute("user", updateUser);
+        return "redirect:/user/registeruserList";
+    }
+
+    @PostMapping("/updateUserJpa")
+    public String UpdateUserJpa(Model model, @ModelAttribute UserDto userDto) {
+        UserDto updateUser = userService.UpdateUserJpa(userDto);
+        model.addAttribute("user", updateUser);
+        return "redirect:/user/registeruserList";
     }
 }

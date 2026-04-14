@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -110,6 +111,26 @@
                 <form:label path="age">Age</form:label>
                 <form:input path="age" type="number" min="0"/>
             </div>
+
+
+
+<select name="role">
+    <option value="">--Select role--</option>
+    <c:forEach var="role" items="${roles}">
+        <option value="${role.name}">${role.name}</option>
+    </c:forEach>
+</select>
+
+
+
+<!-- ✅ ADDITIONAL ROLES (MULTIPLE) -->
+<div class="form-group">
+    <label>Additional Roles</label>
+    <form:select path="roles" multiple="true">
+        <form:options items="${roles}" itemValue="name" itemLabel="name"/>
+    </form:select>
+
+</div>
 
 
 
