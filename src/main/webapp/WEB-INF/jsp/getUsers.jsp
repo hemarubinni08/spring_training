@@ -9,6 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
+        *{box-sizing:border-box;}
+
         body {
             font-family: 'Inter', sans-serif;
             margin: 0;
@@ -16,6 +18,7 @@
             color: #1f2937;
         }
 
+        /* BACK BUTTON */
         .back-arrow {
             position: fixed;
             top: 18px;
@@ -32,7 +35,6 @@
             font-size: 20px;
             color: #4f46e5;
             transition: 0.2s;
-            z-index: 1000;
         }
 
         .back-arrow:hover {
@@ -40,6 +42,7 @@
             background: #eef2ff;
         }
 
+        /* LAYOUT */
         .container {
             max-width: 1100px;
             margin: 70px auto;
@@ -48,19 +51,20 @@
 
         .card {
             background: white;
-            padding: 22px;
+            padding: 24px;
             border-radius: 16px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
 
         h2 {
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             font-weight: 700;
             color: #111827;
         }
 
+        /* SEARCH */
         .search-box {
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
 
         .search-box input {
@@ -70,6 +74,7 @@
             border: 1px solid #e5e7eb;
             outline: none;
             transition: 0.2s;
+            font-size: 14px;
         }
 
         .search-box input:focus {
@@ -77,6 +82,7 @@
             box-shadow: 0 0 0 3px rgba(79,70,229,0.15);
         }
 
+        /* TABLE */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -89,70 +95,75 @@
             color: #3730a3;
             padding: 14px;
             text-align: left;
+            font-size: 13px;
         }
 
         td {
             padding: 14px;
             border-bottom: 1px solid #e5e7eb;
+            vertical-align: middle;
+        }
+
+        tr {
+            transition: 0.2s;
         }
 
         tr:hover {
             background: #f9fafb;
         }
 
+        /* BADGES */
         .badge {
             background: #e0e7ff;
             color: #3730a3;
             padding: 4px 10px;
             border-radius: 8px;
             font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* ACTION BUTTONS (FIXED ALIGNMENT) */
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .actions a,
+        .actions button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 34px;
+            min-width: 70px;
+            padding: 0 12px;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
         }
 
         .btn-edit {
             background: #3b82f6;
             color: white;
-            padding: 6px 10px;
-            border-radius: 8px;
-            font-size: 13px;
             text-decoration: none;
-            margin-right: 6px;
         }
 
         .btn-edit:hover {
             background: #2563eb;
+            transform: translateY(-1px);
         }
 
         .btn-delete {
             background: #ef4444;
             color: white;
-            padding: 6px 10px;
-            border-radius: 8px;
-            border: none;
-            font-size: 13px;
-            cursor: pointer;
         }
 
         .btn-delete:hover {
             background: #dc2626;
-        }
-
-        /* TOAST */
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #111827;
-            color: white;
-            padding: 12px 16px;
-            border-radius: 10px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: 0.3s;
-        }
-
-        .toast.show {
-            opacity: 1;
-            transform: translateY(0);
+            transform: translateY(-1px);
         }
 
         /* MODAL */
@@ -162,7 +173,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0,0,0,0.45);
             display: none;
             align-items: center;
             justify-content: center;
@@ -171,18 +182,35 @@
 
         .modal {
             background: white;
-            padding: 20px;
-            border-radius: 12px;
-            width: 320px;
+            padding: 24px;
+            border-radius: 14px;
+            width: 340px;
             text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            animation: fadeIn 0.25s ease;
+        }
+
+        @keyframes fadeIn {
+            from {opacity:0; transform:scale(0.95);}
+            to {opacity:1; transform:scale(1);}
+        }
+
+        .modal h3 {
+            margin-bottom: 10px;
+        }
+
+        .modal p {
+            font-size: 14px;
+            color: #6b7280;
         }
 
         .modal button {
-            margin: 8px;
+            margin: 10px 6px 0;
             padding: 10px 14px;
-            border: none;
             border-radius: 8px;
+            border: none;
             cursor: pointer;
+            font-weight: 600;
         }
 
         .btn-danger {
@@ -198,12 +226,9 @@
 
 <body>
 
-<a class="back-arrow" href="${pageContext.request.contextPath}/">
-    ←
-</a>
+<a class="back-arrow" href="${pageContext.request.contextPath}/">←</a>
 
 <div class="container">
-
     <div class="card">
 
         <h2>User Management</h2>
@@ -220,6 +245,7 @@
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Username</th>
+                <th>Role</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -234,15 +260,28 @@
                     <td><span class="badge">${user.userName}</span></td>
 
                     <td>
-                        <a class="btn-edit"
-                           href="${pageContext.request.contextPath}/user/profileid/${user.id}">
-                            Edit
-                        </a>
+                        <span class="badge">
+                            <c:choose>
+                                <c:when test="${not empty user.role}">
+                                    ${user.role}
+                                </c:when>
+                                <c:otherwise>No Role</c:otherwise>
+                            </c:choose>
+                        </span>
+                    </td>
 
-                        <button class="btn-delete"
-                                onclick="openModal('${user.email}')">
-                            Delete
-                        </button>
+                    <td>
+                        <div class="actions">
+                            <a class="btn-edit"
+                               href="${pageContext.request.contextPath}/user/profileid/${user.id}">
+                                Edit
+                            </a>
+
+                            <button class="btn-delete"
+                                    onclick="openModal('${user.email}')">
+                                Delete
+                            </button>
+                        </div>
                     </td>
                 </tr>
             </c:forEach>
@@ -252,30 +291,24 @@
     </div>
 </div>
 
-<!-- TOAST -->
-<div id="toast" class="toast"></div>
-
 <!-- MODAL -->
 <div id="modal" class="modal-overlay">
     <div class="modal">
-        <p>Are you sure you want to delete this user?</p>
-        <button class="btn-danger" id="confirmBtn">Yes</button>
-        <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+        <h3>Confirm Delete</h3>
+        <p>This action cannot be undone.</p>
+
+        <form id="deleteForm" method="post">
+            <button type="submit" class="btn-danger">Yes, Delete</button>
+            <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
+        </form>
     </div>
 </div>
 
 <script>
-    let deleteEmail = null;
-
-    document.getElementById("searchInput").addEventListener("keyup", function () {
-        let filter = this.value.toLowerCase();
-        document.querySelectorAll("#userTable tbody tr").forEach(row => {
-            row.style.display = row.innerText.toLowerCase().includes(filter) ? "" : "none";
-        });
-    });
-
     function openModal(email) {
-        deleteEmail = email;
+        document.getElementById("deleteForm").action =
+            "${pageContext.request.contextPath}/user/delete/" + email;
+
         document.getElementById("modal").style.display = "flex";
     }
 
@@ -283,19 +316,12 @@
         document.getElementById("modal").style.display = "none";
     }
 
-    document.getElementById("confirmBtn").onclick = function () {
-        window.location.href = "${pageContext.request.contextPath}/user/delete/" + deleteEmail;
-    };
-
-    function showToast(msg) {
-        const toast = document.getElementById("toast");
-        toast.innerText = msg;
-        toast.classList.add("show");
-
-        setTimeout(() => {
-            toast.classList.remove("show");
-        }, 3000);
-    }
+    document.getElementById("searchInput").addEventListener("keyup", function () {
+        let filter = this.value.toLowerCase();
+        document.querySelectorAll("#userTable tbody tr").forEach(row => {
+            row.style.display = row.innerText.toLowerCase().includes(filter) ? "" : "none";
+        });
+    });
 </script>
 
 </body>

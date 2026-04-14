@@ -9,9 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-*{
-box-sizing:border-box;
-}
+*{box-sizing:border-box;}
 
 body{
 margin:0;
@@ -23,11 +21,10 @@ align-items:center;
 min-height:100vh;
 }
 
-/* CARD */
 .container{
-width:460px;
+width:520px;
 background:#fff;
-padding:30px;
+padding:32px;
 border-radius:16px;
 box-shadow:0 12px 35px rgba(0,0,0,0.08);
 animation:fade 0.4s ease;
@@ -41,11 +38,10 @@ to{opacity:1; transform:translateY(0);}
 h2{
 text-align:center;
 color:#2563eb;
-margin-bottom:20px;
+margin-bottom:22px;
 font-weight:700;
 }
 
-/* FORM GRID */
 form{
 display:grid;
 grid-template-columns:1fr 1fr;
@@ -60,7 +56,8 @@ position:relative;
 grid-column:span 2;
 }
 
-input{
+/* INPUT + SELECT UNIFIED STYLE */
+input, select{
 width:100%;
 padding:12px;
 border:1px solid #e5e7eb;
@@ -69,14 +66,16 @@ font-size:14px;
 background:#fafafa;
 outline:none;
 transition:0.2s;
+appearance:none;
 }
 
-input:focus{
+input:focus, select:focus{
 background:#fff;
 border-color:#2563eb;
 box-shadow:0 0 0 3px rgba(37,99,235,0.12);
 }
 
+/* FLOATING LABEL (WORKS FOR INPUT ONLY) */
 label{
 position:absolute;
 top:10px;
@@ -89,8 +88,22 @@ pointer-events:none;
 transition:0.2s;
 }
 
+/* INPUT LABEL ANIMATION */
 input:focus + label,
 input:not(:placeholder-shown) + label{
+top:-8px;
+font-size:11px;
+color:#2563eb;
+}
+
+/* SELECT FIX (NO PLACEHOLDER, SAME LOOK AS INPUT) */
+select{
+color:#111827;
+}
+
+/* make select behave like input label system */
+select:valid + label,
+select:focus + label{
 top:-8px;
 font-size:11px;
 color:#2563eb;
@@ -135,13 +148,8 @@ opacity:1;
 transform:translateY(0);
 }
 
-.toast.success{
-background:#16a34a;
-}
-
-.toast.error{
-background:#dc2626;
-}
+.toast.success{background:#16a34a;}
+.toast.error{background:#dc2626;}
 </style>
 
 </head>
@@ -165,33 +173,50 @@ action="${pageContext.request.contextPath}/user/register"
 modelAttribute="user"
 onsubmit="return validateForm(event);">
 
+<!-- NAME -->
 <div class="field">
-<form:input path="name" placeholder=" " id="name"/>
+<form:input path="name" id="name" placeholder=" "/>
 <label>Name</label>
 </div>
 
+<!-- EMAIL -->
 <div class="field">
-<form:input path="email" placeholder=" " id="email"/>
+<form:input path="email" id="email" placeholder=" "/>
 <label>Email</label>
 </div>
 
+<!-- PHONE -->
 <div class="field">
-<form:input path="phoneNo" placeholder=" " id="phone"/>
+<form:input path="phoneNo" id="phone" placeholder=" "/>
 <label>Phone</label>
 </div>
 
+<!-- USERNAME -->
 <div class="field">
-<form:input path="userName" placeholder=" " id="username"/>
+<form:input path="userName" id="username" placeholder=" "/>
 <label>Username</label>
 </div>
 
-<div class="field full">
-<form:input path="age" placeholder=" " id="age"/>
+<!-- AGE -->
+<div class="field">
+<form:input path="age" id="age" placeholder=" "/>
 <label>Age</label>
 </div>
 
+<!-- ROLE (NOW SAME STYLE AS INPUT) -->
+<div class="field">
+<form:select path="role" id="role">
+    <form:option value="" label=" "/>
+    <c:forEach var="r" items="${roles}">
+        <form:option value="${r.name}" label="${r.name}"/>
+    </c:forEach>
+</form:select>
+<label>Role</label>
+</div>
+
+<!-- PASSWORD -->
 <div class="field full">
-<form:password path="password" placeholder=" " id="password"/>
+<form:password path="password" id="password" placeholder=" "/>
 <label>Password</label>
 </div>
 
@@ -207,21 +232,18 @@ const toast=document.getElementById("toast");
 toast.innerText=message;
 toast.className="toast show "+type;
 
-setTimeout(()=>{
-toast.className="toast";
-},2500);
+setTimeout(()=>toast.className="toast",2500);
 }
 
-/* CLEAN VALIDATION (NO RED BORDERS) */
 function validateForm(event){
 
-const fields = ["name","email","phone","username","age","password"];
+const fields=["name","email","phone","username","age","password","role"];
 
 for(let id of fields){
 let el=document.getElementById(id);
 if(!el || el.value.trim()===""){
 event.preventDefault();
-showToast("Please fill all fields properly","error");
+showToast("Please fill all fields","error");
 return false;
 }
 }
@@ -229,15 +251,15 @@ return false;
 let email=document.getElementById("email").value;
 if(!email.includes("@")){
 event.preventDefault();
-showToast("Enter a valid email","error");
+showToast("Enter valid email","error");
 return false;
 }
 
-showToast("Validation passed","success");
+showToast("Registration successful","success");
 return true;
 }
 
-/* FIX AGE DEFAULT 0 ISSUE */
+/* FIX AGE DEFAULT 0 */
 document.addEventListener("DOMContentLoaded",()=>{
 let age=document.getElementById("age");
 if(age.value==="0"){

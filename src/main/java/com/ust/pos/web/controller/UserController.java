@@ -1,7 +1,9 @@
 package com.ust.pos.web.controller;
 
 import com.ust.pos.dto.UserDto;
+import com.ust.pos.service.RoleService;
 import com.ust.pos.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +20,13 @@ public class UserController {
         this.userService = userService;
     }
 
+    @Autowired
+    private RoleService roleService;
 
     @GetMapping("/register")
     public String showRegister(Model model) {
         model.addAttribute("user", new UserDto());
+        model.addAttribute("roles",roleService.getAllRoles());
         return "register";
     }
 
@@ -124,6 +129,7 @@ public class UserController {
         UserDto user = userService.getUserById(id);
 
         model.addAttribute("user", user);
+        model.addAttribute("roles",roleService.getAllRoles());
 
         return "userProfile";
     }

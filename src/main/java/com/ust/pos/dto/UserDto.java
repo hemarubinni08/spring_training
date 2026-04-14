@@ -7,7 +7,15 @@ public class UserDto extends CommonDto {
     private String userName;
     private String password;
     private int age;
+    private String role;
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public String getEmail() {
         return email;
