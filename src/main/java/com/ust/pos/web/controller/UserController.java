@@ -120,8 +120,11 @@ public class UserController {
 
     @GetMapping("/profileid/{id}")
     public String profileid(@PathVariable Long id, Model model){
-        UserDto user= userService.getUserById(id);
-        model.addAttribute("user", userService.getUserById(id));
+
+        UserDto user = userService.getUserById(id);
+
+        model.addAttribute("user", user);
+
         return "userProfile";
     }
 
