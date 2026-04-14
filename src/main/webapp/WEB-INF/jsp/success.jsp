@@ -3,84 +3,140 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Registration Successful</title>
+<title>Success</title>
 
-    <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: linear-gradient(to right, #a1ffce, #faffd1);
-            margin: 0;
-            padding: 0;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-        .container {
-            width: 450px;
-            margin: 70px auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-        }
+<style>
+*{
+box-sizing:border-box;
+}
 
-        h2 {
-            text-align: center;
-            color: #2e7d32;
-            margin-bottom: 25px;
-        }
+body{
+margin:0;
+font-family:Inter;
+background:#f4f7fb;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+}
 
-        .field {
-            margin-bottom: 14px;
-        }
+/* CARD */
+.container{
+width:420px;
+background:#fff;
+padding:32px;
+border-radius:16px;
+box-shadow:0 12px 35px rgba(0,0,0,0.08);
+text-align:center;
+animation:pop 0.5s ease;
+}
 
-        .label {
-            font-weight: bold;
-            color: #555;
-            display: block;
-            margin-bottom: 3px;
-        }
+/* ANIMATION */
+@keyframes pop{
+from{
+opacity:0;
+transform:translateY(15px) scale(0.98);
+}
+to{
+opacity:1;
+transform:translateY(0) scale(1);
+}
+}
 
-        .value {
-            background: #f4f4f4;
-            padding: 8px 10px;
-            border-radius: 5px;
-            color: #000;
-        }
+/* SUCCESS ICON */
+.icon{
+width:70px;
+height:70px;
+margin:0 auto 15px;
+border-radius:50%;
+background:#e0f2fe;
+display:flex;
+align-items:center;
+justify-content:center;
+}
 
-        .btn {
-            display: block;
-            text-align: center;
-            margin-top: 25px;
-            text-decoration: none;
-            padding: 10px;
-            background: #4CAF50;
-            color: white;
-            border-radius: 6px;
-            font-weight: bold;
-        }
+.icon svg{
+width:34px;
+height:34px;
+fill:#2563eb;
+}
 
-        .btn:hover {
-            background: #45a049;
-        }
-    </style>
+/* TITLE */
+h2{
+margin:10px 0;
+color:#16a34a;
+font-weight:700;
+}
+
+/* TEXT */
+p{
+color:#6b7280;
+font-size:14px;
+margin-bottom:20px;
+}
+
+/* BUTTONS */
+.btn{
+display:block;
+width:100%;
+padding:12px;
+border-radius:10px;
+text-decoration:none;
+font-weight:600;
+transition:0.2s;
+}
+
+.primary{
+background:#2563eb;
+color:#fff;
+}
+
+.primary:hover{
+background:#1e40af;
+transform:translateY(-1px);
+}
+
+.secondary{
+margin-top:10px;
+background:#eef2ff;
+color:#2563eb;
+}
+
+.secondary:hover{
+background:#dbeafe;
+}
+</style>
 </head>
 
 <body>
 
 <div class="container">
 
-    <div class="field">
-        <span class="label">Name</span>
-        <div class="value">${user.name}</div>
-    </div>
+<!-- ICON -->
+<div class="icon">
+<svg viewBox="0 0 24 24">
+<path d="M9 16.2l-3.5-3.5L4 14.2 9 19l12-12-1.5-1.5z"/>
+</svg>
+</div>
 
-    <div class="field">
-        <span class="label">Email</span>
-        <div class="value">${user.email}</div>
-    </div>
+<h2>Registration Successful</h2>
 
-    <a class="btn" href="${pageContext.request.contextPath}/user/register">
-        Register Another User
-    </a>
+<p>
+User <b>${user.name}</b> has been created successfully.
+</p>
+
+<a class="btn primary"
+href="${pageContext.request.contextPath}/">
+Go to Dashboard
+</a>
+
+<a class="btn secondary"
+href="${pageContext.request.contextPath}/user/register">
+Create Another User
+</a>
+
 </div>
 
 </body>

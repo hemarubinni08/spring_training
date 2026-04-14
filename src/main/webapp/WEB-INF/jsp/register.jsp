@@ -4,166 +4,247 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>User Registration</title>
+<title>Register</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background: #f4f6f9;
-            color: #1f2937;
-        }
+<style>
+*{
+box-sizing:border-box;
+}
 
-        .container {
-            width: 420px;
-            margin: 60px auto;
-            background: #ffffff;
-            padding: 28px;
-            border-radius: 14px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-        }
+body{
+margin:0;
+font-family:Inter;
+background:#f4f7fb;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+}
 
-        h2 {
-            text-align: center;
-            margin-bottom: 22px;
-            font-weight: 700;
-            color: #111827;
-        }
+/* CARD */
+.container{
+width:460px;
+background:#fff;
+padding:30px;
+border-radius:16px;
+box-shadow:0 12px 35px rgba(0,0,0,0.08);
+animation:fade 0.4s ease;
+}
 
-        .form-group {
-            margin-bottom: 14px;
-        }
+@keyframes fade{
+from{opacity:0; transform:translateY(10px);}
+to{opacity:1; transform:translateY(0);}
+}
 
-        label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 6px;
-        }
+h2{
+text-align:center;
+color:#2563eb;
+margin-bottom:20px;
+font-weight:700;
+}
 
-        input {
-            width: 100%;
-            padding: 10px 12px;
-            border-radius: 10px;
-            border: 1px solid #e5e7eb;
-            font-size: 14px;
-            outline: none;
-            transition: 0.2s;
-        }
+/* FORM GRID */
+form{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px;
+}
 
-        input:focus {
-            border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
-        }
+.field{
+position:relative;
+}
 
-        .btn {
-            width: 100%;
-            padding: 12px;
-            background: #6366f1;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            margin-top: 8px;
-        }
+.full{
+grid-column:span 2;
+}
 
-        .btn:hover {
-            background: #4f46e5;
-            transform: translateY(-1px);
-        }
+input{
+width:100%;
+padding:12px;
+border:1px solid #e5e7eb;
+border-radius:10px;
+font-size:14px;
+background:#fafafa;
+outline:none;
+transition:0.2s;
+}
 
-        .error {
-            background: #fef2f2;
-            color: #b91c1c;
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 14px;
-            font-size: 13px;
-        }
-    </style>
+input:focus{
+background:#fff;
+border-color:#2563eb;
+box-shadow:0 0 0 3px rgba(37,99,235,0.12);
+}
 
-    <script>
-        function validateForm() {
-            let email = document.getElementById("email").value;
-            let age = document.getElementById("age").value;
-            let phone = document.getElementById("phoneNo").value;
+label{
+position:absolute;
+top:10px;
+left:12px;
+font-size:12px;
+color:#6b7280;
+background:white;
+padding:0 4px;
+pointer-events:none;
+transition:0.2s;
+}
 
-            if (!email.includes("@")) {
-                alert("Please enter a valid email");
-                return false;
-            }
+input:focus + label,
+input:not(:placeholder-shown) + label{
+top:-8px;
+font-size:11px;
+color:#2563eb;
+}
 
-            if (age <= 0) {
-                alert("Age must be greater than 0");
-                return false;
-            }
+/* BUTTON */
+.btn{
+grid-column:span 2;
+padding:12px;
+background:#2563eb;
+color:#fff;
+border:none;
+border-radius:10px;
+font-weight:600;
+cursor:pointer;
+transition:0.2s;
+}
 
-            if (phone.length < 10) {
-                alert("Phone number must be at least 10 digits");
-                return false;
-            }
+.btn:hover{
+background:#1e40af;
+transform:translateY(-1px);
+}
 
-            return true;
-        }
-    </script>
+/* TOAST */
+.toast{
+position:fixed;
+top:20px;
+right:20px;
+background:#111827;
+color:#fff;
+padding:12px 16px;
+border-radius:10px;
+font-size:13px;
+opacity:0;
+transform:translateY(-10px);
+transition:0.3s;
+z-index:999;
+}
+
+.toast.show{
+opacity:1;
+transform:translateY(0);
+}
+
+.toast.success{
+background:#16a34a;
+}
+
+.toast.error{
+background:#dc2626;
+}
+</style>
+
 </head>
 
 <body>
 
+<div class="toast" id="toast"></div>
+
 <div class="container">
 
-    <h2>Create Account</h2>
+<h2>Create Account</h2>
 
-    <c:if test="${not empty errorMessage}">
-        <div class="error">${errorMessage}</div>
-    </c:if>
+<c:if test="${not empty errorMessage}">
+<script>
+window.onload = () => showToast("${errorMessage}", "error");
+</script>
+</c:if>
 
-    <form:form action="${pageContext.request.contextPath}/user/register"
-               method="post"
-               modelAttribute="user"
-               onsubmit="return validateForm();">
+<form:form method="post"
+action="${pageContext.request.contextPath}/user/register"
+modelAttribute="user"
+onsubmit="return validateForm(event);">
 
-        <div class="form-group">
-            <label>Name</label>
-            <form:input path="name" placeholder="Enter full name"/>
-        </div>
+<div class="field">
+<form:input path="name" placeholder=" " id="name"/>
+<label>Name</label>
+</div>
 
-        <div class="form-group">
-            <label>Email</label>
-            <form:input path="email" id="email" placeholder="Enter email"/>
-        </div>
+<div class="field">
+<form:input path="email" placeholder=" " id="email"/>
+<label>Email</label>
+</div>
 
-        <div class="form-group">
-            <label>Phone Number</label>
-            <form:input path="phoneNo" id="phoneNo" placeholder="Enter phone number"/>
-        </div>
+<div class="field">
+<form:input path="phoneNo" placeholder=" " id="phone"/>
+<label>Phone</label>
+</div>
 
-        <div class="form-group">
-            <label>Username</label>
-            <form:input path="userName" placeholder="Choose username"/>
-        </div>
+<div class="field">
+<form:input path="userName" placeholder=" " id="username"/>
+<label>Username</label>
+</div>
 
-        <div class="form-group">
-            <label>Age</label>
-            <form:input path="age" id="age" placeholder="Enter age"/>
-        </div>
+<div class="field full">
+<form:input path="age" placeholder=" " id="age"/>
+<label>Age</label>
+</div>
 
-        <div class="form-group">
-            <label>Password</label>
-            <form:password path="password" id="password" placeholder="Enter password"/>
-        </div>
+<div class="field full">
+<form:password path="password" placeholder=" " id="password"/>
+<label>Password</label>
+</div>
 
-        <button type="submit" class="btn">Register</button>
+<button class="btn" type="submit">Register</button>
 
-    </form:form>
+</form:form>
 
 </div>
+
+<script>
+function showToast(message,type="error"){
+const toast=document.getElementById("toast");
+toast.innerText=message;
+toast.className="toast show "+type;
+
+setTimeout(()=>{
+toast.className="toast";
+},2500);
+}
+
+/* CLEAN VALIDATION (NO RED BORDERS) */
+function validateForm(event){
+
+const fields = ["name","email","phone","username","age","password"];
+
+for(let id of fields){
+let el=document.getElementById(id);
+if(!el || el.value.trim()===""){
+event.preventDefault();
+showToast("Please fill all fields properly","error");
+return false;
+}
+}
+
+let email=document.getElementById("email").value;
+if(!email.includes("@")){
+event.preventDefault();
+showToast("Enter a valid email","error");
+return false;
+}
+
+showToast("Validation passed","success");
+return true;
+}
+
+/* FIX AGE DEFAULT 0 ISSUE */
+document.addEventListener("DOMContentLoaded",()=>{
+let age=document.getElementById("age");
+if(age.value==="0"){
+age.value="";
+}
+});
+</script>
 
 </body>
 </html>

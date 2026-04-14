@@ -1,201 +1,229 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib uri="jakarta.tags.core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home Dashboard</title>
+<title>Dashboard</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background: #f4f6f9;
-            color: #1f2937;
-        }
+<style>
+body{
+margin:0;
+font-family:Inter,sans-serif;
+background:#f4f7fb;
+color:#1f2937;
+}
 
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 260px;
-            height: 100vh;
-            background: #111827;
-            box-shadow: 4px 0 20px rgba(0,0,0,0.15);
-        }
+/* SIDEBAR */
+.sidebar{
+position:fixed;
+left:0;
+top:0;
+width:250px;
+height:100vh;
+background:#ffffff;
+border-right:1px solid #e5e7eb;
+box-shadow:2px 0 20px rgba(0,0,0,0.05);
+}
 
-        .sidebar-header {
-            padding: 18px;
-            font-size: 18px;
-            font-weight: 600;
-            color: #ffffff;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
+.sidebar-header{
+padding:18px;
+font-weight:700;
+color:#2563eb;
+border-bottom:1px solid #eee;
+}
 
-        .sidebar a {
-            display: block;
-            padding: 12px 18px;
-            margin: 6px 10px;
-            color: #e5e7eb;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: 0.2s;
-        }
+.sidebar a{
+display:block;
+padding:12px 18px;
+margin:6px 10px;
+text-decoration:none;
+color:#374151;
+border-radius:8px;
+transition:0.2s;
+}
 
-        .sidebar a:hover {
-            background: rgba(255,255,255,0.08);
-            transform: translateX(4px);
-        }
+.sidebar a:hover{
+background:#eef2ff;
+color:#2563eb;
+transform:translateX(4px);
+}
 
-        .content {
-            margin-left: 260px;
-            padding: 30px;
-        }
+/* TOP BAR */
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 25px;
+background:#fff;
+border-radius:12px;
+box-shadow:0 4px 15px rgba(0,0,0,0.05);
+margin-bottom:20px;
+}
 
-        .title {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
+.title{
+font-size:20px;
+font-weight:700;
+color:#111827;
+}
 
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
+/* LOGOUT ICON */
+.logout{
+width:38px;
+height:38px;
+border-radius:10px;
+background:#eff6ff;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+transition:0.2s;
+}
 
-        .card {
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 14px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-        }
+.logout:hover{
+background:#dbeafe;
+transform:scale(1.05);
+}
 
-        h3 {
-            margin-bottom: 15px;
-            font-size: 18px;
-            color: #111827;
-        }
+.logout svg{
+width:20px;
+height:20px;
+fill:#2563eb;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            border-radius: 10px;
-            overflow: hidden;
-        }
+/* CONTENT */
+.content{
+margin-left:250px;
+padding:25px;
+}
 
-        th {
-            text-align: left;
-            background: #eef2ff;
-            padding: 12px;
-            font-weight: 600;
-            color: #374151;
-        }
+/* CARDS */
+.card{
+background:#fff;
+border-radius:14px;
+padding:18px;
+box-shadow:0 8px 25px rgba(0,0,0,0.06);
+margin-bottom:20px;
+}
 
-        td {
-            padding: 12px;
-            border-bottom: 1px solid #e5e7eb;
-        }
+h3{
+margin-bottom:12px;
+color:#2563eb;
+}
 
-        tr:hover {
-            background: #f9fafb;
-        }
+/* TABLE */
+table{
+width:100%;
+border-collapse:collapse;
+}
 
-        .badge {
-            background: #e0e7ff;
-            color: #3730a3;
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 12px;
-        }
-    </style>
+th{
+text-align:left;
+padding:12px;
+background:#f1f5ff;
+color:#1e3a8a;
+font-size:13px;
+}
+
+td{
+padding:12px;
+border-bottom:1px solid #eee;
+}
+
+tr:hover{
+background:#f9fafb;
+}
+
+.badge{
+background:#dbeafe;
+color:#1e3a8a;
+padding:4px 10px;
+border-radius:8px;
+font-size:12px;
+}
+</style>
 </head>
 
 <body>
 
 <!-- SIDEBAR -->
 <div class="sidebar">
-    <div class="sidebar-header">Dashboard</div>
+<div class="sidebar-header">Dashboard</div>
 
-    <c:forEach var="node" items="${nodes}">
-        <a href="${pageContext.request.contextPath}${node.path}">
-            ${node.name}
-        </a>
-    </c:forEach>
+<c:forEach var="node" items="${nodes}">
+<a href="${pageContext.request.contextPath}${node.path}">
+${node.name}
+</a>
+</c:forEach>
 </div>
 
 <!-- CONTENT -->
 <div class="content">
 
-    <div class="title">Home Dashboard</div>
+<div class="topbar">
+<div class="title">Home Dashboard</div>
 
-    <div class="grid">
+<a class="logout"
+href="${pageContext.request.contextPath}/user/register">
+<svg viewBox="0 0 24 24">
+<path d="M10 17l5-5-5-5v10z"/>
+</svg>
+</a>
+</div>
 
-        <!-- USERS -->
-        <div class="card">
-            <h3>Users</h3>
-            <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Username</th>
-                </tr>
+<!-- USERS -->
+<div class="card">
+<h3>Users</h3>
+<table>
+<tr>
+<th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Username</th>
+</tr>
 
-                <c:forEach var="u" items="${users}">
-                    <tr>
-                        <td>${u.id}</td>
-                        <td>${u.name}</td>
-                        <td>${u.email}</td>
-                        <td>${u.phoneNo}</td>
-                        <td><span class="badge">${u.userName}</span></td>
-                    </tr>
-                </c:forEach>
-            </table>
-        </div>
+<c:forEach var="u" items="${users}">
+<tr>
+<td>${u.id}</td>
+<td>${u.name}</td>
+<td>${u.email}</td>
+<td>${u.phoneNo}</td>
+<td><span class="badge">${u.userName}</span></td>
+</tr>
+</c:forEach>
+</table>
+</div>
 
-        <!-- ROLES -->
-        <div class="card">
-            <h3>Roles</h3>
-            <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Role Name</th>
-                </tr>
+<!-- ROLES -->
+<div class="card">
+<h3>Roles</h3>
+<table>
+<tr><th>ID</th><th>Name</th></tr>
 
-                <c:forEach var="r" items="${roles}">
-                    <tr>
-                        <td>${r.id}</td>
-                        <td>${r.name}</td>
-                    </tr>
-                </c:forEach>
-            </table>
-        </div>
+<c:forEach var="r" items="${roles}">
+<tr>
+<td>${r.id}</td>
+<td>${r.name}</td>
+</tr>
+</c:forEach>
+</table>
+</div>
 
-        <!-- NODES -->
-        <div class="card">
-            <h3>Nodes</h3>
-            <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Path</th>
-                </tr>
+<!-- NODES -->
+<div class="card">
+<h3>Nodes</h3>
+<table>
+<tr><th>ID</th><th>Name</th><th>Path</th></tr>
 
-                <c:forEach var="n" items="${nodes}">
-                    <tr>
-                        <td>${n.id}</td>
-                        <td>${n.name}</td>
-                        <td>${n.path}</td>
-                    </tr>
-                </c:forEach>
-            </table>
-        </div>
+<c:forEach var="n" items="${nodes}">
+<tr>
+<td>${n.id}</td>
+<td>${n.name}</td>
+<td>${n.path}</td>
+</tr>
+</c:forEach>
+</table>
+</div>
 
-    </div>
 </div>
 
 </body>

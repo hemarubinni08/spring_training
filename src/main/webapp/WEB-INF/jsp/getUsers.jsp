@@ -4,9 +4,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>All Users</title>
+    <title>User Management</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         body {
@@ -20,18 +20,19 @@
             position: fixed;
             top: 18px;
             left: 18px;
-            width: 42px;
-            height: 42px;
+            width: 44px;
+            height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
             text-decoration: none;
             font-size: 20px;
             color: #4f46e5;
             transition: 0.2s;
+            z-index: 1000;
         }
 
         .back-arrow:hover {
@@ -41,17 +42,20 @@
 
         .container {
             max-width: 1100px;
-            margin: 60px auto;
-            background: #ffffff;
-            padding: 25px;
-            border-radius: 14px;
+            margin: 70px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 16px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.08);
         }
 
         h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            font-weight: 600;
+            margin-bottom: 15px;
+            font-weight: 700;
             color: #111827;
         }
 
@@ -61,17 +65,16 @@
 
         .search-box input {
             width: 100%;
-            padding: 10px 14px;
+            padding: 12px 14px;
+            border-radius: 10px;
             border: 1px solid #e5e7eb;
-            border-radius: 8px;
             outline: none;
-            font-size: 14px;
             transition: 0.2s;
         }
 
         .search-box input:focus {
-            border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(99,102,241,0.2);
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79,70,229,0.15);
         }
 
         table {
@@ -81,71 +84,114 @@
             overflow: hidden;
         }
 
-        thead {
-            background: linear-gradient(90deg, #4f46e5, #6366f1);
-            color: white;
+        th {
+            background: #eef2ff;
+            color: #3730a3;
+            padding: 14px;
+            text-align: left;
         }
 
-        th, td {
-            padding: 12px 14px;
-            text-align: center;
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #e5e7eb;
         }
 
-        tbody tr {
-            transition: 0.2s;
-        }
-
-        tbody tr:hover {
+        tr:hover {
             background: #f9fafb;
         }
 
-        a {
-            color: #4f46e5;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .btn-delete {
-            background: #ef4444;
-            border: none;
-            color: white;
-            padding: 6px 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .btn-delete:hover {
-            background: #dc2626;
-            transform: scale(1.05);
+        .badge {
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 12px;
         }
 
         .btn-edit {
             background: #3b82f6;
             color: white;
             padding: 6px 10px;
-            border-radius: 6px;
-            text-decoration: none;
+            border-radius: 8px;
             font-size: 13px;
-            transition: 0.2s;
+            text-decoration: none;
             margin-right: 6px;
         }
 
         .btn-edit:hover {
             background: #2563eb;
-            transform: scale(1.05);
         }
 
-        .badge {
-            padding: 4px 8px;
-            border-radius: 6px;
-            background: #e0e7ff;
-            color: #3730a3;
-            font-size: 12px;
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 8px;
+            border: none;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .btn-delete:hover {
+            background: #dc2626;
+        }
+
+        /* TOAST */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #111827;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: 0.3s;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .modal {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            width: 320px;
+            text-align: center;
+        }
+
+        .modal button {
+            margin: 8px;
+            padding: 10px 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
         }
     </style>
 </head>
@@ -158,80 +204,97 @@
 
 <div class="container">
 
-    <h2>User Management Dashboard</h2>
+    <div class="card">
 
-    <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Search users by name, email, username...">
-    </div>
+        <h2>User Management</h2>
 
-    <table id="userTable">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Username</th>
-            <th>Action</th>
-        </tr>
-        </thead>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search users...">
+        </div>
 
-        <tbody>
-        <c:forEach var="user" items="${getUsers}">
+        <table id="userTable">
+            <thead>
             <tr>
-                <td>
-                    <a href="${pageContext.request.contextPath}/user/profileJdbc/id/${user.id}">
-                        ${user.id}
-                    </a>
-                </td>
-
-                <td>${user.name}</td>
-
-                <td>
-                    <a href="${pageContext.request.contextPath}/user/profileJdbc/id/${user.id}">
-                        ${user.email}
-                    </a>
-                </td>
-
-                <td>${user.phoneNo}</td>
-
-                <td>
-                    <span class="badge">${user.userName}</span>
-                </td>
-
-                <td>
-                    <a class="btn-edit"
-                       href="${pageContext.request.contextPath}/user/profileid/${user.id}">
-                        Edit
-                    </a>
-
-                    <c:url var="deleteUrl" value="/user/delete/${user.email}" />
-                    <form action="${deleteUrl}" method="post"
-                          style="display:inline;"
-                          onsubmit="return confirmDelete();">
-
-                        <button class="btn-delete" type="submit">Delete</button>
-                    </form>
-                </td>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Username</th>
+                <th>Action</th>
             </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+            </thead>
 
+            <tbody>
+            <c:forEach var="user" items="${getUsers}">
+                <tr>
+                    <td>${user.id}</td>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>${user.phoneNo}</td>
+                    <td><span class="badge">${user.userName}</span></td>
+
+                    <td>
+                        <a class="btn-edit"
+                           href="${pageContext.request.contextPath}/user/profileid/${user.id}">
+                            Edit
+                        </a>
+
+                        <button class="btn-delete"
+                                onclick="openModal('${user.email}')">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast"></div>
+
+<!-- MODAL -->
+<div id="modal" class="modal-overlay">
+    <div class="modal">
+        <p>Are you sure you want to delete this user?</p>
+        <button class="btn-danger" id="confirmBtn">Yes</button>
+        <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+    </div>
 </div>
 
 <script>
+    let deleteEmail = null;
+
     document.getElementById("searchInput").addEventListener("keyup", function () {
         let filter = this.value.toLowerCase();
-        let rows = document.querySelectorAll("#userTable tbody tr");
-
-        rows.forEach(row => {
+        document.querySelectorAll("#userTable tbody tr").forEach(row => {
             row.style.display = row.innerText.toLowerCase().includes(filter) ? "" : "none";
         });
     });
 
-    function confirmDelete() {
-        return confirm("Are you sure you want to delete this user?");
+    function openModal(email) {
+        deleteEmail = email;
+        document.getElementById("modal").style.display = "flex";
+    }
+
+    function closeModal() {
+        document.getElementById("modal").style.display = "none";
+    }
+
+    document.getElementById("confirmBtn").onclick = function () {
+        window.location.href = "${pageContext.request.contextPath}/user/delete/" + deleteEmail;
+    };
+
+    function showToast(msg) {
+        const toast = document.getElementById("toast");
+        toast.innerText = msg;
+        toast.classList.add("show");
+
+        setTimeout(() => {
+            toast.classList.remove("show");
+        }, 3000);
     }
 </script>
 
