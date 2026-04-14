@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,29 +30,35 @@
 <body>
 
 <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
-    <div class="card shadow p-4" style="width: 400px;">
+    <div class="card shadow p-4" style="width: 420px;">
 
         <h3 class="text-center mb-4">Add Node</h3>
 
-        <!-- ✅ FORM TAG ADDED -->
-        <form action="/node/addnode" method="post" modelAttribute="nodeDto">
+        <form action="/node/addnode" method="post">
 
             <div class="form-group">
                 <label>Node Name</label>
-                <input type="text"
-                       class="form-control"
-                       name="name"
-                       placeholder="Enter node name"
-                       required>
+                <input type="text" class="form-control" name="name" required>
             </div>
 
             <div class="form-group">
                 <label>Path</label>
-                <input type="text"
-                       class="form-control"
-                       name="path"
-                       placeholder="Enter path"
-                       required>
+                <input type="text" class="form-control" name="path" required>
+            </div>
+
+            <div class="form-group">
+                <label class="font-weight-bold">Roles (Multiple)</label>
+                <div class="border rounded p-2">
+                    <c:forEach items="${rolesList}" var="r">
+                        <div class="form-check">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   name="roles"
+                                   value="${r.name}">
+                            <label class="form-check-label">${r.name}</label>
+                        </div>
+                    </c:forEach>
+                </div>
             </div>
 
             <button type="submit" class="btn btn-primary">
@@ -58,7 +66,6 @@
             </button>
 
         </form>
-        <!-- ✅ FORM TAG CLOSED -->
 
     </div>
 </div>

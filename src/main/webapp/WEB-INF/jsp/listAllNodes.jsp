@@ -45,6 +45,7 @@
                         <th>ID</th>
                         <th>Name</th>
                         <th>Path</th>
+                        <th>Roles</th>
                         <th class="text-center">Actions</th>
                     </tr>
                 </thead>
@@ -53,12 +54,28 @@
                     <c:forEach items="${nodes}" var="node">
                         <tr>
                             <td>
-                                <a href="/node/nodeprofile/${node.id}" class="text-decoration-none fw-semibold">
+                                <a href="/node/nodeprofile/${node.id}"
+                                   class="text-decoration-none fw-semibold">
                                     ${node.id}
                                 </a>
                             </td>
+
                             <td>${node.name}</td>
                             <td class="text-muted">${node.path}</td>
+
+                            <!-- ✅ ROLES DISPLAY -->
+                            <td>
+                                <c:if test="${empty node.roles}">
+                                    <span class="text-muted">No Roles</span>
+                                </c:if>
+
+                                <c:forEach items="${node.roles}" var="r">
+                                    <span class="badge bg-secondary me-1">
+                                        ${r}
+                                    </span>
+                                </c:forEach>
+                            </td>
+
                             <td class="text-center">
                                 <a href="/node/nodeprofile/${node.id}"
                                    class="btn btn-sm btn-outline-primary me-2">
@@ -76,7 +93,7 @@
 
                     <c:if test="${empty nodes}">
                         <tr>
-                            <td colspan="4" class="text-center py-4 text-muted">
+                            <td colspan="5" class="text-center py-4 text-muted">
                                 No nodes found.
                             </td>
                         </tr>

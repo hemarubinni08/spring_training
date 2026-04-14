@@ -60,7 +60,7 @@
                 <button type="submit" class="btn btn-primary w-100">
                     Update & Save
                 </button>
-                <a href="/role/list" class="btn btn-outline-secondary w-100">
+                <a href="/role/listallroles" class="btn btn-outline-secondary w-100">
                     Cancel
                 </a>
             </div>

@@ -20,8 +20,7 @@ public class NodeController {
 
     @GetMapping("/addnode")
     public String addNode(Model model) {
-        model.addAttribute("rolesList", roleService.getAllRoles()
-        );
+        model.addAttribute("rolesList", roleService.getAllRoles());
         model.addAttribute("nodeDto", new NodeDto());
         return "addNode";
     }
@@ -34,6 +33,7 @@ public class NodeController {
 
     @GetMapping("/listallnodes")
     public String getAllNodes(Model model) {
+        model.addAttribute("rolesList",roleService.getAllRoles());
         model.addAttribute("nodes", nodeService.getAllNodes());
         return "listAllNodes";
     }
