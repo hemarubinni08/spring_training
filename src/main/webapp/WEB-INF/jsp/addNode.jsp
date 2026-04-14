@@ -11,7 +11,6 @@
     <meta charset="UTF-8">
     <title>Add Node</title>
 
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
           rel="stylesheet"/>
 
@@ -43,13 +42,11 @@
 
                     <h4 class="text-center mb-4">Add Node</h4>
 
-                    <!-- ✅ SPRING FORM (OPEN TAG IS REQUIRED) -->
                     <form:form
                         action="/node/addNode"
                         method="post"
                         modelAttribute="nodeDto">
 
-                        <!-- Node Name -->
                         <div class="mb-3">
                             <label class="form-label">Node Name</label>
                             <form:input path="name"
@@ -57,7 +54,6 @@
                                         required="true"/>
                         </div>
 
-                        <!-- Node Path -->
                         <div class="mb-3">
                             <label class="form-label">Node Path</label>
                             <form:input path="path"
@@ -65,7 +61,6 @@
                                         required="true"/>
                         </div>
 
-                        <!-- Primary Role -->
                         <div class="mb-3">
                             <label class="form-label">Primary Role</label>
                             <form:select path="role" cssClass="form-control">
@@ -76,7 +71,6 @@
                             </form:select>
                         </div>
 
-                        <!-- Additional Roles -->
                         <div class="mb-3">
                             <label class="form-label">Additional Roles</label>
                             <form:select path="roles"
@@ -98,7 +92,6 @@
                         </div>
 
                     </form:form>
-                    <!-- ✅ SPRING FORM (CLOSE TAG) -->
 
                 </div>
 

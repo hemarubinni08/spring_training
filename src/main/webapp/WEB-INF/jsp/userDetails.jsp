@@ -7,7 +7,6 @@
 <head>
     <title>Update User</title>
 
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
           rel="stylesheet"/>
 
@@ -78,51 +77,41 @@
 <div class="update-card">
     <h3>Update User</h3>
 
-    <!-- ✅ SPRING FORM -->
     <form:form action="/user/updateUserJpa" method="post" modelAttribute="user">
 
-        <!-- ✅ Hidden ID -->
         <form:hidden path="id"/>
 
-        <!-- Name -->
         <div class="mb-3">
             <label>Name</label>
             <form:input path="name" cssClass="form-control" required="true"/>
         </div>
 
-        <!-- Email -->
         <div class="mb-3">
             <label>Email</label>
             <form:input path="email" type="email" cssClass="form-control" required="true"/>
         </div>
 
-        <!-- Phone -->
         <div class="mb-3">
             <label>Phone Number</label>
             <form:input path="phoneNo" cssClass="form-control" required="true"/>
         </div>
 
-        <!-- ✅ PRIMARY ROLE -->
         <div class="mb-3">
             <label>Primary Role</label>
 
-            <!-- Display current value -->
             <div class="mb-1 text-muted">
                 Current: <strong>${user.role}</strong>
             </div>
 
-            <!-- Editable dropdown -->
             <form:select path="role" cssClass="form-control">
                 <form:option value="" label="-- Select Primary Role --"/>
                 <form:options items="${roles}" itemValue="name" itemLabel="name"/>
             </form:select>
         </div>
 
-        <!-- ✅ ADDITIONAL ROLES -->
         <div class="mb-3">
             <label>Additional Roles</label>
 
-            <!-- ✅ Display CURRENT USER ROLES -->
             <div class="mb-1 text-muted">
                 Current:
                 <c:forEach var="r" items="${user.roles}">
@@ -130,7 +119,6 @@
                 </c:forEach>
             </div>
 
-            <!-- Editable multi-select -->
             <form:select path="roles" multiple="true" cssClass="form-control">
                 <form:options items="${roles}" itemValue="name" itemLabel="name"/>
             </form:select>
@@ -141,7 +129,6 @@
             </small>
         </div>
 
-        <!-- Submit -->
         <button type="submit" class="btn-update">Update User</button>
 
     </form:form>

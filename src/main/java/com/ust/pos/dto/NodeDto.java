@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class NodeDto extends CommonDto{
+public class NodeDto extends CommonDto {
     private String path;
     private boolean isSuccess = true;
     private String role;

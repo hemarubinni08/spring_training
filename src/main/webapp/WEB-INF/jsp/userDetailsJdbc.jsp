@@ -12,23 +12,18 @@
 
 <form action="updateUserJdbc" method="post">
 
-    <!-- User ID (Readonly, but submitted) -->
     <label>User ID:</label><br>
     <input type="text" name="id" value="${user.id}" readonly /><br><br>
 
-    <!-- Name -->
     <label>Name:</label><br>
     <input type="text" name="Name" value="${user.name}" required /><br><br>
 
-    <!-- Email -->
     <label>Email:</label><br>
     <input type="email" name="email" value="${user.email}" required /><br><br>
 
-    <!-- Phone Number (MATCHES DTO: phoneNo) -->
     <label>Phone Number:</label><br>
     <input type="text" name="phoneNo" value="${user.phoneNo}" required /><br><br>
 
-    <!-- Submit -->
     <button type="submit">Update</button>
 
 </form>

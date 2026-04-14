@@ -6,7 +6,6 @@
 <head>
     <title>User Registration</title>
 
-    <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
@@ -98,7 +97,6 @@
             <form:input path="email" type="email"/>
         </div>
 
-        <!-- ✅ PRIMARY ROLE (SINGLE) -->
         <div class="form-group">
             <label>Primary Role</label>
             <form:select path="role">
@@ -114,25 +112,21 @@
             </form:select>
         </div>
 
-        <!-- Phone -->
         <div class="form-group">
             <label>Phone Number</label>
             <form:input path="phoneNo"/>
         </div>
 
-        <!-- Username -->
         <div class="form-group">
             <label>Username</label>
             <form:input path="userName"/>
         </div>
 
-        <!-- Password -->
         <div class="form-group">
             <label>Password</label>
             <form:password path="password"/>
         </div>
 
-        <!-- Age -->
         <div class="form-group">
             <label>Age</label>
             <form:input path="age"/>

@@ -2,10 +2,8 @@ package com.ust.pos.service.impl;
 
 import com.ust.pos.dao.RoleDao;
 import com.ust.pos.dto.RoleDto;
-import com.ust.pos.dto.UserDto;
 import com.ust.pos.model.Role;
 import com.ust.pos.model.RoleRepository;
-import com.ust.pos.model.User;
 import com.ust.pos.service.RoleService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -39,6 +37,7 @@ public class RoleServiceImpl implements RoleService {
             return null;
         }
     }
+
     @Override
     public void deleteRole(long id) {
         roleRepository.deleteById(id);
@@ -49,6 +48,7 @@ public class RoleServiceImpl implements RoleService {
         List<Role> result = roleRepository.findAll();
         return result.stream().map(role -> modelMapper.map(role, RoleDto.class)).toList();
     }
+
     @Override
     public RoleDto updateRole(RoleDto roleDto) {
         Role existingRole = roleRepository.findById(roleDto.getId()).orElse(null);
@@ -60,8 +60,7 @@ public class RoleServiceImpl implements RoleService {
         if (roleWithSameName != null && roleWithSameName.getId() != roleDto.getId()) {
             roleDto.setSuccess(false);
             return roleDto;
-        }
-        else {
+        } else {
             existingRole.setName(roleDto.getName());
             Role savedRole = roleRepository.save(existingRole);
             roleDto.setSuccess(true);
@@ -71,12 +70,11 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleDto addRoleJdbc(RoleDto roleDto) {
-        if(roleDao.findByName(roleDto.getName()) == null){
+        if (roleDao.findByName(roleDto.getName()) == null) {
             roleDao.addRole(roleDto);
             roleDto.setSuccess(true);
             return roleDto;
-        }
-        else{
+        } else {
             roleDto.setSuccess(false);
             return roleDto;
         }
@@ -85,16 +83,17 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleDto roleDetails(long id) {
         Optional<Role> role = roleRepository.findById(id);
-        if(role.isPresent()){
-            return modelMapper.map(role,RoleDto.class);
+        if (role.isPresent()) {
+            return modelMapper.map(role, RoleDto.class);
+        } else {
+            return null;
         }
-        else{return null;}
     }
 
     @Override
     public List<RoleDto> getAllRolesJdbc() {
         List<Role> roleDtos = roleDao.findAll();
-        return roleDtos.stream().map(role -> modelMapper.map(role , RoleDto.class)).toList();
+        return roleDtos.stream().map(role -> modelMapper.map(role, RoleDto.class)).toList();
     }
 
     @Override
@@ -105,11 +104,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleDto updateByJdbc(RoleDto roleDto) {
         Role existingRole = roleDao.findByName(roleDto.getName());
-        if(existingRole != null && existingRole.getId() != roleDto.getId()){
+        if (existingRole != null && existingRole.getId() != roleDto.getId()) {
             roleDto.setSuccess(false);
             return roleDto;
-        }
-        else{
+        } else {
             roleDao.updateByJdbc(roleDto);
             roleDto.setSuccess(true);
             return roleDto;

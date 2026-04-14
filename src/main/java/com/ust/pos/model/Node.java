@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 
-public class Node extends CommonData{
+public class Node extends CommonData {
     private String path;
     private String role;
     private List<String> roles;

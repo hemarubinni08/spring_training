@@ -1,6 +1,5 @@
 package com.ust.pos.dto;
 
-import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 

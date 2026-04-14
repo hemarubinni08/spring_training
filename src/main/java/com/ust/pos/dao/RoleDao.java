@@ -9,8 +9,12 @@ import java.util.List;
 @Component
 public interface RoleDao {
     boolean addRole(RoleDto roleDto);
+
     Role findByName(String name);
+
     List<Role> findAll();
+
     void deleteByIdJdbc(long id);
+
     void updateByJdbc(RoleDto roleDto);
 }

@@ -7,7 +7,6 @@
 <head>
     <title>Edit Node</title>
 
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
           rel="stylesheet">
 
@@ -21,6 +20,9 @@
         }
         .label {
             font-weight: 600;
+        }
+        select[multiple] {
+            height: 130px;
         }
     </style>
 </head>
@@ -49,7 +51,6 @@
                                    action="${pageContext.request.contextPath}/node/updateNode"
                                    modelAttribute="node">
 
-                            <!-- Hidden ID -->
                             <form:hidden path="id"/>
 
                             <div class="mb-3">
@@ -74,8 +75,29 @@
                                             required="true"/>
                             </div>
 
+                            <div class="mb-3">
+                                <label class="label">Primary Role</label>
+                                <form:select path="role" cssClass="form-control">
+                                    <form:option value="" label="-- Select Primary Role --"/>
+                                    <form:options items="${roles}"
+                                                  itemValue="name"
+                                                  itemLabel="name"/>
+                                </form:select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="label">Additional Roles</label>
+                                <form:select path="roles"
+                                             cssClass="form-control"
+                                             multiple="true">
+                                    <form:options items="${roles}"
+                                                  itemValue="name"
+                                                  itemLabel="name"/>
+                                </form:select>
+                            </div>
+
                             <div class="d-flex justify-content-between">
-                                <a href="${pageContext.request.contextPath}/node/listOfNodes"
+                                <a href="/node/listOfNodes"
                                    class="btn btn-secondary">
                                     Cancel
                                 </a>

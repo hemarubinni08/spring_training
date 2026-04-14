@@ -9,7 +9,6 @@
     <meta charset="UTF-8">
     <title>Home</title>
 
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
           rel="stylesheet"/>
 
@@ -46,7 +45,6 @@
 
 <div class="d-flex">
 
-    <!-- ✅ Sidebar -->
     <div class="sidebar p-3">
         <h5 class="text-center mb-4">POS System</h5>
 
@@ -69,7 +67,6 @@
         </c:if>
     </div>
 
-    <!-- ✅ Main Content -->
     <div class="content-area flex-grow-1">
         <div class="card shadow-sm">
             <div class="card-body">

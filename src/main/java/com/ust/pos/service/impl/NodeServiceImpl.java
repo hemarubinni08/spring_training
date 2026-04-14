@@ -22,16 +22,16 @@ public class NodeServiceImpl implements NodeService {
     NodeRepository nodeRepository;
     @Autowired
     ModelMapper modelMapper;
+
     @Override
     public NodeDto addNode(NodeDto nodeDto) {
-        if(nodeRepository.findByName(nodeDto.getName()) == null &&
-                nodeRepository.findByPath(nodeDto.getPath()) ==null){
-            Node node = modelMapper.map(nodeDto , Node.class);
+        if (nodeRepository.findByName(nodeDto.getName()) == null &&
+                nodeRepository.findByPath(nodeDto.getPath()) == null) {
+            Node node = modelMapper.map(nodeDto, Node.class);
             nodeRepository.save(node);
             nodeDto.setSuccess(true);
             return modelMapper.map(node, NodeDto.class);
-        }
-        else{
+        } else {
             nodeDto.setSuccess(false);
             return nodeDto;
         }
@@ -54,13 +54,7 @@ public class NodeServiceImpl implements NodeService {
         if (nameNode != null && nameNode.getId() != nodeDto.getId()) {
             nodeDto.setSuccess(false);
             return nodeDto;
-        }
-        /*Node pathNode = nodeRepository.findByPath(nodeDto.getPath());
-        if (pathNode != null && pathNode.getId() != nodeDto.getId()) {
-            nodeDto.setSuccess(false);
-            return nodeDto;
-        }*/
-        else {
+        } else {
             Node existingNode = modelMapper.map(nodeDto, Node.class);
             nodeRepository.save(existingNode);
             nodeDto.setSuccess(true);
@@ -71,10 +65,9 @@ public class NodeServiceImpl implements NodeService {
     @Override
     public NodeDto getById(long id) {
         Optional<Node> node = nodeRepository.findById(id);
-        if(node.isPresent()){
-            return modelMapper.map(node , NodeDto.class);
-        }
-        else{
+        if (node.isPresent()) {
+            return modelMapper.map(node, NodeDto.class);
+        } else {
             return null;
         }
     }

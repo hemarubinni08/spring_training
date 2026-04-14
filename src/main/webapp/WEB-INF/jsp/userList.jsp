@@ -44,6 +44,7 @@
 
             <h3 class="text-center mb-4">User Management</h3>
 
+            <!-- NO USERS MESSAGE -->
             <c:if test="${empty users}">
                 <div class="alert alert-warning text-center">
                     No users found
@@ -65,7 +66,6 @@
                         </tr>
                         </thead>
                         <tbody>
-
                         <c:forEach var="user" items="${users}">
                             <tr>
                                 <td>
@@ -88,7 +88,6 @@
                                 </td>
                             </tr>
                         </c:forEach>
-
                         </tbody>
                     </table>
                 </div>
@@ -96,9 +95,22 @@
 
         </div>
 
-        <div class="card-footer text-muted text-center small">
-            User Management System
+        <div class="card-footer text-center">
+            <div class="d-flex justify-content-center gap-3">
+                <a href="http://localhost:8080/" class="btn btn-secondary">
+                    Home
+                </a>
+
+                <a href="/user/register" class="btn btn-success">
+                    Register
+                </a>
+            </div>
+
+            <div class="text-muted small mt-2">
+                User Management System
+            </div>
         </div>
+
     </div>
 </div>
 

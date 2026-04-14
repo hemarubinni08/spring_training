@@ -53,27 +53,28 @@ public class UserServiceimpl implements UserService {
             return false;
         }
     }
+
     @Override
     public List<UserDto> getData() {
         List<User> users = userRepository.findAll();
-        return users.stream().map(user -> modelMapper.map(user,UserDto.class)).toList();
+        return users.stream().map(user -> modelMapper.map(user, UserDto.class)).toList();
     }
 
     @Override
     public List<UserDto> getDataJdbc() {
-        return userDao.getData().stream().map(user -> modelMapper.map(user,UserDto.class)).toList();
+        return userDao.getData().stream().map(user -> modelMapper.map(user, UserDto.class)).toList();
     }
 
     @Override
     public UserDto getUserDetailsJdbc(String email) {
         User user = userDao.fundByEmail(email);
-        return modelMapper.map(user , UserDto.class);
+        return modelMapper.map(user, UserDto.class);
     }
 
     @Override
     public UserDto getUserDetails(String email) {
         User user = userRepository.findByEmail(email);
-        return modelMapper.map(user , UserDto.class);
+        return modelMapper.map(user, UserDto.class);
     }
 
     @Override
@@ -89,23 +90,25 @@ public class UserServiceimpl implements UserService {
     @Override
     public UserDto getUserDetailsById(Long id) {
         Optional<User> userOptional = userRepository.findById(id);
-        if(userOptional.isPresent()) {
+        if (userOptional.isPresent()) {
             return modelMapper.map(userOptional.get(), UserDto.class);
+        } else {
+            return null;
         }
-        else{return null;}
     }
+
     @Override
     public UserDto getUserDetailsByIdJdbc(Long id) {
         User user = userDao.findById(id);
-        return modelMapper.map(user , UserDto.class);
+        return modelMapper.map(user, UserDto.class);
     }
 
     @Override
     public UserDto updaterUserJdbc(UserDto userDto) {
-            User user = modelMapper.map(userDto, User.class);
-            User updateUser = userDao.updateUserJdbc(user);
-            return modelMapper.map(updateUser, UserDto.class);
-        }
+        User user = modelMapper.map(userDto, User.class);
+        User updateUser = userDao.updateUserJdbc(user);
+        return modelMapper.map(updateUser, UserDto.class);
+    }
 
     @Override
     public UserDto updateUserJpa(UserDto userDto) {
@@ -113,12 +116,11 @@ public class UserServiceimpl implements UserService {
         if (userWithSameEmail != null && userWithSameEmail.getId() != (userDto.getId())) {
             userDto.setSuccess(false);
             return userDto;
-        }
-        else {
+        } else {
             User user = modelMapper.map(userDto, User.class);
-        userRepository.save(user);
-        userDto.setSuccess(true);
-        return modelMapper.map(user, UserDto.class);
-    }
+            userRepository.save(user);
+            userDto.setSuccess(true);
+            return modelMapper.map(user, UserDto.class);
+        }
     }
 }

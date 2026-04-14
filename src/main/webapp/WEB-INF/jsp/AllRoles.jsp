@@ -6,7 +6,6 @@
 <head>
     <title>Role List</title>
 
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
           rel="stylesheet">
 
@@ -42,53 +41,56 @@
 
                 <div class="card-body">
 
-                    <!-- No data case -->
                     <c:if test="${empty role}">
                         <div class="alert alert-warning text-center">
                             No roles found
                         </div>
                     </c:if>
 
-                    <!-- Roles list -->
                     <c:if test="${not empty role}">
                         <table class="table table-bordered table-hover text-center align-middle">
                             <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Role</th>
-                                    <th>Action</th>
-                                </tr>
+                            <tr>
+                                <th>ID</th>
+                                <th>Role</th>
+                                <th>Action</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="r" items="${role}">
-                                    <tr>
-                                        <td>
-                                            <a href="/role/roleDetails/${r.id}"
-                                               class="text-decoration-none fw-semibold">
-                                                ${r.id}
-                                            </a>
-                                        </td>
-                                        <td>${r.name}</td>
-                                        <td>
-                                            <a href="/role/deleteByIdJdbc?id=${r.id}"
-                                               class="btn btn-danger btn-sm"
-                                               onclick="return confirm('Are you sure you want to delete this role?');">
-                                                Delete
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
+                            <c:forEach var="r" items="${role}">
+                                <tr>
+                                    <td>
+                                        <a href="/role/roleDetails/${r.id}"
+                                           class="text-decoration-none fw-semibold">
+                                            ${r.id}
+                                        </a>
+                                    </td>
+                                    <td>${r.name}</td>
+                                    <td>
+                                        <a href="/role/deleteByIdJdbc?id=${r.id}"
+                                           class="btn btn-danger btn-sm"
+                                           onclick="return confirm('Are you sure you want to delete this role?');">
+                                            Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </c:if>
 
                 </div>
 
-                <div class="card-footer text-center bg-light">
+                <div class="card-footer text-center bg-light d-flex justify-content-center gap-3">
+                    <a href="http://localhost:8080/" class="btn btn-secondary">
+                        Home
+                    </a>
+
                     <a href="/role/addRoleJdbc" class="btn btn-success">
                         + Add New Role
                     </a>
                 </div>
+
             </div>
 
         </div>

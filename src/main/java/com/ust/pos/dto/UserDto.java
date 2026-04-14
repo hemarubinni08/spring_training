@@ -8,15 +8,15 @@ import java.util.List;
 
 @Getter
 @Setter
-public class UserDto extends CommonDto{
+public class UserDto extends CommonDto {
     private String email;
     private String phoneNo;
     private String userName;
     private String password;
     private int age;
     private Date dateOfBirth;
-    private boolean isSuccess=true;
-    private boolean userSuccess=true;
+    private boolean isSuccess = true;
+    private boolean userSuccess = true;
     private String role;
     private List<String> roles;
 }

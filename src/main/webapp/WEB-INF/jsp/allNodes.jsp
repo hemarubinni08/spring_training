@@ -9,7 +9,6 @@
     <meta charset="UTF-8">
     <title>All Nodes</title>
 
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
           rel="stylesheet"/>
 
@@ -40,44 +39,47 @@
             <c:if test="${not empty node}">
                 <table class="table table-bordered table-hover text-center align-middle">
                     <thead class="table-dark">
-                        <tr>
-                            <th>ID</th>
-                            <th>Node Name</th>
-                            <th>Path</th>
-                            <th>Role</th>
-                            <th>Roles</th>
-                            <th>Actions</th>
-                        </tr>
+                    <tr>
+                        <th>ID</th>
+                        <th>Node Name</th>
+                        <th>Path</th>
+                        <th>Role</th>
+                        <th>Roles</th>
+                        <th>Actions</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="n" items="${node}">
-                            <tr>
-                                <td>${n.id}</td>
-                                <td>${n.name}</td>
-                                <td>${n.path}</td>
-                                <td>${n.role}</td>
-                                <td>${n.roles}</td>
-                                <td>
-                                    <!-- UPDATE -->
-                                    <a href="/node/updateNode?id=${n.id}"
-                                       class="btn btn-sm btn-warning">
-                                        Update
-                                    </a>
+                    <c:forEach var="n" items="${node}">
+                        <tr>
+                            <td>${n.id}</td>
+                            <td>${n.name}</td>
+                            <td>${n.path}</td>
+                            <td>${n.role}</td>
+                            <td>${n.roles}</td>
+                            <td>
+                                <a href="/node/updateNode?id=${n.id}"
+                                   class="btn btn-sm btn-warning">
+                                    Update
+                                </a>
 
-                                    <!-- DELETE -->
-                                    <a href="/node/deleteNode?id=${n.id}"
-                                       class="btn btn-sm btn-danger"
-                                       onclick="return confirm('Are you sure you want to delete this node?');">
-                                        Delete
-                                    </a>
-                                </td>
-                            </tr>
-                        </c:forEach>
+                                <a href="/node/deleteNode?id=${n.id}"
+                                   class="btn btn-sm btn-danger"
+                                   onclick="return confirm('Are you sure you want to delete this node?');">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
             </c:if>
 
-            <div class="text-center mt-3">
+            <div class="d-flex justify-content-center gap-3 mt-3">
+                <a href="http://localhost:8080/"
+                   class="btn btn-secondary">
+                    Home
+                </a>
+
                 <a href="${pageContext.request.contextPath}/node/addNode"
                    class="btn btn-primary">
                     Add New Node

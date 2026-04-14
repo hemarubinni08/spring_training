@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @Table
 
-public class User extends CommonData{
+public class User extends CommonData {
     private String email;
     private String phoneNo;
     private String userName;

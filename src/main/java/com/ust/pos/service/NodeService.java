@@ -8,9 +8,13 @@ import java.util.List;
 @Component
 public interface NodeService {
     NodeDto addNode(NodeDto nodeDto);
+
     List<NodeDto> getAll();
+
     void deleteNode(long id);
+
     NodeDto updateNode(NodeDto nodeDto);
+
     NodeDto getById(long id);
 
 }
