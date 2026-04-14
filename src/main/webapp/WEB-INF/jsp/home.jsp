@@ -70,15 +70,15 @@
             font-weight: bold;
         }
 
+        /* ✅ CENTER CONTENT */
         .content {
             flex: 1;
-        }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background-color: #eef2f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            font-weight: bold;
+            color: #2c3e50;
         }
     </style>
 </head>
@@ -94,7 +94,7 @@
         <ul class="menu">
             <c:forEach var="node" items="${node}">
                 <li>
-                    <a href="${node.path}" target="contentFrame">
+                    <a href="${node.path}">
                         ${node.name}
                     </a>
                 </li>
@@ -108,8 +108,9 @@
             Dashboard
         </div>
 
+        <!-- ✅ CENTERED TEXT -->
         <div class="content">
-            <iframe name="contentFrame" src="/dashboard"></iframe>
+            Welcome to My POS Application
         </div>
     </div>
 

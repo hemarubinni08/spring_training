@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserServiceRitu {
     @Override
     public UserDto registerJdbc(UserDto userDto) {
         User user = userDao.findByEmail(userDto.getEmail());
-        if (user == null ) {
+        if (user == null) {
             boolean success = userDao.register(userDto);
             userDto.setSuccess(success);
             return userDto;
@@ -65,11 +65,10 @@ public class UserServiceImpl implements UserServiceRitu {
     @Override
     public UserDto updateJpa(UserDto userDto) {
         User existingUserWithEmail = userRepository.findByEmail(userDto.getEmail());
-        if(existingUserWithEmail != null && existingUserWithEmail.getId()!= userDto.getId()){
+        if (existingUserWithEmail != null && existingUserWithEmail.getId() != userDto.getId()) {
             userDto.setSuccess(false);
             return userDto;
-        }
-        else{
+        } else {
             modelMapper.map(userDto, existingUserWithEmail);
             userDto.setSuccess(true);
             userRepository.save(existingUserWithEmail);
@@ -107,8 +106,9 @@ public class UserServiceImpl implements UserServiceRitu {
         Optional<User> user2 = userRepository.findById(id);
         if (user2.isPresent()) {
             return modelMapper.map(user2.get(), UserDto.class);
+        } else {
+            return null;
         }
-        else{return null;}
     }
 
     @Override
@@ -122,5 +122,4 @@ public class UserServiceImpl implements UserServiceRitu {
 
         userDao.deleteUserByEmail(email);
     }
-
 }

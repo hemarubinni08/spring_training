@@ -41,15 +41,14 @@
             text-align: center;
             color: green;
         }
+
     </style>
 </head>
-
 <body>
 
 <div class="container">
     <h2>Add Role</h2>
 
-    <!-- ✅ OPENING form:form -->
     <form:form
             action="/role/addRoleJpa"
             method="post"
@@ -60,10 +59,8 @@
         <form:errors path="name" cssStyle="color:red"/>
 
         <button type="submit">Add Role</button>
-
+        <button type="button" onclick="history.back()">Back</button>
     </form:form>
-    <!-- ✅ CLOSING form:form -->
-
 </div>
 
 </body>

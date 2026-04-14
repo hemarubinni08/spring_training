@@ -26,9 +26,7 @@ public interface RoleService {
 
     RoleDto getRolesByIdJdbc(Long id);
 
-
     void deleteRoleByIdJpa(Long id);
 
     void deleteRoleByIdJdbc(Long id);
-
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class NodeServiceImpl implements NodeService {
 
@@ -28,8 +29,7 @@ public class NodeServiceImpl implements NodeService {
         if (existingNode != null) {
             nodeDto.setSuccess(false);
             return nodeDto;
-        }
-        else {
+        } else {
             Node node = modelMapper.map(nodeDto, Node.class);
             nodeRepository.save(node);
             nodeDto.setSuccess(true);
@@ -39,18 +39,16 @@ public class NodeServiceImpl implements NodeService {
 
     @Override
     public NodeDto updateNode(NodeDto nodeDto) {
-        Node existingNode = nodeRepository.findByPath(nodeDto.getPath());
-        if (existingNode != null) {
+        Node existingNode = nodeRepository.findByName(nodeDto.getName());
+        if (existingNode != null && existingNode.getId() != nodeDto.getId()) {
             nodeDto.setSuccess(false);
             return nodeDto;
-        }
-        else {
+        } else {
             Node node = modelMapper.map(nodeDto, Node.class);
             nodeRepository.save(node);
             nodeDto.setSuccess(true);
             return nodeDto;
         }
-
     }
 
     @Override

@@ -89,7 +89,7 @@
 
 
             <button class="save-button" type="submit">SUBMIT</button>
-            <button class="back-button" type="button" onclick="history.back()">Back</button>
+            <button class="save-button" type="button" onclick="history.back()">Back</button>
 
         </div>
     </form>

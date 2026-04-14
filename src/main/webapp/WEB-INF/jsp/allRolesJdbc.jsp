@@ -72,7 +72,6 @@
         }
     </style>
 </head>
-
 <body>
 
 <h2>All Roles Jdbc</h2>

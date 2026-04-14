@@ -99,12 +99,30 @@
                 .edit {
                     color: #3498db;
                 }
+        /* ✅ FOOTER HOME BUTTON */
+                .footer-buttons {
+                    margin-top: 25px;
+                    text-align: center;
+                }
+
+                .home-btn {
+                    display: inline-block;
+                    padding: 10px 22px;
+                    background-color: #7f8c8d;
+                    color: #ffffff;
+                    text-decoration: none;
+                    border-radius: 5px;
+                    font-weight: 600;
+                }
+
+                .home-btn:hover {
+                    background-color: #636e72;
+                }
     </style>
 </head>
 
 <body>
 
-<!-- HEADER WITH ADD BUTTON -->
 <div class="header">
     <h2>All Roles JPA</h2>
     <a href="/role/addRoleJpa" class="add-btn" title="Add Role">+</a>
@@ -139,6 +157,12 @@
         </tr>
     </c:forEach>
 </table>
+<!-- ✅ HOME BUTTON -->
+<div class="footer-buttons">
+    <a href="http://localhost:8080/" class="home-btn">
+        Home
+    </a>
+</div>
 
 </body>
 </html>

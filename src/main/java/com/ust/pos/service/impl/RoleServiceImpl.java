@@ -6,8 +6,6 @@ import com.ust.pos.dto.RoleDto;
 import com.ust.pos.dto.UserDto;
 import com.ust.pos.model.Role;
 import com.ust.pos.model.RoleRepository;
-import com.ust.pos.model.User;
-import com.ust.pos.model.UserRepository;
 import com.ust.pos.service.RoleService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -17,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
 
 @Component
 @Service
@@ -51,7 +48,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleDto addRoleJdbc(RoleDto roleDto) {
         Role role = roleDao.findRoleByName(roleDto.getName());
-        if (role == null ) {
+        if (role == null) {
             boolean success = roleDao.addRole(roleDto);
             roleDto.setSuccess(success);
             return roleDto;
@@ -66,8 +63,7 @@ public class RoleServiceImpl implements RoleService {
         if (role1 != null) {
             roleDto.setSuccess(false);
             return roleDto;
-        }
-        else {
+        } else {
             Role role = modelMapper.map(roleDto, Role.class);
             roleRepository.save(role);
             roleDto.setSuccess(true);
@@ -77,8 +73,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleDto updateRoleJdbc(RoleDto roleDto) {
-        Role role =modelMapper.map(roleDto, Role.class);
-        Role updateRole=roleDao.updateRole(role);
+        Role role = modelMapper.map(roleDto, Role.class);
+        Role updateRole = roleDao.updateRole(role);
         return modelMapper.map(updateRole, RoleDto.class);
     }
 
@@ -108,9 +104,9 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void deleteRoleByIdJpa(Long id) {
-            Optional<Role> role = roleRepository.findById(id);
+        Optional<Role> role = roleRepository.findById(id);
 
-            roleRepository.deleteById(id);
+        roleRepository.deleteById(id);
 
     }
 

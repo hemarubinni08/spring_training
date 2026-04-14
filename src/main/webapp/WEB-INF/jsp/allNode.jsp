@@ -105,6 +105,26 @@
         .delete-icon {
             color: #e74c3c;
         }
+
+        /* ✅ FOOTER HOME BUTTON */
+        .footer-buttons {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .home-btn {
+            display: inline-block;
+            padding: 10px 22px;
+            background-color: #7f8c8d;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        .home-btn:hover {
+            background-color: #636e72;
+        }
     </style>
 </head>
 
@@ -113,7 +133,7 @@
 <!-- HEADER WITH ADD ICON -->
 <div class="header">
     <h2>All Nodes</h2>
-    <a href="/node/add" class="add-icon" title="Add Node">+</a>
+    <a href="/node/addNode" class="add-icon" title="Add Node">+</a>
 </div>
 
 <table>
@@ -121,6 +141,8 @@
         <th>ID</th>
         <th>Node Name</th>
         <th>Path</th>
+        <th>Role</th>
+        <th>Roles</th>
         <th class="icon-header">Update</th>
         <th class="icon-header">Delete</th>
     </tr>
@@ -130,6 +152,8 @@
             <td>${node.id}</td>
             <td>${node.name}</td>
             <td>${node.path}</td>
+            <td>${node.role}</td>
+            <td>${node.roles}</td>
 
             <td class="icon-cell">
                 <a href="/node/update?id=${node.id}"
@@ -150,6 +174,13 @@
         </tr>
     </c:forEach>
 </table>
+
+<!-- ✅ HOME BUTTON -->
+<div class="footer-buttons">
+    <a href="http://localhost:8080/" class="home-btn">
+        Home
+    </a>
+</div>
 
 </body>
 </html>

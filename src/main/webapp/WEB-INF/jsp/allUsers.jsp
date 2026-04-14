@@ -4,13 +4,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>All Users JDBC</title>
+    <title>All Users</title>
 
     <style>
+        /* ===== PAGE BACKGROUND ===== */
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background-color: #eef2f7;
+            background: linear-gradient(to right, #eef2f7, #d9e4f5);
             padding: 20px;
+            min-height: 100vh;
         }
 
         h2 {
@@ -19,6 +21,7 @@
             margin-bottom: 20px;
         }
 
+        /* ===== TABLE STYLING ===== */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -59,8 +62,43 @@
             text-decoration: underline;
         }
 
-        .delete-icon {
-            font-size: 18px;
+        /* ===== FOOTER BUTTONS ===== */
+        .footer-buttons {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .footer-buttons a {
+            display: inline-block;
+            padding: 10px 22px;
+            margin: 0 8px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .home-btn {
+            background-color: #7f8c8d;
+        }
+
+        .home-btn:hover {
+            background-color: #636e72;
+        }
+
+        .register-btn {
+            background-color: #27ae60;
+        }
+
+        .register-btn:hover {
+            background-color: #1e8449;
+        }
+
+        .footer-text {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #7f8c8d;
         }
     </style>
 </head>
@@ -71,7 +109,7 @@
 
 <table>
     <tr>
-        <th>ID (JPA)</th>
+        <th>ID</th>
         <th>Name</th>
         <th>Email</th>
         <th>Age</th>
@@ -90,14 +128,14 @@
                 </a>
             </td>
 
-
-
             <td>${user.name}</td>
+
             <td>
                 <a href="/user/detail?email=${user.email}">
-                     ${user.email}
+                    ${user.email}
                 </a>
-             </td>
+            </td>
+
             <td>${user.age}</td>
             <td>${user.phoneNo}</td>
             <td>${user.userName}</td>
@@ -115,6 +153,15 @@
     </c:forEach>
 </table>
 
+<!-- ✅ FOOTER WITH HOME + REGISTER -->
+<div class="footer-buttons">
+    <a href="/" class="home-btn">Home</a>
+    <a href="/user/register" class="register-btn">New Register</a>
+
+    <div class="footer-text">
+        User Management System
+    </div>
+</div>
+
 </body>
 </html>
-``

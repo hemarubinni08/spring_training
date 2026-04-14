@@ -15,7 +15,7 @@
 
     <style>
         body {
-            background: linear-gradient(120deg,#13834f99, rgba(0, 0, 0, 0.075));
+            background: linear-gradient(120deg, rgba(0, 0, 0, 0.075));
             height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
@@ -111,4 +111,3 @@
 
 </body>
 </html>
-``

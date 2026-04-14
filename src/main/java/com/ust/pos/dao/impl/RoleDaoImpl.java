@@ -25,7 +25,7 @@ public class RoleDaoImpl implements RoleDao {
     @Override
     public boolean addRole(RoleDto roleDto) {
         String sql = "INSERT INTO role SET name=?";
-        int count= jdbcTemplate.update(sql, roleDto.getName());
+        int count = jdbcTemplate.update(sql, roleDto.getName());
         if (count > 0) {
             return true;
         }
@@ -36,14 +36,16 @@ public class RoleDaoImpl implements RoleDao {
     @Override
     public Role findRoleByName(String name) {
         String sql = "SELECT * FROM role WHERE name = ?";
-        List<Role> roles = jdbcTemplate.query(sql, new Object[]{name}, new BeanPropertyRowMapper(Role.class));
+        List<Role> roles = jdbcTemplate.query(
+                sql,
+                new Object[]{name},
+                new BeanPropertyRowMapper(Role.class));
         return roles.isEmpty() ? null : roles.get(0);
     }
 
-
     @Override
     public Role updateRole(Role role) {
-        String s2="UPDATE role SET name = ?" ;
+        String s2 = "UPDATE role SET name = ?";
         jdbcTemplate.update(s2, role.getName());
         return role;
     }
@@ -60,8 +62,8 @@ public class RoleDaoImpl implements RoleDao {
 
     @Override
     public List<Role> findallRole() {
-        String s2="SELECT * FROM role";
-        List<Role> roleList = jdbcTemplate.query(s2,new BeanPropertyRowMapper<>(Role.class));
+        String s2 = "SELECT * FROM role";
+        List<Role> roleList = jdbcTemplate.query(s2, new BeanPropertyRowMapper<>(Role.class));
         return roleList;
     }
 

@@ -10,7 +10,6 @@ import java.util.List;
 public class NodeDto extends CommonDto {
     private String path;
     private boolean isSuccess;
-
     private String role;
     private List<String> roles;
 

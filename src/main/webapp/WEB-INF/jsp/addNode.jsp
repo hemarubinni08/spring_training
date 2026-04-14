@@ -67,6 +67,7 @@
             margin-top: 6px;
             color: #6c757d;
         }
+
     </style>
 </head>
 
@@ -83,7 +84,7 @@
         <label>Path</label>
         <form:input path="path" placeholder="Enter path" />
 
-        <!-- ✅ PRIMARY ROLE -->
+        <!--PRIMARY ROLE -->
         <label>Primary Role</label>
         <form:select path="role">
             <form:option value="">-- Select Role --</form:option>
@@ -94,7 +95,7 @@
             </c:forEach>
         </form:select>
 
-        <!-- ✅ MULTIPLE ROLES -->
+        <!-- MULTIPLE ROLES -->
         <label>Multiple Roles</label>
         <form:select path="roles" multiple="true">
             <c:forEach var="r" items="${role}">
@@ -109,6 +110,8 @@
         </small>
 
         <button type="submit">Add Node</button>
+        <button type="button" onclick="history.back()">Back</button>
+
 
     </form:form>
 </div>

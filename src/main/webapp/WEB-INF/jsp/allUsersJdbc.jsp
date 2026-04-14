@@ -81,14 +81,12 @@
 
     </style>
 </head>
-
 <body>
 
 <h2>All Users (JDBC)</h2>
 
 <table>
     <tr>
-
         <th>ID(Jdbc)</th>
         <th>Age</th>
         <th>Email</th>
@@ -128,4 +126,3 @@
 
 </body>
 </html>
-``

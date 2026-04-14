@@ -1,13 +1,13 @@
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Details of each user</title>
+    <title>Update Node</title>
 
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
             background-color: #f4f6f9;
-            margin: 0;
             padding: 20px;
         }
 
@@ -25,14 +25,14 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .user-card label {
+        label {
             font-weight: bold;
             display: block;
-            margin-top: 10px;
+            margin-top: 12px;
             color: #2c3e50;
         }
 
-        .user-card input {
+        input, select {
             width: 100%;
             padding: 8px;
             margin-top: 4px;
@@ -40,8 +40,12 @@
             border-radius: 5px;
         }
 
+        select[multiple] {
+            height: 120px;
+        }
+
         .save-button {
-            margin-top: 15px;
+            margin-top: 20px;
             padding: 8px 20px;
             background-color: #2ecc71;
             color: white;
@@ -55,14 +59,12 @@
         }
 
         .back-button {
-            display: block;
-            margin: 30px auto;
-            padding: 10px 25px;
-            font-size: 16px;
+            margin-left: 10px;
+            padding: 8px 20px;
             background-color: #3498db;
             color: white;
             border: none;
-            border-radius: 25px;
+            border-radius: 20px;
             cursor: pointer;
         }
 
@@ -74,28 +76,56 @@
 
 <body>
 
-<h2>Node Details</h2>
+<h2>Update Node Details</h2>
 
+<form action="/node/updateNode" method="post">
 
-    <form action="/node/updateNode" method="post"  modelAttribute="${nodeDto}">
+    <div class="user-card">
 
-        <div class="user-card">
+        <!-- ✅ ID (readonly so it submits) -->
+        <label>ID</label>
+        <input type="text" name="id" value="${node.id}" readonly />
 
-            <!-- Hidden ID (IMPORTANT for update) -->
-            <input type="hidden" name="id" value="${node.id}" />
+        <!-- ✅ Node Name -->
+        <label>Name</label>
+        <input type="text" name="name" value="${node.name}" />
 
-            <label>Name</label>
-            <input type="text" name="name" value="${node.name}" />
-             <label>Name</label>
-                        <input type="text" name="path" value="${node.path}" />
+        <!-- ✅ Node Path -->
+        <label>Path</label>
+        <input type="text" name="path" value="${node.path}" />
 
+        <!-- ✅ SINGLE ROLE -->
+        <label>Role</label>
+        <select name="role">
+            <c:forEach var="r" items="${roles}">
+                <option value="${r.name}"
+                    <c:if test="${r.name == node.role}">
+                        selected
+                    </c:if>>
+                    ${r.name}
+                </option>
+            </c:forEach>
+        </select>
 
-            <button class="save-button" type="submit">SUBMIT</button>
-            <button class="back-button" type="button" onclick="history.back()">Back</button>
+        <!-- ✅ MULTIPLE ROLES -->
+        <label>Roles</label>
+        <select name="roles" multiple>
+            <c:forEach var="r" items="${roles}">
+                <option value="${r.name}"
+                    <c:if test="${node.roles != null && node.roles.contains(r.name)}">
+                        selected
+                    </c:if>>
+                    ${r.name}
+                </option>
+            </c:forEach>
+        </select>
 
-        </div>
-    </form>
+        <!-- ✅ Buttons -->
+        <button class="save-button" type="submit">SUBMIT</button>
+        <button class="back-button" type="button" onclick="history.back()">Back</button>
 
+    </div>
+</form>
 
 </body>
 </html>

@@ -81,7 +81,6 @@
 
         <div class="user-card">
 
-            <!-- Hidden ID (IMPORTANT for update) -->
             <input type="hidden" name="id" value="${user.id}" />
 
             <label>Age</label>
@@ -97,7 +96,7 @@
             <input type="text" name="phoneNo" value="${user.phoneNo}" />
 
              <label>Password</label>
-                        <input type="password" name="password" value="${user.password}" />
+             <input type="password" name="password" value="${user.password}" />
 
             <label>User Name</label>
             <input type="text" name="userName" value="${user.userName}" />
@@ -107,7 +106,6 @@
 
         </div>
     </form>
-
 
 </body>
 </html>

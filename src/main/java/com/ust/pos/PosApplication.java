@@ -33,18 +33,18 @@ public class PosApplication {
     }
 
     @Bean
-    ModelMapper getModelMapper(){
+    ModelMapper getModelMapper() {
         return new ModelMapper();
     }
 
     @Bean
-    public JdbcTemplate jdbcTemplate(){
+    public JdbcTemplate jdbcTemplate() {
         return new JdbcTemplate(getDataSource());
     }
 
     @Bean
-    DataSource getDataSource(){
-        DriverManagerDataSource ds= new DriverManagerDataSource();
+    DataSource getDataSource() {
+        DriverManagerDataSource ds = new DriverManagerDataSource();
         ds.setUrl(environment.getProperty("spring.datasource.url"));
         ds.setUsername(environment.getProperty("spring.datasource.username"));
         ds.setPassword(environment.getProperty("spring.datasource.password"));
@@ -53,7 +53,7 @@ public class PosApplication {
     }
 
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

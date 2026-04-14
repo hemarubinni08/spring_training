@@ -131,7 +131,7 @@
                 <input type="text" name="userName" value="${user.userName}" />
             </div>
 
-            <!-- ✅ SINGLE ROLE DROPDOWN -->
+            <!-- SINGLE ROLE DROPDOWN -->
             <div>
                 <label>Role</label>
                 <select name="role">
@@ -144,7 +144,7 @@
                 </select>
             </div>
 
-            <!-- ✅ MULTI ROLE DROPDOWN -->
+            <!-- MULTI ROLE DROPDOWN -->
             <div>
                 <label>Roles</label>
                 <select name="roles" multiple>

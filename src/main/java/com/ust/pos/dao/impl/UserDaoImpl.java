@@ -23,11 +23,9 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean register(UserDto userDto) {
-//        String sql = "INSERT INTO user VALUES(?,?,?,?,?,?)";      //same order from database
         String encodedPass = passwordEncoder.encode(userDto.getPassword());
-        String sqlQ = "INSERT INTO user SET age=?,email=?, name=?,password=?,phone_no=?";   //only the specific
-        int count = jdbcTemplate.update(sqlQ,  userDto.getAge(), null, userDto.getEmail(), userDto.getName(), userDto.getPassword(), userDto.getPhoneNo());
-
+        String sqlQ = "INSERT INTO user SET age=?,email=?, name=?,password=?,phone_no=?";
+        int count = jdbcTemplate.update(sqlQ, userDto.getAge(), null, userDto.getEmail(), userDto.getName(), userDto.getPassword(), userDto.getPhoneNo());
         if (count > 0) {
             return true;
         }
@@ -37,7 +35,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User update(User user) {
         String sql2 = "UPDATE user SET age=?,email=?,name = ?, phone_no = ? , user_name= ? where id=?";
-        jdbcTemplate.update(sql2,  user.getAge(), user.getEmail(), user.getName(), user.getPhoneNo(),user.getUserName(),user.getId());
+        jdbcTemplate.update(sql2, user.getAge(), user.getEmail(), user.getName(), user.getPhoneNo(), user.getUserName(), user.getId());
         return user;
     }
 

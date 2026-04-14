@@ -5,6 +5,7 @@ import com.ust.pos.dto.RoleDto;
 import com.ust.pos.service.NodeService;
 import com.ust.pos.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.BeanDefinitionDsl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,6 @@ public class NodeController {
         model.addAttribute("nodeDto", new NodeDto());
         model.addAttribute("role", roles);
         return "addNode";
-
     }
 
     @PostMapping("/addNode")
@@ -45,15 +45,15 @@ public class NodeController {
 
     @GetMapping("/update")
     public String updateNode(Model model, @RequestParam Long id, String path) {
-        NodeDto  nodes= nodeService.getNode(id);
-        model.addAttribute("nodeDto", new NodeDto());
-        model.addAttribute("node", nodes);
+        NodeDto nodeDto = nodeService.getNode(id);
+        List<RoleDto> roles = roleService.findAllRoles();
+        model.addAttribute("node", nodeDto);
+        model.addAttribute("roles", roles);
         return "updateNode";
     }
 
     @PostMapping("/updateNode")
-    public String updateNode(Model model,@ModelAttribute NodeDto nodeDto) {
-//        System.out.println("------------ : "+roleDto.getId()+" "+roleDto.getName());
+    public String updateNode(Model model, @ModelAttribute NodeDto nodeDto) {
         NodeDto nodeDto1 = nodeService.updateNode(nodeDto);
         model.addAttribute("node", nodeDto1);
         if (nodeDto1.isSuccess()) {
@@ -67,7 +67,7 @@ public class NodeController {
     @GetMapping("/allNode")
     public String allNode(Model model) {
         model.addAttribute("node", nodeService.findAllNode());
-        return "ListNode";
+        return "allNode";
     }
 
     @GetMapping("/deleteNode")

@@ -5,11 +5,9 @@ import com.ust.pos.dto.UserDto;
 import com.ust.pos.service.RoleService;
 import com.ust.pos.service.UserServiceRitu;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @Controller
@@ -24,12 +22,13 @@ public class UserController {
 
     @GetMapping("/register")
     public String register(Model model, @ModelAttribute UserDto userDto) {
-        List<RoleDto> roles=roleService.findAllRoles();
+        List<RoleDto> roles = roleService.findAllRoles();
         model.addAttribute("name", "Ritu");
         model.addAttribute("userDto", new UserDto());
         model.addAttribute("role", roles);
         return "register";
     }
+
     @PostMapping("/register")
     public String userRegister(Model model, @ModelAttribute UserDto userDto) {
         UserDto userDto1 = userService.register(userDto);
@@ -62,7 +61,7 @@ public class UserController {
 
 
     @PostMapping("/updateJpa")
-    public String updateJpa(Model model,@ModelAttribute UserDto userDto) {
+    public String updateJpa(Model model, @ModelAttribute UserDto userDto) {
         UserDto userDto1 = userService.updateJpa(userDto);
         model.addAttribute("user", userDto1);
         if (userDto1.isSuccess()) {
@@ -74,7 +73,7 @@ public class UserController {
     }
 
     @PostMapping("/updateJdbc")
-    public String updateJdbc(Model model,@ModelAttribute UserDto userDto) {
+    public String updateJdbc(Model model, @ModelAttribute UserDto userDto) {
         UserDto userDto1 = userService.updateJdbc(userDto);
         model.addAttribute("user", userDto1);
         return "redirect:/user/allUsersJdbc";
