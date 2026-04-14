@@ -33,4 +33,6 @@ public interface UserService {
     UserDto updaterUserJdbc(UserDto userDto);
 
     UserDto updateUserJpa(UserDto userDto);
+
+    User getUserByUsername(String username);
 }

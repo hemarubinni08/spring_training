@@ -123,4 +123,10 @@ public class UserServiceimpl implements UserService {
             return modelMapper.map(user, UserDto.class);
         }
     }
+
+    @Override
+    public User getUserByUsername(String username) {
+        return userRepository.findByUserName(username);
+    }
+
 }

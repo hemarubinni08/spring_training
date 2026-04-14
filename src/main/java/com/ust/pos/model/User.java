@@ -21,4 +21,5 @@ public class User extends CommonData {
     private Date dateOfBirth;
     private String role;
     private List<String> roles;
+    private boolean enabled = true;
 }
