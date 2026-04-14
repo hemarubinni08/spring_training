@@ -1,6 +1,7 @@
 package com.ust.pos.web.controller;
 
 import com.ust.pos.dto.UserDto;
+import com.ust.pos.service.RoleService;
 import com.ust.pos.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,15 +15,18 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RoleService roleService;
 
     @GetMapping("/register")
     public String registerPage(Model model) {
+        model.addAttribute("rolesList", roleService.getAllRoles());
         model.addAttribute("userDto", new UserDto());
         return "register";
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute UserDto userDto) {
+    public String register(Model model, @ModelAttribute UserDto userDto) {
         userService.register(userDto);
         return "redirect:/user/getuser";
     }
@@ -30,25 +34,13 @@ public class UserController {
     @GetMapping("/registerjdbc")
     public String registerJdbcPage(Model model) {
         model.addAttribute("userDto", new UserDto());
-        return "registered";
+        return "registerjdbc";
     }
 
     @PostMapping("/registerjdbc")
-    public String registerJdbc(@ModelAttribute UserDto userDto) {
+    public String registerJdbc(Model model, @ModelAttribute UserDto userDto) {
         userService.saveDataJdbc(userDto);
         return "redirect:/user/getuser";
-    }
-
-    @PostMapping("/updateUser")
-    public String updateUser(@ModelAttribute UserDto userDto) {
-        userService.updateUser(userDto);
-        return "redirect:/user/getuser";
-    }
-
-    @PostMapping("/updateUserJdbc")
-    public String updateUserJdbc(@ModelAttribute UserDto userDto) {
-        userService.updateUserJdbc(userDto);
-        return "redirect:/user/getuserjdbc";
     }
 
     @GetMapping("/getuser")
@@ -65,26 +57,42 @@ public class UserController {
 
     @GetMapping("/getProfileById")
     public String getProfileById(Model model, @RequestParam Long id) {
+        model.addAttribute("rolesList", roleService.getAllRoles());
         model.addAttribute("userDetails", userService.findById(id));
         return "profile";
     }
 
     @GetMapping("/getProfileByIdJdbc/{id}")
     public String getProfileByIdJdbc(Model model, @PathVariable Long id) {
+        model.addAttribute("rolesList", roleService.getAllRoles());
         model.addAttribute("userDetails", userService.findByIdJdbc(id));
         return "profile";
     }
 
     @GetMapping("/profile/{email}")
     public String getProfileByEmail(Model model, @PathVariable String email) {
+        model.addAttribute("rolesList", roleService.getAllRoles());
         model.addAttribute("userDetails", userService.getProfile(email));
         return "profile";
     }
 
     @GetMapping("/profilejdbc")
     public String getProfileByEmailJdbc(Model model, @RequestParam String email) {
+        model.addAttribute("rolesList", roleService.getAllRoles());
         model.addAttribute("userDetails", userService.getProfileJdbc(email));
         return "profile";
+    }
+
+    @PostMapping("/updateUser")
+    public String updateUser(@ModelAttribute UserDto userDto) {
+        userService.updateUser(userDto);
+        return "redirect:/user/getuser";
+    }
+
+    @PostMapping("/updateUserJdbc")
+    public String updateUserJdbc(@ModelAttribute UserDto userDto) {
+        userService.updateUserJdbc(userDto);
+        return "redirect:/user/getuserjdbc";
     }
 
     @GetMapping("/deleteUser")

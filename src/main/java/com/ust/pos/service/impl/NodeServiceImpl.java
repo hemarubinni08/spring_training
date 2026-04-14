@@ -14,50 +14,51 @@ import java.util.Optional;
 
 @Service
 public class NodeServiceImpl implements NodeService {
+
     @Autowired
     private NodeRepository nodeRepository;
 
     @Autowired
     private ModelMapper modelMapper;
 
-
     @Override
     public List<NodeDto> getAllNodes() {
-        List<Node> nodesList=nodeRepository.findAll();
-        List<NodeDto> nodeDtosList=new ArrayList<>();
-        for (Node node:nodesList){
-            nodeDtosList.add(modelMapper.map(node,NodeDto.class));
+        List<Node> nodes = nodeRepository.findAll();
+        List<NodeDto> result = new ArrayList<>();
+        for (Node node : nodes) {
+            result.add(modelMapper.map(node, NodeDto.class));
         }
-        return nodeDtosList;
+        return result;
     }
 
     @Override
     public boolean addNode(NodeDto nodeDto) {
-        boolean existingNode=nodeRepository.existsByName(nodeDto.getName());
-        if(existingNode){
+        if (nodeRepository.existsByName(nodeDto.getName())) {
             return false;
         }
-        else {
-            Node node=modelMapper.map(nodeDto,Node.class);
-            nodeRepository.save(node);
-            return true;
-        }
-
+        Node node = modelMapper.map(nodeDto, Node.class);
+        nodeRepository.save(node);
+        return true;
     }
 
     @Override
     public void updateNode(NodeDto nodeDto) {
-        Optional<Node> node=nodeRepository.findById(nodeDto.getId());
-        if (node.isPresent()){
-//            Node existingNode=node.get();
-//            if(existingNode.getName().equalsIgnoreCase(nodeDto.getName())){
-//                if (nodeRepository.findByName(NodeDto.getName())==null)
-//                modelMapper.map(nodeDto,Node.class);
-//
-//            }
-            Node updatedNode=modelMapper.map(nodeDto,Node.class);
-            nodeRepository.save(updatedNode);
+        Optional<Node> nodeOpt = nodeRepository.findById(nodeDto.getId());
+
+        if (nodeOpt.isEmpty()) {
+            return;
         }
+
+        Node existingNode = nodeOpt.get();
+
+        if (!existingNode.getName().equalsIgnoreCase(nodeDto.getName())) {
+            if (nodeRepository.existsByName(nodeDto.getName())) {
+                return;
+            }
+        }
+
+        modelMapper.map(nodeDto, existingNode);
+        nodeRepository.save(existingNode);
     }
 
     public void deleteNode(Long id) {
@@ -65,8 +66,7 @@ public class NodeServiceImpl implements NodeService {
     }
 
     public NodeDto getNodeProfile(Long id) {
-        Optional<Node> node=nodeRepository.findById(id);
-        NodeDto nodeDto=modelMapper.map(node,NodeDto.class);
-        return nodeDto;
+        Optional<Node> nodeOpt = nodeRepository.findById(id);
+        return nodeOpt.map(node -> modelMapper.map(node, NodeDto.class)).orElse(null);
     }
 }

@@ -15,74 +15,94 @@ public class RoleController {
     private RoleService roleService;
 
     @GetMapping("/addrole")
-    public String addRolePage(Model model) {
+    public String addRole(Model model) {
         model.addAttribute("roleDto", new RoleDto());
         return "addRole";
     }
 
     @PostMapping("/addrole")
-    public String addRole(@ModelAttribute RoleDto roleDto) {
-        roleService.addRole(roleDto);
+    public String addRole(Model model, @ModelAttribute RoleDto roleDto) {
+        boolean success = roleService.addRole(roleDto);
+
+        if (!success) {
+            model.addAttribute("statusMessage",
+                    roleDto.getName() + " already exists.");
+        } else {
+            model.addAttribute("statusMessage",
+                    roleDto.getName()
+                            + " added successfully.");
+        }
+
         return "redirect:/role/listallroles";
     }
 
     @GetMapping("/addrolejdbc")
-    public String addRoleJdbcPage(Model model) {
+    public String addRoleJdbc(Model model) {
         model.addAttribute("roleDto", new RoleDto());
         return "addRoleJdbc";
     }
 
     @PostMapping("/addrolejdbc")
-    public String addRoleJdbc(@ModelAttribute RoleDto roleDto) {
-        roleService.addRoleJdbc(roleDto);
-        return "redirect:/role/listallrolesjdbc";
+    public String addRoleJdbc(Model model, @ModelAttribute RoleDto roleDto) {
+        boolean success = roleService.addRoleJdbc(roleDto);
+
+        if (!success) {
+            model.addAttribute("statusMessage",
+                    roleDto.getName() + " already exists.");
+        } else {
+            model.addAttribute("statusMessage",
+                    roleDto.getName() + " added successfully.");
+        }
+
+        return "rolestatus";
     }
 
     @GetMapping("/listallroles")
-    public String listAllRoles(Model model) {
-        model.addAttribute("role", roleService.getAllRoles());
+    public String rolesListJpa(Model model) {
+        model.addAttribute("rolesList", roleService.getAllRoles());
         return "listAllRoles";
     }
 
     @GetMapping("/listallrolesjdbc")
-    public String listAllRolesJdbc(Model model) {
-        model.addAttribute("roles", roleService.getAllRolesJdbc());
+    public String rolesListJdbc(Model model) {
+        model.addAttribute("rolesList", roleService.getAllRolesJdbc());
         return "listAllRolesJdbc";
     }
 
-    @GetMapping("/roleprofile/{id}")
-    public String roleProfile(Model model, @PathVariable Long id) {
+    @GetMapping("/getrolebyidjpa")
+    public String getRoleByIdJpa(Model model, @RequestParam Long id) {
         model.addAttribute("roledata", roleService.getProfile(id));
         return "roleProfile";
     }
 
-    @GetMapping("/roleprofilejdbc/{id}")
-    public String roleProfileJdbc(Model model, @PathVariable Long id) {
+    @GetMapping("/getrolebyidjdbc/{id}")
+    public String getRoleByIdJdbc(Model model, @PathVariable Long id) {
         model.addAttribute("roledata", roleService.getProfileJdbc(id));
-        return "roleProfileJdbc";
+        return "roleProfile";
     }
 
     @PostMapping("/updaterole")
-    public String updateRole(@ModelAttribute RoleDto roleDto) {
+    public String updateRoleJpa(@ModelAttribute RoleDto roleDto) {
         roleService.updateRole(roleDto);
         return "redirect:/role/listallroles";
     }
 
-    @PostMapping("/updateroleJdbc")
+    @PostMapping("/updaterolejdbc")
     public String updateRoleJdbc(@ModelAttribute RoleDto roleDto) {
         roleService.updateRoleJdbc(roleDto);
         return "redirect:/role/listallrolesjdbc";
     }
 
-    @GetMapping("/deleterole/{id}")
-    public String deleteRole(@PathVariable Long id) {
+
+    @GetMapping("/deleterolejpa")
+    public String deleteRoleJpa(@RequestParam Long id) {
         roleService.deleteById(id);
         return "redirect:/role/listallroles";
     }
 
-    @GetMapping("/deleterolejdbc/{id}")
-    public String deleteRoleJdbc(@PathVariable Long id) {
+    @GetMapping("/deleterolejdbc")
+    public String deleteRoleJdbc(@RequestParam Long id) {
         roleService.deleteByIdJdbc(id);
-        return "redirect:/role/listallrolesjdbc";
+        return "redirect:/role/listallroles";
     }
 }

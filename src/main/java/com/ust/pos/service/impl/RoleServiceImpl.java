@@ -8,15 +8,14 @@ import com.ust.pos.service.RoleService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.swing.event.ListDataEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class RoleServiceImpl implements RoleService {
+
     @Autowired
     private RoleRepository roleRepository;
 
@@ -28,93 +27,92 @@ public class RoleServiceImpl implements RoleService {
 
     public List<RoleDto> getAllRoles() {
         List<Role> roles = roleRepository.findAll();
-        List<RoleDto> roleDto = new ArrayList<>();
-        for (Role role1 : roles) {
-            roleDto.add(modelMapper.map(role1, RoleDto.class));
+        List<RoleDto> result = new ArrayList<>();
+        for (Role role : roles) {
+            result.add(modelMapper.map(role, RoleDto.class));
         }
-        return roleDto;
+        return result;
     }
 
     public List<RoleDto> getAllRolesJdbc() {
-        List<Role> roleList=roleDao.printAllRoles();
-        List<RoleDto> roleDtoList=new ArrayList<>();
-        for (Role role:roleList){
-            roleDtoList.add(modelMapper.map(role,RoleDto.class));
+        List<Role> roles = roleDao.printAllRoles();
+        List<RoleDto> result = new ArrayList<>();
+        for (Role role : roles) {
+            result.add(modelMapper.map(role, RoleDto.class));
         }
-        return roleDtoList;
+        return result;
     }
 
     public boolean addRole(RoleDto roleDto) {
-        boolean existingRole = roleRepository.existsByName(roleDto.getName());
-        if (existingRole) {
+        if (roleRepository.existsByName(roleDto.getName())) {
             return false;
-        } else {
-            Role role = modelMapper.map(roleDto, Role.class);
-            roleRepository.save(role);
-            return true;
         }
+        Role role = modelMapper.map(roleDto, Role.class);
+        roleRepository.save(role);
+        return true;
     }
 
-    public boolean addRoleJdbc(RoleDto roleDto){
-        boolean existingRole=roleRepository.existsByName(roleDto.getName());
-        if(existingRole){
+    public boolean addRoleJdbc(RoleDto roleDto) {
+        if (roleDao.findByName(roleDto.getName()) != null) {
             return false;
         }
-        else {
-            Role role=modelMapper.map(roleDto,Role.class);
-            roleDao.addRoleJdbc(roleDto);
-            return true;
-        }
+        roleDao.addRoleJdbc(roleDto);
+        return true;
     }
 
     public void deleteById(Long id) {
         roleRepository.deleteById(id);
     }
 
-    public void deleteByIdJdbc(Long id){
+    public void deleteByIdJdbc(Long id) {
         roleDao.deleteRoleByIdJdbc(id);
     }
 
     public boolean updateRole(RoleDto roleDto) {
-        Optional<Role> role = roleRepository.findById(roleDto.getId());
-        if (role.isPresent()) {
-            Role existingRole=role.get();
-            if (!existingRole.getName().equalsIgnoreCase(roleDto.getName())){
-                if (roleRepository.findByName(roleDto.getName())==null){
-                    Role updatedRole = modelMapper.map(roleDto, Role.class);
-                    roleRepository.save(updatedRole);
-                    return true;
-                }
+        Optional<Role> roleOpt = roleRepository.findById(roleDto.getId());
+
+        if (roleOpt.isEmpty()) {
+            return false;
+        }
+
+        Role existingRole = roleOpt.get();
+
+        if (!existingRole.getName().equalsIgnoreCase(roleDto.getName())) {
+            if (roleRepository.existsByName(roleDto.getName())) {
+                return false;
             }
         }
-        return false;
+
+        modelMapper.map(roleDto, existingRole);
+        roleRepository.save(existingRole);
+        return true;
     }
 
     public boolean updateRoleJdbc(RoleDto roleDto) {
-        Optional<Role> role=roleRepository.findById(roleDto.getId());
-        if(role.isPresent()){
-            Role existingRole=role.get();
-            if(!existingRole.getName().equalsIgnoreCase(roleDto.getName())){
-                if(roleDao.findByName(roleDto.getName())==null){
-                    modelMapper.map(roleDto,existingRole);
-                    roleDao.updateRoleByJdbc(roleDto);
-                    return true;
-                }
+        Role existingRole = roleDao.getRoleProfileJdbc(roleDto.getId());
+
+        if (existingRole == null) {
+            return false;
+        }
+
+        if (!existingRole.getName().equalsIgnoreCase(roleDto.getName())) {
+            if (roleDao.findByName(roleDto.getName()) != null) {
+                return false;
             }
         }
-        return false;
+
+        roleDao.updateRoleByJdbc(roleDto);
+        return true;
     }
 
     public RoleDto getProfile(Long id) {
         Optional<Role> role = roleRepository.findById(id);
-        RoleDto roleDto = modelMapper.map(role, RoleDto.class);
-        return roleDto;
+        return role.map(value -> modelMapper.map(value, RoleDto.class)).orElse(null);
     }
 
     @Override
     public RoleDto getProfileJdbc(Long id) {
-         Role role= roleDao.getRoleProfileJdbc(id);
-         return modelMapper.map(role,RoleDto.class);
+        Role role = roleDao.getRoleProfileJdbc(id);
+        return role == null ? null : modelMapper.map(role, RoleDto.class);
     }
-
 }

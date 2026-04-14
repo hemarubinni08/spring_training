@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Update User</title>
+    <title>Update Role</title>
 
-    <!-- Bootstrap 5 CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet">
 
     <style>
         body {
@@ -24,71 +25,43 @@
         }
     </style>
 </head>
+
 <body>
 
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-    <div class="card shadow p-4" style="width: 480px;">
+    <div class="card shadow p-4" style="width: 420px;">
 
-        <h3 class="text-center fw-bold mb-4">Update User</h3>
+        <h3 class="text-center fw-bold mb-4">Update Role</h3>
 
-        <form action="/user/updateUser" method="post">
+        <form action="/role/updaterole" method="post">
 
-            <!-- ID (readonly + hidden submit) -->
+            <!-- ID (required for update) -->
+            <input type="hidden" name="id" value="${roledata.id}">
+
             <div class="mb-3">
-                <label class="form-label">User ID</label>
+                <label class="form-label">Role ID</label>
                 <input type="text"
                        class="form-control"
-                       value="${userDetails.id}"
+                       value="${roledata.id}"
                        readonly>
-                <input type="hidden" name="id" value="${userDetails.id}">
             </div>
 
-            <!-- Name -->
-            <div class="mb-3">
-                <label class="form-label">Name</label>
+            <div class="mb-4">
+                <label class="form-label">Role Name</label>
                 <input type="text"
                        class="form-control"
                        name="name"
-                       value="${userDetails.name}"
+                       value="${roledata.name}"
                        required>
             </div>
 
-            <!-- Age -->
-            <div class="mb-3">
-                <label class="form-label">Age</label>
-                <input type="number"
-                       class="form-control"
-                       name="age"
-                       value="${userDetails.age}"
-                       required>
-            </div>
-
-            <!-- Email -->
-            <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="email"
-                       class="form-control"
-                       name="email"
-                       value="${userDetails.email}"
-                       required>
-            </div>
-
-            <!-- Phone -->
-            <div class="mb-4">
-                <label class="form-label">Phone</label>
-                <input type="text"
-                       class="form-control"
-                       name="phoneNo"
-                       value="${userDetails.phoneNo}"
-                       required>
-            </div>
-
-            <!-- Actions -->
             <div class="d-flex gap-2">
                 <button type="submit" class="btn btn-primary w-100">
-                    Update & Save
+                    Update Role
                 </button>
-                <a href="/user/listallusers" class="btn btn-outline-secondary w-100">
+
+                <a href="/role/listallrolesjdbc"
+                   class="btn btn-outline-secondary w-100">
                     Cancel
                 </a>
             </div>

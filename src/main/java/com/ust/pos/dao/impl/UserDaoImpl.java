@@ -25,10 +25,10 @@ public class UserDaoImpl implements UserDao {
 //        if(findByEmail(userDto.getEmail())==null){
 //            return false;
 //        }
-        String sqlQ = "insert into user set name=?,user_name=?,password=?,email=?,age=?";
+        String sqlQ = "insert into user set name=?,user_name=?,password=?,phone_no=?,email=?,age=?";
         String encodePassword = passwordEncoder.encode(userDto.getPassword());
 
-        jdbcTemplate.update(sqlQ, userDto.getName(), userDto.getUserName(), encodePassword, userDto.getEmail(), userDto.getAge());
+        jdbcTemplate.update(sqlQ, userDto.getName(), userDto.getUserName(), encodePassword,userDto.getPhoneNo(),userDto.getEmail(), userDto.getAge());
         return true;
     }
 
@@ -59,12 +59,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     public boolean updateUserJdbc(UserDto userDto) {
-        String sqlQ = "update user set name=?, user_name=?, password=?, email=?, age=? where id=?";
+        String sqlQ = "update user set name=?, user_name=?, password=?, email=?,phoneNo=?, age=? where id=?";
         String encodePassword = passwordEncoder.encode(userDto.getPassword());
 
         jdbcTemplate.update(
                 sqlQ, userDto.getName(), userDto.getUserName(),encodePassword,userDto.getEmail(),
-                userDto.getAge(),userDto.getId()
+                userDto.getAge(),userDto.getPhoneNo(),userDto.getId()
         );
         return true;
     }

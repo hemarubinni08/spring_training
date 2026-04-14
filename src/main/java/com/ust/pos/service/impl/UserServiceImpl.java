@@ -17,8 +17,9 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
+
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository userRepository;
@@ -29,127 +30,137 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
-//    public boolean registerjdbc(UserDto userDto) {
-//       boolean emailExists = userRepository.existsByEmail(userDto.getEmail());
-//
-//        if (emailExists) {
-//            return false;
-//        }
-//
-//        User user = modelMapper.map(userDto, User.class);
-//        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-//        userDao.registerjdbc(userDto);
-//        return true;
-//    }
+    /* ======================= REGISTER JDBC ======================= */
 
     public boolean saveDataJdbc(UserDto userDto) {
-        User user = userDao.findByEmail(userDto.getEmail());
-        if (user == null) {
-            userDao.registerjdbc(userDto);
-            return true;
-        } else {
+        User existingUser = userDao.findByEmail(userDto.getEmail());
+        if (existingUser != null) {
             return false;
         }
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        userDao.registerjdbc(userDto);
+        return true;
     }
 
+    /* ======================= REGISTER JPA ======================= */
+
     public boolean register(UserDto userDto) {
-
-        boolean emailExists = userRepository.existsByEmail(userDto.getEmail());
-
-        if (emailExists) {
+        if (userRepository.existsByEmail(userDto.getEmail())) {
             return false;
         }
-
         User user = modelMapper.map(userDto, User.class);
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userRepository.save(user);
         return true;
     }
 
+    /* ======================= LIST USERS ======================= */
+
     @Override
     public List<UserDto> printAllUsers() {
         List<User> users = userRepository.findAll();
-        List<UserDto> userDto = new ArrayList<>();
-        for (User user1 : users) {
-            userDto.add(modelMapper.map(user1, UserDto.class));
+        List<UserDto> result = new ArrayList<>();
+        for (User user : users) {
+            result.add(modelMapper.map(user, UserDto.class));
         }
-        return userDto;
-    }
-    @Transactional
-    public void deleteByEmail(String email){
-        userRepository.deleteByEmail(email);
-    }
-    public void deleteByEmailJdbc(String email){
-        userDao.deleteByEmailJdbc(email);
+        return result;
     }
 
     @Override
     public List<UserDto> printAllUsersJdbc() {
         List<User> users = userDao.printAllUsersJdbc();
-        List<UserDto> userDtoJdbc = new ArrayList<>();
+        List<UserDto> result = new ArrayList<>();
         for (User user : users) {
-            userDtoJdbc.add(modelMapper.map(user, UserDto.class));
+            result.add(modelMapper.map(user, UserDto.class));
         }
-        return userDtoJdbc;
+        return result;
     }
 
+    /* ======================= DELETE ======================= */
+
+    @Transactional
+    public void deleteByEmail(String email) {
+        userRepository.deleteByEmail(email);
+    }
+
+    public void deleteByEmailJdbc(String email) {
+        userDao.deleteByEmailJdbc(email);
+    }
+
+    /* ======================= PROFILE ======================= */
+
     public UserDto getProfile(String email) {
-        User user1 = userRepository.findByEmail(email);
-        UserDto user2 = modelMapper.map(user1, UserDto.class);
-        return user2;
+        User user = userRepository.findByEmail(email);
+        return user == null ? null : modelMapper.map(user, UserDto.class);
     }
 
     public UserDto getProfileJdbc(String email) {
-        User user1 = userDao.findByEmail(email);
-        UserDto userProfile = modelMapper.map(user1, UserDto.class);
-        return userProfile;
-    }
-//    public UserDto findById(Long id){
-//        Optional<User> user1=userRepository.findById(id);
-//        UserDto userProfile=modelMapper.map(user1,UserDto.class);
-//        return userProfile;
-//    }
-    public UserDto findById(Long id){
-        Optional<User> user1 = userRepository.findById(id);
-        if (user1.isPresent()) {
-            return modelMapper.map(user1.get(), UserDto.class);
-        }
-        return null;
+        User user = userDao.findByEmail(email);
+        return user == null ? null : modelMapper.map(user, UserDto.class);
     }
 
-    public UserDto findByIdJdbc(Long id){
-        User user1=userDao.findById(id);
-        UserDto userProfile=modelMapper.map(user1,UserDto.class);
-        return userProfile;
+    public UserDto findById(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        return user.map(value -> modelMapper.map(value, UserDto.class)).orElse(null);
     }
+
+    public UserDto findByIdJdbc(Long id) {
+        User user = userDao.findById(id);
+        return user == null ? null : modelMapper.map(user, UserDto.class);
+    }
+
+    /* ======================= UPDATE JPA ======================= */
 
     public boolean updateUser(UserDto userDto) {
-        Optional<User> user = userRepository.findById(userDto.getId());
-        if (user.isPresent()) {
-            User existingUser = user.get();
-            if(!existingUser.getEmail().equalsIgnoreCase(userDto.getEmail())){
-                if(userRepository.findByEmail(userDto.getEmail())==null){
-                    modelMapper.map(userDto, existingUser);
-                    userRepository.save(existingUser);
-                    return true;
-                }
+        Optional<User> userOpt = userRepository.findById(userDto.getId());
+
+        if (userOpt.isEmpty()) {
+            return false;
+        }
+
+        User existingUser = userOpt.get();
+
+        if (!existingUser.getEmail().equalsIgnoreCase(userDto.getEmail())) {
+            if (userRepository.existsByEmail(userDto.getEmail())) {
+                return false;
             }
         }
-        return false;
-    }
-    public boolean updateUserJdbc(UserDto userDto){
-        Optional<User> user = Optional.ofNullable(userDao.findById(userDto.getId()));
-        if(user.isPresent()) {
-            User exstingUser=user.get();
-            if(!exstingUser.getEmail().equalsIgnoreCase(userDto.getEmail())){
-                if(userDao.findByEmail(userDto.getEmail())==null){
-                    modelMapper.map(userDto,exstingUser);
-                    userDao.updateUserJdbc(userDto);
-                    return true;
-                }
-            }
+
+        String encodedPassword = existingUser.getPassword();
+        modelMapper.map(userDto, existingUser);
+
+        if (userDto.getPassword() == null || userDto.getPassword().isEmpty()) {
+            existingUser.setPassword(encodedPassword);
+        } else {
+            existingUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
         }
-        return false;
+
+        userRepository.save(existingUser);
+        return true;
     }
 
+    /* ======================= UPDATE JDBC ======================= */
+
+    public boolean updateUserJdbc(UserDto userDto) {
+        User existingUser = userDao.findById(userDto.getId());
+
+        if (existingUser == null) {
+            return false;
+        }
+
+        if (!existingUser.getEmail().equalsIgnoreCase(userDto.getEmail())) {
+            if (userDao.findByEmail(userDto.getEmail()) != null) {
+                return false;
+            }
+        }
+
+        if (userDto.getPassword() != null && !userDto.getPassword().isEmpty()) {
+            userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        } else {
+            userDto.setPassword(existingUser.getPassword());
+        }
+
+        userDao.updateUserJdbc(userDto);
+        return true;
+    }
 }
