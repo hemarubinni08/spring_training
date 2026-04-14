@@ -7,8 +7,7 @@
     <meta charset="UTF-8">
     <title>Role List</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-          rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         body {
@@ -26,14 +25,19 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold">Role List</h2>
 
-        <a href="/role/addrole" class="btn btn-primary">
-            + Add Role
-        </a>
+        <div class="d-flex gap-2">
+            <a href="${pageContext.request.contextPath}/" class="btn btn-success btn-sm">
+                Back To Home
+            </a>
+
+            <a href="/role/addrole" class="btn btn-primary btn-sm">
+                + Add Role
+            </a>
+        </div>
     </div>
 
     <div class="card shadow-sm">
         <div class="card-body p-0">
-
             <table class="table table-hover table-striped mb-0">
                 <thead class="table-dark">
                 <tr>
@@ -58,7 +62,6 @@
                         <td>${role.id}</td>
                         <td>${role.name}</td>
                         <td class="text-center">
-
                             <a href="/role/getrolebyidjdbc/${role.id}"
                                class="btn btn-sm btn-outline-primary me-2">
                                 Update
@@ -69,14 +72,12 @@
                                onclick="return confirm('Are you sure?');">
                                 Delete
                             </a>
-
                         </td>
                     </tr>
                 </c:forEach>
 
                 </tbody>
             </table>
-
         </div>
     </div>
 

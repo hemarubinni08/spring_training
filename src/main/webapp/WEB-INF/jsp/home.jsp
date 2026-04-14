@@ -1,0 +1,84 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+          rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f6fa;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 240px;
+            height: 100vh;
+            background: linear-gradient(180deg, #4D0505, #661919);
+            padding-top: 30px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.15);
+        }
+        .sidebar h4 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .sidebar a {
+            display: block;
+            padding: 14px 25px;
+            color: #d1d1d1;
+            text-decoration: none;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+        .sidebar a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding-left: 35px;
+        }
+        .content {
+            margin-left: 240px;
+            padding: 40px;
+        }
+        .welcome-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+        .welcome-card h1 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .welcome-card p {
+            font-size: 16px;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+<div class="sidebar">
+    <h4>Dashboard</h4>
+    <c:forEach items="${navList}" var="nav">
+        <a href="${nav.path}">${nav.name}</a>
+    </c:forEach>
+</div>
+<div class="content">
+    <div class="welcome-card">
+        <h1>Welcome</h1>
+        <p>Select a module from the sidebar to continue managing your application.</p>
+    </div>
+</div>
+</body>
+</html>

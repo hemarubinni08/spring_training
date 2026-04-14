@@ -25,10 +25,6 @@
             border-radius: 10px;
             width: 100%;
         }
-        .login-link {
-            text-align: center;
-            margin-top: 15px;
-        }
     </style>
 </head>
 
@@ -39,6 +35,7 @@
 
         <h3 class="text-center mb-4 font-weight-bold">Create Account</h3>
 
+        <!-- ✅ PROPER FORM -->
         <form action="/user/register" method="post">
 
             <div class="form-group">
@@ -79,16 +76,23 @@
                 </select>
             </div>
 
-            <!-- ✅ MULTIPLE ROLES -->
+            <!-- ✅ MULTIPLE ROLES (CHECKBOX) -->
             <div class="form-group">
-                <label>Roles (Multiple)</label>
-                <select class="form-control" name="roles" multiple size="4">
+                <label class="font-weight-bold">Roles (Multiple)</label>
+
+                <div class="border rounded p-2">
                     <c:forEach items="${multiplerole}" var="r">
-                        <option value="${r.name}">
-                            ${r.name}
-                        </option>
+                        <div class="form-check">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   name="roles"
+                                   value="${r.name}">
+                            <label class="form-check-label">
+                                ${r.name}
+                            </label>
+                        </div>
                     </c:forEach>
-                </select>
+                </div>
             </div>
 
             <button type="submit" class="btn btn-primary">
@@ -96,11 +100,6 @@
             </button>
 
         </form>
-
-        <div class="login-link">
-            <small>Already have an account?</small><br>
-            <a href="/user/login" class="btn btn-link btn-sm">Login</a>
-        </div>
 
     </div>
 </div>

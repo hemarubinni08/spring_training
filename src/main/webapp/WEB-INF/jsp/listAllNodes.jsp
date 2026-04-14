@@ -7,7 +7,6 @@
     <meta charset="UTF-8">
     <title>Node List</title>
 
-    <!-- Bootstrap 5 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
@@ -22,13 +21,24 @@
 <body>
 
 <div class="container table-container">
+
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold">Node List</h2>
-        <a href="/node/addnode" class="btn btn-primary">+ Add Node</a>
+
+        <div class="d-flex gap-2">
+            <a href="${pageContext.request.contextPath}/" class="btn btn-success btn-sm">
+                Back To Home
+            </a>
+
+            <a href="/node/addnode" class="btn btn-primary btn-sm">
+                + Add Node
+            </a>
+        </div>
     </div>
 
     <div class="card shadow-sm">
         <div class="card-body p-0">
+
             <table class="table table-hover table-striped mb-0">
                 <thead class="table-dark">
                     <tr>
@@ -43,17 +53,12 @@
                     <c:forEach items="${nodes}" var="node">
                         <tr>
                             <td>
-                                <a href="/node/nodeprofile/${node.id}"
-                                   class="text-decoration-none fw-semibold">
+                                <a href="/node/nodeprofile/${node.id}" class="text-decoration-none fw-semibold">
                                     ${node.id}
                                 </a>
                             </td>
-
                             <td>${node.name}</td>
-
-                            <!-- NEW: Path column -->
                             <td class="text-muted">${node.path}</td>
-
                             <td class="text-center">
                                 <a href="/node/nodeprofile/${node.id}"
                                    class="btn btn-sm btn-outline-primary me-2">
@@ -79,8 +84,10 @@
                 </tbody>
 
             </table>
+
         </div>
     </div>
+
 </div>
 
 </body>

@@ -7,7 +7,6 @@
     <meta charset="UTF-8">
     <title>User List</title>
 
-    <!-- Bootstrap 5 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
@@ -20,28 +19,35 @@
         td, th {
             vertical-align: middle;
         }
+        .action-btn {
+            width: 100%;
+        }
     </style>
 </head>
 <body>
 
 <div class="container table-container">
 
-    <!-- Header with TWO Add buttons -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold">User List</h2>
 
-        <div>
-            <a href="/user/register" class="btn btn-primary me-2">
-                + Add User (JPA)
+        <div class="d-flex gap-2">
+            <a href="${pageContext.request.contextPath}/"
+               class="btn btn-success fw-bold">
+                 Back To Home
             </a>
 
-            <a href="/user/registerjdbc" class="btn btn-warning">
-                + Add User (JDBC)
+            <a href="/user/register" class="btn btn-primary fw-bold">
+                + Register User (JPA)
+            </a>
+
+            <a href="/user/registerjdbc" class="btn btn-warning fw-bold">
+                + Register User (JDBC)
             </a>
         </div>
     </div>
 
-    <!-- User Table -->
+    <!--  USER TABLE -->
     <div class="card shadow-sm">
         <div class="card-body p-0">
 
@@ -56,7 +62,7 @@
                         <th>Email (Path JPA)</th>
                         <th>Phone</th>
                         <th>Role</th>
-                        <th>Roles</th>
+                        <th class="text-center">Roles</th>
                         <th class="text-center">Actions</th>
                     </tr>
                 </thead>
@@ -64,18 +70,16 @@
                 <tbody>
                     <c:forEach items="${users}" var="user">
                         <tr>
-                            <!-- ID as Param -->
                             <td>
                                 <a href="/user/getProfileById?id=${user.id}"
-                                   class="text-decoration-none fw-semibold">
+                                   class="fw-semibold text-decoration-none">
                                     ${user.id}
                                 </a>
                             </td>
 
-                            <!-- ID as Path -->
                             <td>
                                 <a href="/user/getProfileByIdJdbc/${user.id}"
-                                   class="text-decoration-none fw-semibold">
+                                   class="fw-semibold text-decoration-none">
                                     ${user.id}
                                 </a>
                             </td>
@@ -83,7 +87,6 @@
                             <td>${user.name}</td>
                             <td>${user.age}</td>
 
-                            <!-- Email Param JDBC -->
                             <td>
                                 <a href="/user/profilejdbc?email=${user.email}"
                                    class="text-decoration-none">
@@ -91,7 +94,6 @@
                                 </a>
                             </td>
 
-                            <!-- Email Path JPA -->
                             <td>
                                 <a href="/user/profile/${user.email}"
                                    class="text-decoration-none">
@@ -103,41 +105,38 @@
                             <td>${user.role}</td>
                             <td>${user.roles}</td>
 
-                            <!-- Actions -->
-
+                            <!-- ✅ ACTION COLUMN -->
                             <td class="text-center">
+                                <div class="d-grid gap-2">
                                     <a href="/user/getProfileById?id=${user.id}"
-                                       class="btn btn-sm btn-outline-primary">
-                                       Update
-                                     </a>
-                            </td>
+                                       class="btn btn-sm btn-outline-primary action-btn">
+                                        Update
+                                    </a>
 
-                            <td class="text-center">
-                                <a href="/user/deleteUser?email=${user.email}"
-                                   class="btn btn-sm btn-outline-danger me-2"
-                                   onclick="return confirm('Are you sure you want to delete this user?');">
-                                    Delete
-                                </a>
+                                    <a href="/user/deleteUser?email=${user.email}"
+                                       class="btn btn-sm btn-outline-danger action-btn"
+                                       onclick="return confirm('Are you sure?');">
+                                        Delete
+                                    </a>
 
-                                <a href="/user/deleteUserJdbc?email=${user.email}"
-                                   class="btn btn-sm btn-outline-warning"
-                                   onclick="return confirm('Are you sure you want to delete this user via JDBC?');">
-                                    Delete JDBC
-                                </a>
+                                    <a href="/user/deleteUserJdbc?email=${user.email}"
+                                       class="btn btn-sm btn-outline-warning action-btn"
+                                       onclick="return confirm('Are you sure JDBC?');">
+                                        Delete JDBC
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     </c:forEach>
 
-                    <!-- Empty State -->
                     <c:if test="${empty users}">
                         <tr>
-                            <td colspan="8" class="text-center py-4 text-muted">
+                            <td colspan="10" class="text-center py-4 text-muted">
                                 No users found.
                             </td>
                         </tr>
                     </c:if>
                 </tbody>
-
             </table>
 
         </div>
@@ -147,4 +146,3 @@
 
 </body>
 </html>
-``
