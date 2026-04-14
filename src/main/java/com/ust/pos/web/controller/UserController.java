@@ -20,7 +20,8 @@ public class UserController {
 
     @GetMapping("/register")
     public String registerPage(Model model) {
-        model.addAttribute("rolesList", roleService.getAllRoles());
+        model.addAttribute("singlerole", roleService.getAllRoles());
+        model.addAttribute("multiplerole", roleService.getAllRoles());
         model.addAttribute("userDto", new UserDto());
         return "register";
     }
@@ -33,6 +34,8 @@ public class UserController {
 
     @GetMapping("/registerjdbc")
     public String registerJdbcPage(Model model) {
+        model.addAttribute("singlerole", roleService.getAllRoles());
+        model.addAttribute("multiplerole", roleService.getAllRoles());
         model.addAttribute("userDto", new UserDto());
         return "registerjdbc";
     }
@@ -57,14 +60,16 @@ public class UserController {
 
     @GetMapping("/getProfileById")
     public String getProfileById(Model model, @RequestParam Long id) {
-        model.addAttribute("rolesList", roleService.getAllRoles());
+        model.addAttribute("singlerole", roleService.getAllRoles());
+        model.addAttribute("multiplerole", roleService.getAllRoles());
         model.addAttribute("userDetails", userService.findById(id));
         return "profile";
     }
 
     @GetMapping("/getProfileByIdJdbc/{id}")
     public String getProfileByIdJdbc(Model model, @PathVariable Long id) {
-        model.addAttribute("rolesList", roleService.getAllRoles());
+        model.addAttribute("singlerole", roleService.getAllRoles());
+        model.addAttribute("multiplerole", roleService.getAllRoles());
         model.addAttribute("userDetails", userService.findByIdJdbc(id));
         return "profile";
     }
@@ -78,7 +83,8 @@ public class UserController {
 
     @GetMapping("/profilejdbc")
     public String getProfileByEmailJdbc(Model model, @RequestParam String email) {
-        model.addAttribute("rolesList", roleService.getAllRoles());
+        model.addAttribute("singlerole", roleService.getAllRoles());
+        model.addAttribute("multiplerole", roleService.getAllRoles());
         model.addAttribute("userDetails", userService.getProfileJdbc(email));
         return "profile";
     }

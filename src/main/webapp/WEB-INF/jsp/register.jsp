@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,6 +64,31 @@
             <div class="form-group">
                 <label>Password</label>
                 <input type="password" class="form-control" name="password" required>
+            </div>
+
+            <!-- ✅ SINGLE ROLE -->
+            <div class="form-group">
+                <label>Role (Single)</label>
+                <select class="form-control" name="role">
+                    <option value="">-- Select Role --</option>
+                    <c:forEach items="${singlerole}" var="r">
+                        <option value="${r.name}">
+                            ${r.name}
+                        </option>
+                    </c:forEach>
+                </select>
+            </div>
+
+            <!-- ✅ MULTIPLE ROLES -->
+            <div class="form-group">
+                <label>Roles (Multiple)</label>
+                <select class="form-control" name="roles" multiple size="4">
+                    <c:forEach items="${multiplerole}" var="r">
+                        <option value="${r.name}">
+                            ${r.name}
+                        </option>
+                    </c:forEach>
+                </select>
             </div>
 
             <button type="submit" class="btn btn-primary">

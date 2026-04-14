@@ -55,6 +55,8 @@
                         <th>Email (Param JDBC)</th>
                         <th>Email (Path JPA)</th>
                         <th>Phone</th>
+                        <th>Role</th>
+                        <th>Roles</th>
                         <th class="text-center">Actions</th>
                     </tr>
                 </thead>
@@ -98,8 +100,18 @@
                             </td>
 
                             <td>${user.phoneNo}</td>
+                            <td>${user.role}</td>
+                            <td>${user.roles}</td>
 
                             <!-- Actions -->
+
+                            <td class="text-center">
+                                    <a href="/user/getProfileById?id=${user.id}"
+                                       class="btn btn-sm btn-outline-primary">
+                                       Update
+                                     </a>
+                            </td>
+
                             <td class="text-center">
                                 <a href="/user/deleteUser?email=${user.email}"
                                    class="btn btn-sm btn-outline-danger me-2"
