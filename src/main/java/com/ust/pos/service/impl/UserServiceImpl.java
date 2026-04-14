@@ -114,6 +114,7 @@ public class UserServiceImpl implements UserService {
         existingUser.setName(userDto.getName());
         existingUser.setEmail(userDto.getEmail());
         existingUser.setPhoneNo(userDto.getPhoneNo());
+        existingUser.setRole(userDto.getRole());
 
         User updatedUser = userRepository.save(existingUser);
 
@@ -161,6 +162,7 @@ public class UserServiceImpl implements UserService {
         existingUser.setEmail(userDto.getEmail());
         existingUser.setPhoneNo(userDto.getPhoneNo());
         existingUser.setUserName(userDto.getUserName());
+        existingUser.setRole(userDto.getRole());
 
         userRepository.save(existingUser);
         return true;

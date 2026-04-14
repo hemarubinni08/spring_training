@@ -123,16 +123,15 @@ public class UserDaoImpl implements UserDao {
     public UserDto updateUserJdbc(UserDto userDto) {
 
         String sql = """
-                UPDATE user
-                SET
-                    name = ?,
-                    email = ?,
-                    phone_no = ?,
-                    user_name = ?
-                WHERE id = ?
-                """;
-
-
+            UPDATE user
+            SET
+                name = ?,
+                email = ?,
+                phone_no = ?,
+                user_name = ?,
+                role = ?
+            WHERE id = ?
+            """;
 
         int rows = jdbcTemplate.update(
                 sql,
@@ -140,6 +139,7 @@ public class UserDaoImpl implements UserDao {
                 userDto.getEmail(),
                 userDto.getPhoneNo(),
                 userDto.getUserName(),
+                userDto.getRole(),
                 userDto.getId()
         );
 
@@ -147,9 +147,8 @@ public class UserDaoImpl implements UserDao {
             throw new RuntimeException("Update failed");
         }
 
-
-        return getUserByIdJdbc(userDto.getId());    }
-
+        return getUserByIdJdbc(userDto.getId());
+    }
     @Override
     public boolean emailExistsForAnotherUser(String email, Long userId) {
 

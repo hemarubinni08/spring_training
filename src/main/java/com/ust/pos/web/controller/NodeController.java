@@ -2,6 +2,7 @@ package com.ust.pos.web.controller;
 
 import com.ust.pos.dto.NodeDto;
 import com.ust.pos.service.NodeService;
+import com.ust.pos.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,9 @@ public class NodeController {
 
     @Autowired
     private NodeService nodeService;
+
+    @Autowired
+    private RoleService roleService;
 
     @GetMapping("/addnodes")
     public String showNodes(Model model) {
