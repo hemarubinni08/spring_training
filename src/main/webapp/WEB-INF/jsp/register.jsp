@@ -50,19 +50,12 @@
         margin-bottom: 6px;
     }
 
-    input {
+    input, select {
         width: 100%;
         padding: 9px 12px;
         font-size: 14px;
         border-radius: 8px;
         border: 1px solid #ccc;
-        transition: border-color 0.2s, box-shadow 0.2s;
-    }
-
-    input:focus {
-        outline: none;
-        border-color: #36d1dc;
-        box-shadow: 0 0 0 2px rgba(54,209,220,0.2);
     }
 
     button {
@@ -76,21 +69,38 @@
         cursor: pointer;
         background: linear-gradient(120deg, #36d1dc, #5b86e5);
         color: white;
-        transition: all 0.25s ease;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.12);
     }
 
-    button:hover {
-        opacity: 0.95;
-        transform: translateY(-1px);
-    }
-
-    .error-box {
-        margin-top: 15px;
-        text-align: center;
-        font-size: 13px;
-        color: #b91c1c;
+    /* TOAST STYLE */
+    .toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        min-width: 260px;
+        padding: 14px 20px;
+        border-radius: 10px;
+        color: #fff;
+        font-size: 14px;
         font-weight: 600;
+        z-index: 9999;
+        opacity: 0;
+        transform: translateY(-10px);
+        animation: fadeInOut 4s ease forwards;
+    }
+
+    .toast.success {
+        background: linear-gradient(120deg, #22c55e, #16a34a);
+    }
+
+    .toast.error {
+        background: linear-gradient(120deg, #ef4444, #dc2626);
+    }
+
+    @keyframes fadeInOut {
+        0% { opacity: 0; transform: translateY(-10px); }
+        15% { opacity: 1; transform: translateY(0); }
+        85% { opacity: 1; }
+        100% { opacity: 0; }
     }
 </style>
 </head>
@@ -100,7 +110,7 @@
 <div class="container">
     <h2>User Registration</h2>
 
-    <form:form action="/user/register"
+    <form:form action="${pageContext.request.contextPath}/user/register"
                method="POST"
                modelAttribute="userDto">
 
@@ -134,6 +144,27 @@
             <form:input path="userName"/>
         </div>
 
+        <!-- ROLE DROPDOWN (FROM DB) -->
+        <div class="form-group">
+            <label>Role</label>
+            <form:select path="roleName">
+                <form:option value="">-- Select Role --</form:option>
+                <c:forEach var="role" items="${roleList}">
+                    <form:option value="${role}">${role}</form:option>
+                </c:forEach>
+            </form:select>
+        </div>
+
+        <!-- MULTI-ROLES DROPDOWN (FROM DB) -->
+        <div class="form-group">
+            <label>Other Roles</label>
+            <form:select path="roles" multiple="true" size="1">
+                <form:option value="">-- Select Other Roles --</form:option>
+                <c:forEach var="role" items="${roleList}">
+                    <form:option value="${role}">${role}</form:option>
+                </c:forEach>
+            </form:select>
+        </div>
         <div class="form-group">
             <label>Password</label>
             <form:password path="password"/>
@@ -141,13 +172,41 @@
 
         <button type="submit">Register</button>
     </form:form>
-
-    <c:if test="${not empty errorMessage}">
-        <div class="error-box">
-            ${errorMessage}
-        </div>
-    </c:if>
+    <a href="${pageContext.request.contextPath}/"
+        style="display:inline-block; margin-top:15px; font-weight:600; color:#2563eb; text-decoration:none;">
+            ← Back to Home
+    </a>
 </div>
+
+<!-- TOAST MESSAGE -->
+
+<c:if test="${not empty toastMessage1}">
+    <div id="toast1" class="toast ${toastType}">
+        ${toastMessage1}
+    </div>
+</c:if>
+
+<c:if test="${not empty toastMessage2}">
+    <div id="toast2" class="toast ${toastType}" style="display:none;">
+        ${toastMessage2}
+    </div>
+</c:if>
+
+
+<!-- AUTO REDIRECT ON SUCCESS -->
+
+<c:if test="${toastType eq 'success'}">
+<script>
+    setTimeout(function () {
+        document.getElementById("toast2").style.display = "block";
+    }, 4000);
+
+    setTimeout(function () {
+        window.location.href =
+            "${pageContext.request.contextPath}/user/list";
+    }, 8000);
+</script>
+</c:if>
 
 </body>
 </html>

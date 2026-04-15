@@ -20,80 +20,24 @@ public class NodeServiceImpl implements NodeService {
     @Autowired
     private ModelMapper modelMapper;
 
-    // ================= CREATE =================
-
     @Override
     public NodeDto addNode(NodeDto nodeDto) {
-
-        // ✅ Check duplicate node name
         if (nodeRepository.existsByNameIgnoreCase(nodeDto.getName())) {
             nodeDto.setMessage("Node name already exists!");
             nodeDto.setColour("red");
             return nodeDto;
         }
-
-        // ✅ Check duplicate node path
         if (nodeRepository.existsByPathIgnoreCase(nodeDto.getPath())) {
             nodeDto.setMessage("Node path already exists!");
             nodeDto.setColour("red");
             return nodeDto;
         }
-
         Node node = modelMapper.map(nodeDto, Node.class);
         nodeRepository.save(node);
-
         nodeDto.setMessage("Node added successfully!");
         nodeDto.setColour("green");
         return nodeDto;
     }
-
-    // ================= DELETE =================
-
-    @Override
-    public void deleteNode(long id) {
-        nodeRepository.deleteById(id);
-    }
-
-    // ================= UPDATE =================
-
-    @Override
-    public NodeDto updateNode(NodeDto nodeDto) {
-
-        // ✅ Validate name uniqueness except current node
-        if (nodeRepository.existsByNameIgnoreCaseAndIdNot(
-                nodeDto.getName(), nodeDto.getId())) {
-            nodeDto.setMessage("Node name already exists!");
-            nodeDto.setColour("red");
-            return nodeDto;
-        }
-
-        // ✅ Validate path uniqueness except current node
-        if (nodeRepository.existsByPathIgnoreCaseAndIdNot(
-                nodeDto.getPath(), nodeDto.getId())) {
-            nodeDto.setMessage("Node path already exists!");
-            nodeDto.setColour("red");
-            return nodeDto;
-        }
-
-        Optional<Node> nodeOpt = nodeRepository.findById(nodeDto.getId());
-        if (nodeOpt.isEmpty()) {
-            nodeDto.setMessage("Node not found!");
-            nodeDto.setColour("red");
-            return nodeDto;
-        }
-
-        Node node = nodeOpt.get();
-        node.setName(nodeDto.getName());
-        node.setPath(nodeDto.getPath());
-
-        nodeRepository.save(node);
-
-        nodeDto.setMessage("Node updated successfully!");
-        nodeDto.setColour("green");
-        return nodeDto;
-    }
-
-    // ================= LIST =================
 
     @Override
     public List<NodeDto> getAllNodes() {
@@ -103,12 +47,45 @@ public class NodeServiceImpl implements NodeService {
                 .toList();
     }
 
-    // ================= BY ID =================
-
     @Override
-    public NodeDto getNode(long id) {
+    public NodeDto getNodeById(long id) {
         return nodeRepository.findById(id)
                 .map(node -> modelMapper.map(node, NodeDto.class))
                 .orElse(new NodeDto());
+    }
+
+    @Override
+    public NodeDto updateNode(NodeDto nodeDto) {
+        if (nodeRepository.existsByNameIgnoreCaseAndIdNot(
+                nodeDto.getName(), nodeDto.getId())) {
+            nodeDto.setMessage("Node name already exists!");
+            nodeDto.setColour("red");
+            return nodeDto;
+        }
+        if (nodeRepository.existsByPathIgnoreCaseAndIdNot(
+                nodeDto.getPath(), nodeDto.getId())) {
+            nodeDto.setMessage("Node path already exists!");
+            nodeDto.setColour("red");
+            return nodeDto;
+        }
+        Optional<Node> nodeOpt = nodeRepository.findById(nodeDto.getId());
+        if (nodeOpt.isEmpty()) {
+            nodeDto.setMessage("Node not found!");
+            nodeDto.setColour("red");
+            return nodeDto;
+        }
+        Node node = nodeOpt.get();
+        node.setName(nodeDto.getName());
+        node.setPath(nodeDto.getPath());
+        node.setRoles(nodeDto.getRoles());
+        nodeRepository.save(node);
+        nodeDto.setMessage("Node updated successfully!");
+        nodeDto.setColour("green");
+        return nodeDto;
+    }
+
+    @Override
+    public void deleteNode(long id) {
+        nodeRepository.deleteById(id);
     }
 }

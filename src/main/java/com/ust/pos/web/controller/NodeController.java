@@ -2,6 +2,7 @@ package com.ust.pos.web.controller;
 
 import com.ust.pos.dto.NodeDto;
 import com.ust.pos.service.NodeService;
+import com.ust.pos.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,45 +16,45 @@ public class NodeController {
     @Autowired
     private NodeService nodeService;
 
-    // ================= ADD =================
+    @Autowired
+    private RoleService roleService;
 
-    @PostMapping("/addNode")
-    public String addNode(@ModelAttribute NodeDto nodeDto,
-                          RedirectAttributes redirectAttributes) {
 
-        // ✅ USE SERVICE RESULT (important)
+    @PostMapping("/add")
+    public String addNode(@ModelAttribute NodeDto nodeDto, RedirectAttributes redirectAttributes) {
         NodeDto response = nodeService.addNode(nodeDto);
-
         redirectAttributes.addFlashAttribute("message", response.getMessage());
         redirectAttributes.addFlashAttribute("colour", response.getColour());
-
-        return "redirect:/node/nodesList";
+        return "redirect:/node/list";
     }
 
-    // ================= LIST =================
-
-    @GetMapping("/nodesList")
+    @GetMapping("/list")
     public String nodesList(Model model) {
-        model.addAttribute("nodesList", nodeService.getAllNodes());
+        model.addAttribute("nodeDetailsList", nodeService.getAllNodes());
+        model.addAttribute("rolesList", roleService.getAllRoleNames());
         return "nodesList";
     }
 
-    // ================= DELETE =================
-
-    @GetMapping("/deletenode/{id}") // ✅ matches JSP
-    public String deleteNode(@PathVariable long id,
-                             RedirectAttributes redirectAttributes) {
-
-        nodeService.deleteNode(id);
-        redirectAttributes.addFlashAttribute("message", "Node deleted successfully!");
-        redirectAttributes.addFlashAttribute("colour", "green");
-
-        return "redirect:/node/nodesList";
+    @GetMapping("/profile/{id}")
+    public String nodeProfile(@PathVariable long id, Model model) {
+        model.addAttribute("rolesList", roleService.getAllRoleNames());
+        model.addAttribute("nodeDto", nodeService.getNodeById(id));
+        return "nodeProfile";
     }
 
-    // ================= UPDATE =================
+    @GetMapping("/update")
+    public String updateNodefetch(@ModelAttribute NodeDto nodeDto, Model model,
+                                  RedirectAttributes redirectAttributes) {
 
-    @PostMapping("/updateNode")
+        NodeDto response = nodeService.updateNode(nodeDto);
+        model.addAttribute("rolesList", roleService.getAllRoleNames());
+        redirectAttributes.addFlashAttribute("message", response.getMessage());
+        redirectAttributes.addFlashAttribute("colour", response.getColour());
+
+        return "nodeProfile";
+    }
+
+    @PostMapping("/update")
     public String updateNode(@ModelAttribute NodeDto nodeDto,
                              RedirectAttributes redirectAttributes) {
 
@@ -62,14 +63,14 @@ public class NodeController {
         redirectAttributes.addFlashAttribute("message", response.getMessage());
         redirectAttributes.addFlashAttribute("colour", response.getColour());
 
-        return "redirect:/node/nodeProfile/" + nodeDto.getId();
+        return "redirect:/node/profile/" + nodeDto.getId();
     }
 
-    // ================= PROFILE =================
-
-    @GetMapping("/nodeProfile/{id}")
-    public String nodeProfile(@PathVariable long id, Model model) {
-        model.addAttribute("nodeDto", nodeService.getNode(id));
-        return "nodeProfile";
+    @GetMapping("/delete/{id}")
+    public String deleteNode(@PathVariable long id, RedirectAttributes redirectAttributes) {
+        nodeService.deleteNode(id);
+        redirectAttributes.addFlashAttribute("message", "Node deleted successfully!");
+        redirectAttributes.addFlashAttribute("colour", "green");
+        return "redirect:/node/list";
     }
 }

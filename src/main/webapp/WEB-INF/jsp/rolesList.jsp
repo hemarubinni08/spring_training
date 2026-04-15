@@ -103,7 +103,6 @@
             background: linear-gradient(120deg, #ff416c, #ff4b2b);
         }
 
-        /* ✅ Toast Notification */
         .toast {
             position: fixed;
             top: 20px;
@@ -140,7 +139,6 @@
 
 <body>
 
-<!-- ✅ Toast Message -->
 <c:set var="toastClass"
        value="${colour eq 'red' ? 'toast-error' : 'toast-success'}" />
 
@@ -154,15 +152,13 @@
 <div class="container">
     <h1>Role Management</h1>
 
-    <!-- ✅ Add Role -->
-    <form action="/role/addRoleJdbc"
+    <form action="/role/add"
           method="post"
           class="add-role">
         <input type="text" name="name" placeholder="Enter role name" required />
         <button type="submit" class="btn-add">Add Role</button>
     </form>
 
-    <!-- ✅ Role List -->
     <table>
         <thead>
         <tr>
@@ -177,12 +173,12 @@
                 <td>${role.id}</td>
                 <td>${role.name}</td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/role/roleProfileJdbcById/${role.id}"
+                    <a href="${pageContext.request.contextPath}/role/profile/${role.id}"
                        class="btn-view">
                         View / Edit
                     </a>
 
-                    <a href="${pageContext.request.contextPath}/role/deleteRoleJdbc/${role.id}"
+                    <a href="${pageContext.request.contextPath}/role/delete/${role.id}"
                        class="btn-view btn-delete"
                        onclick="return confirm('Are you sure you want to delete this role?')">
                         Delete
@@ -192,9 +188,14 @@
         </c:forEach>
         </tbody>
     </table>
+    <div class="action-cell">
+            <a href="${pageContext.request.contextPath}/"
+                style="display:inline-block; margin-top:15px; font-weight:600; color:#2563eb; text-decoration:none;">
+                    ← Back to Homepage
+            </a>
+        </div>
 </div>
 
-<!-- ✅ Toast Script -->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const toast = document.getElementById("toast");

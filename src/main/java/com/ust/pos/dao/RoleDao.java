@@ -7,8 +7,11 @@ import java.util.List;
 
 public interface RoleDao {
     boolean createRole(RoleDto roleDto);
+
     boolean updateRole(RoleDto roleDto);
+
     void deleteRole(long id);
+
     List<Role> getAllRoles();
 
     Role getRoleById(long id);

@@ -110,7 +110,6 @@
             color: #111827;
         }
 
-        /* ✅ Toast Notification */
         .toast {
             position: fixed;
             top: 20px;
@@ -145,7 +144,6 @@
 
 <body>
 
-<!-- ✅ Toast Message -->
 <c:if test="${not empty message}">
     <div id="toast" class="toast toast-success">
         ${message}
@@ -154,7 +152,7 @@
 
 <div class="profile-container">
 
-    <form action="${pageContext.request.contextPath}/role/updateRoleJdbc" method="post">
+    <form action="${pageContext.request.contextPath}/role/update" method="post">
 
         <!-- Hidden ID -->
         <input type="hidden" name="id" value="${roleDto.id}" />
@@ -178,8 +176,8 @@
             <button type="button" class="edit-btn" onclick="enableEdit()">Edit Role</button>
             <button type="submit" class="save-btn">Save Changes</button>
 
-            <a href="${pageContext.request.contextPath}/role/showRolesListJdbc">
-                <button type="button" class="back-btn">← Back to List</button>
+            <a href="${pageContext.request.contextPath}/role/list">
+                <button type="button" class="back-btn">← Back to Roles</button>
             </a>
         </div>
 
@@ -199,7 +197,6 @@
         document.querySelector('.save-btn').style.display = 'inline-block';
     }
 
-    // ✅ Toast Animation
     document.addEventListener("DOMContentLoaded", function () {
         const toast = document.getElementById("toast");
 

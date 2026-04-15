@@ -28,11 +28,6 @@
         box-shadow: 0 18px 35px rgba(0, 0, 0, 0.15);
     }
 
-    .icon {
-        font-size: 64px;
-        margin-bottom: 12px;
-    }
-
     h2 {
         margin: 10px 0;
         letter-spacing: 0.6px;
@@ -81,14 +76,12 @@
 <div class="container">
 
     <c:if test="${userDto.colour == 'green'}">
-        <div class="icon">✅</div>
         <h2>Registration Successful</h2>
         <p>Your account has been created successfully.</p>
         <a href="/login" class="btn-view">Go to Login</a>
     </c:if>
 
     <c:if test="${userDto.colour != 'green'}">
-        <div class="icon">❌</div>
         <h2>Registration Failed</h2>
         <p>Something went wrong. Please try again.</p>
         <a href="/user/register" class="btn-view btn-retry">Try Again</a>

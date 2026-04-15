@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,11 +46,6 @@
         margin: 0 auto 10px auto;
     }
 
-    h2 {
-        margin: 8px 0;
-        color: #333;
-    }
-
     .profile-row {
         display: flex;
         justify-content: space-between;
@@ -70,7 +67,7 @@
         text-align: right;
     }
 
-    input {
+    input, select {
         width: 60%;
         padding: 7px 10px;
         border-radius: 8px;
@@ -111,54 +108,98 @@
 
 <div class="profile-container">
 
-<form action="${pageContext.request.contextPath}/user/updateUserJdbc" method="post">
+<form action="${pageContext.request.contextPath}/user/update" method="post">
 
-<input type="hidden" name="id" value="${userDetailsDto.id}">
+<input type="hidden" name="id" value="${userDetailsDto.id}" />
 
 <div class="profile-header">
-    <div class="avatar">${userDetailsDto.name.substring(0,1)}</div>
+    <div class="avatar">
+        ${not empty userDetailsDto.name ? userDetailsDto.name.substring(0,1) : 'U'}
+    </div>
     <h2>User Profile</h2>
 </div>
 
 <div class="profile-row">
     <span class="label">Name</span>
     <span class="value">${userDetailsDto.name}</span>
-    <input type="text" name="name" value="${userDetailsDto.name}">
+    <input type="text" name="name" value="${userDetailsDto.name}" />
 </div>
 
 <div class="profile-row">
     <span class="label">Email</span>
     <span class="value">${userDetailsDto.email}</span>
-    <input type="text" name="email" value="${userDetailsDto.email}">
+    <input type="text" name="email" value="${userDetailsDto.email}" />
 </div>
 
 <div class="profile-row">
     <span class="label">Phone</span>
     <span class="value">${userDetailsDto.phoneNo}</span>
-    <input type="text" name="phoneNo" value="${userDetailsDto.phoneNo}">
+    <input type="text" name="phoneNo" value="${userDetailsDto.phoneNo}" />
 </div>
 
 <div class="profile-row">
     <span class="label">Age</span>
     <span class="value">${userDetailsDto.age}</span>
-    <input type="number" name="age" value="${userDetailsDto.age}">
+    <input type="number" name="age" value="${userDetailsDto.age}" />
 </div>
 
 <div class="profile-row">
     <span class="label">DOB</span>
     <span class="value">${userDetailsDto.dateOfBirth}</span>
-    <input type="date" name="dateOfBirth" value="${userDetailsDto.dateOfBirth}">
+    <input type="date" name="dateOfBirth" value="${userDetailsDto.dateOfBirth}" />
 </div>
 
 <div class="profile-row">
     <span class="label">Username</span>
     <span class="value">${userDetailsDto.userName}</span>
-    <input type="text" name="userName" value="${userDetailsDto.userName}">
+    <input type="text" name="userName" value="${userDetailsDto.userName}" />
+</div>
+
+<!-- SINGLE ROLE -->
+<div class="profile-row">
+    <span class="label">Role</span>
+
+    <select name="roleName">
+        <c:forEach var="role" items="${rolesList}">
+            <option value="${role}"
+                ${role eq userDetailsDto.roleName ? 'selected="selected"' : ''}>
+                ${role}
+            </option>
+        </c:forEach>
+    </select>
+
+    <span class="value">${userDetailsDto.roleName}</span>
+</div>
+
+<!-- MULTIPLE ROLES -->
+<div class="profile-row">
+    <span class="label">Roles</span>
+
+    <select name="roles" multiple style="width:60%; height:80px;">
+        <c:forEach var="role" items="${rolesList}">
+            <option value="${role}"
+                <c:if test="${userDetailsDto.roles != null and userDetailsDto.roles.contains(role)}">
+                    selected="selected"
+                </c:if>>
+                ${role}
+            </option>
+        </c:forEach>
+    </select>
+
+    <span class="value">${userDetailsDto.roles}</span>
 </div>
 
 <div class="actions">
     <button type="button" class="edit-btn" onclick="enableEdit()">Edit Profile</button>
     <button type="submit" class="save-btn">Save Changes</button>
+</div>
+
+<div class="actions">
+
+    <a href="${pageContext.request.contextPath}/user/list"
+        style="display:inline-block; margin-top:15px; font-weight:600; color:#2563eb; text-decoration:none;">
+            ← Back to Users
+    </a>
 </div>
 
 </form>
@@ -171,13 +212,12 @@
     </div>
 </c:if>
 
-
 </div>
 
 <script>
 function enableEdit(){
     document.querySelectorAll('.value').forEach(v => v.style.display = 'none');
-    document.querySelectorAll('input').forEach(i => i.style.display = 'inline-block');
+    document.querySelectorAll('input, select').forEach(i => i.style.display = 'inline-block');
     document.querySelector('.edit-btn').style.display = 'none';
     document.querySelector('.save-btn').style.display = 'inline-block';
 }

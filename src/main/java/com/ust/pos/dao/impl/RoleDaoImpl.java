@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 @Component
 public class RoleDaoImpl implements RoleDao {
+
     @Autowired
     JdbcTemplate jdbcTemplate;
 
@@ -33,19 +35,14 @@ public class RoleDaoImpl implements RoleDao {
 
     @Override
     public List<Role> getAllRoles() {
-        return jdbcTemplate.query(
-                "SELECT id, name FROM role",
-                new BeanPropertyRowMapper<>(Role.class)
-        );
+        return jdbcTemplate.query("SELECT id, name FROM role",new BeanPropertyRowMapper<>(Role.class));
     }
-
 
     @Override
     public Role getRoleById(long id) {
         String sql = "SELECT id, name FROM role WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Role.class),id);
+        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Role.class), id);
     }
-
 
     @Override
     public boolean existsByName(String name) {
@@ -53,6 +50,4 @@ public class RoleDaoImpl implements RoleDao {
         Integer count = jdbcTemplate.queryForObject(sql, Integer.class, name);
         return count != null && count > 0;
     }
-
-
 }

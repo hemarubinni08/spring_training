@@ -5,23 +5,29 @@ import com.ust.pos.dto.RoleDto;
 import java.util.List;
 
 public interface RoleService {
-    RoleDto createRoleUsingJpa(RoleDto roleDto);
 
+    //Using Jpa
+    RoleDto createRole(RoleDto roleDto);
+
+    RoleDto getRoleById(long id);
+
+    List<RoleDto> getAllRoles();
+
+    List<String> getAllRoleNames();
+
+    RoleDto updateRole(RoleDto roleDto);
+
+    void deleteRole(long id);
+
+
+    //Using Jdbc
     RoleDto createRoleUsingJdbc(RoleDto roleDto);
 
-    void deleteRoleUsingIdJpa(long id);
-
-    void deleteRoleUsingIdJdbc(long id);
-
-    boolean updateRoleUsingJdbc(RoleDto roleDto);
-
-    RoleDto updateRoleUsingJpa(RoleDto roleDto);
+    RoleDto getRoleByIdUsingJdbc(long id);
 
     List<RoleDto> getAllRolesUsingJdbc();
 
-    List<RoleDto> getAllRolesUsingJpa();
+    boolean updateRoleUsingJdbc(RoleDto roleDto);
 
-    RoleDto getRoleByIdUsingJpa(long id);
-
-    RoleDto getRoleByIdUsingJdbc(long id);
+    void deleteRoleUsingIdJdbc(long id);
 }

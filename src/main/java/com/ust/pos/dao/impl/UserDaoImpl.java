@@ -25,28 +25,22 @@ public class UserDaoImpl implements UserDao {
         String sq1 = "INSERT INTO user VALUES (?,?,?,?,?,?,?,?)";
         String encodedPass = passwordEncoder.encode(userDto.getPassword());
 //        String sqlQ = "INSERT INTO user SET age = ?, email = ?";
-        int count = jdbcTemplate.update(sq1, null, userDto.getAge(), userDto.getDateOfBirth(), userDto.getEmail(), userDto.getName(),
-                encodedPass, userDto.getPhoneNo(), userDto.getUserName());
-
-        if (count > 0) {
-            return true;
-        }
-        return false;
+        return jdbcTemplate.update(sq1, null, userDto.getAge(), userDto.getDateOfBirth(), userDto.getEmail(),
+                userDto.getName(), encodedPass, userDto.getPhoneNo(), userDto.getUserName()) > 0;
     }
 
-    // For checking existing Email
     @Override
     public User findByEmail(String email) {
-        String sq1 = "SELECT * from USER WHERE email = ?";
+        String sq1 = "SELECT * FROM user WHERE email = ?";
         List<User> userList = jdbcTemplate.query(sq1, new BeanPropertyRowMapper<>(User.class), email);
-        return userList.isEmpty() ? null : userList.get(0);
+        return userList.isEmpty() ? null : userList.getFirst();
     }
 
     @Override
     public User findById(long id) {
-        String sq1 = "SELECT * from USER WHERE id = ?";
+        String sq1 = "SELECT * FROM user WHERE id = ?";
         List<User> userList = jdbcTemplate.query(sq1, new BeanPropertyRowMapper<>(User.class), id);
-        return userList.isEmpty() ? null : userList.get(0);
+        return userList.isEmpty() ? null : userList.getFirst();
     }
 
     @Override
@@ -56,19 +50,18 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void deleteByEmail(String email) {
-        String sql = "DELETE from USER where EMAIL = ?";
-        jdbcTemplate.update(sql, email);
+    public boolean updateUserDetails(UserDto userDto) {
+        String sql = "UPDATE user SET age = ?, date_of_birth = ?, email = ?, name = ?, phone_no = ?, user_name = ? "
+                + "WHERE id = ?";
+        int count = jdbcTemplate.update(sql, userDto.getAge(), userDto.getDateOfBirth(), userDto.getEmail(),
+                userDto.getName(), userDto.getPhoneNo(), userDto.getUserName(), userDto.getId());
+        return count > 0;
     }
 
     @Override
-    public boolean updateUserDetails(UserDto userDto) {
-        String sql = "UPDATE user SET age = ?, date_of_birth = ?, email = ?, name = ?, phone_no = ?, user_name = ? WHERE id = ?";
-        int count = jdbcTemplate.update(sql, userDto.getAge(), userDto.getDateOfBirth(),userDto.getEmail(), userDto.getName(), userDto.getPhoneNo(), userDto.getUserName(), userDto.getId());
-        if (count > 0) {
-            return true;
-        }
-        return false;
+    public void deleteByEmail(String email) {
+        String sql = "DELETE from USER where EMAIL = ?";
+        jdbcTemplate.update(sql, email);
     }
 }
 

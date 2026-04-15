@@ -3,8 +3,11 @@ package com.ust.pos.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
-public class NodeDto extends CommonDto{
+public class NodeDto extends CommonDto {
     String path;
+    List<String> roles;
 }

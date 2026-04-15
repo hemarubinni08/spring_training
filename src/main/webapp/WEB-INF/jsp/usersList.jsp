@@ -30,6 +30,30 @@
         box-shadow: 0 18px 35px rgba(0, 0, 0, 0.15);
     }
 
+    .header-actions {
+        display: flex;
+        justify-content: flex-end; /* Aligns button to the right */
+        margin-bottom: 20px;
+    }
+
+    .btn-register {
+        padding: 10px 20px;
+        background: linear-gradient(120deg, #11998e, #38ef7d);
+        color: white;
+        border-radius: 25px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        box-shadow: 0 4px 12px rgba(56, 239, 125, 0.3);
+        transition: transform 0.2s ease;
+    }
+
+    .btn-register:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(56, 239, 125, 0.4);
+        color: white;
+    }
+
     h1 {
         text-align: center;
         margin-bottom: 22px;
@@ -51,43 +75,33 @@
         color: white;
     }
 
-    th {
-        padding: 14px;
+    th, td {
+        padding: 12px 14px;
         text-align: center;
-        font-weight: 600;
-        font-size: 12px;
-        text-transform: uppercase;
+        border-bottom: 1px solid #eee;
     }
 
-    td {
-        padding: 12px 14px;
-        color: #333;
-        border-bottom: 1px solid #eee;
-        vertical-align: middle;
-        text-align: center;
+    th {
+        font-size: 12px;
+        text-transform: uppercase;
     }
 
     tbody tr:nth-child(even) {
         background: #f6f9ff;
     }
 
-    tbody tr {
-        transition: background 0.25s ease;
-    }
-
     tbody tr:hover {
         background: linear-gradient(120deg, #eef2ff, #dbeafe);
     }
 
-    /* ACTION BUTTONS */
     .action-cell {
         display: flex;
         flex-direction: column;
         gap: 6px;
+        align-items: center;
     }
 
     .btn-view {
-        display: inline-block;
         padding: 7px 14px;
         background: linear-gradient(120deg, #36d1dc, #5b86e5);
         color: white;
@@ -95,14 +109,11 @@
         text-decoration: none;
         font-size: 12px;
         font-weight: 600;
-        text-align: center;
-        transition: all 0.25s ease;
         box-shadow: 0 4px 8px rgba(0,0,0,0.12);
     }
 
     .btn-view:hover {
         background: linear-gradient(120deg, #5b86e5, #36d1dc);
-        transform: translateY(-1px);
     }
 
     .btn-delete {
@@ -119,16 +130,6 @@
         font-weight: 600;
         color: #888;
     }
-
-    @media (max-width: 768px) {
-        table {
-            font-size: 12px;
-        }
-
-        th, td {
-            padding: 10px;
-        }
-    }
 </style>
 </head>
 
@@ -136,7 +137,11 @@
 
 <div class="container">
     <h1>User List</h1>
-
+    <div class="header-actions">
+        <a href="${pageContext.request.contextPath}/user/register" class="btn-register">
+            + Register New User
+        </a>
+    </div>
     <table>
         <thead>
             <tr>
@@ -147,7 +152,9 @@
                 <th>Age</th>
                 <th>DOB</th>
                 <th>Username</th>
-                <th>Operate Data</th>
+                <th>Primary Role</th>
+                <th>Other Roles</th>
+                <th>Actions</th>
             </tr>
         </thead>
 
@@ -163,18 +170,34 @@
                         <td>${user.age}</td>
                         <td>${user.dateOfBirth}</td>
                         <td>${user.userName}</td>
+                        <td>${user.roleName}</td>
+
+                        <!-- MULTI-ROLES COLUMN -->
+                        <td>
+                            <c:choose>
+                                <c:when test="${not empty user.roles}">
+                                    ${user.roles}
+                                </c:when>
+                                <c:otherwise>
+                                    -
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+
                         <td class="action-cell">
+                            <!-- RequestParam -->
                             <a href="${pageContext.request.contextPath}/user/userProfileJdbcById?id=${user.id}"
                                class="btn-view">
                                 View (RequestParam)
                             </a>
 
-                            <a href="${pageContext.request.contextPath}/user/userProfileJpaById/${user.id}"
+                            <!-- PathVariable -->
+                            <a href="${pageContext.request.contextPath}/user/profileById/${user.id}"
                                class="btn-view">
                                 View (PathVariable)
                             </a>
 
-                            <a href="${pageContext.request.contextPath}/user/userDelete/${user.email}"
+                            <a href="${pageContext.request.contextPath}/user/delete/${user.email}"
                                class="btn-view btn-delete">
                                 Delete User
                             </a>
@@ -185,15 +208,21 @@
 
             <c:otherwise>
                 <tr>
-                    <td colspan="8" class="no-data">
-                        🚫 No users found
+                    <td colspan="10" class="no-data">
+                        No users found
                     </td>
                 </tr>
             </c:otherwise>
         </c:choose>
         </tbody>
     </table>
-</div>
+    <div class="action-cell">
 
+        <a href="${pageContext.request.contextPath}/"
+            style="display:inline-block; margin-top:15px; font-weight:600; color:#2563eb; text-decoration:none;">
+                ← Back to Home
+        </a>
+    </div>
+</div>
 </body>
 </html>

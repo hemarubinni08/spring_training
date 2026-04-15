@@ -16,9 +16,50 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
-    // ================= ADD =================
+    // JPA
+    @GetMapping("/add")
+    public String addRole(Model model) {
+        model.addAttribute("roleDto", new RoleDto());
+        model.addAttribute("rolesList", roleService.getAllRoles());
+        return "rolesList";
+    }
 
-    // JDBC
+    @PostMapping("/add")
+    public String addRole(@ModelAttribute RoleDto roleDto, RedirectAttributes redirectAttributes) {
+        roleService.createRole(roleDto);
+        redirectAttributes.addFlashAttribute("message", "Role added successfully!");
+        return "redirect:/role/list";
+    }
+
+    @GetMapping("/list")
+    public String rolesList(Model model) {
+        model.addAttribute("rolesList", roleService.getAllRoles());
+        return "rolesList";
+    }
+
+    @GetMapping("/profile/{id}")
+    public String roleProfile(@PathVariable long id, Model model) {
+        model.addAttribute("roleDto", roleService.getRoleById(id));
+        return "roleProfile";
+    }
+
+    @PostMapping("/update")
+    public String updateRole(@ModelAttribute RoleDto roleDto,
+                             RedirectAttributes redirectAttributes) {
+        RoleDto response = roleService.updateRole(roleDto);
+        redirectAttributes.addFlashAttribute("message", response.getMessage());
+        return "redirect:/role/profile/" + roleDto.getId();
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteRole(@PathVariable long id, RedirectAttributes redirectAttributes) {
+        roleService.deleteRole(id);
+        redirectAttributes.addFlashAttribute("message", "Role deleted successfully!");
+        return "redirect:/role/list";
+    }
+
+
+    /* JDBC */
     @GetMapping("/addRoleJdbc")
     public String addRoleJdbc(Model model) {
         model.addAttribute("roleDto", new RoleDto());
@@ -26,87 +67,18 @@ public class RoleController {
         return "rolesList";
     }
 
-
     @PostMapping("/addRoleJdbc")
-    public String addRoleJdbc(@ModelAttribute RoleDto roleDto,RedirectAttributes redirectAttributes) {
+    public String addRoleJdbc(@ModelAttribute RoleDto roleDto, RedirectAttributes redirectAttributes) {
         RoleDto response = roleService.createRoleUsingJdbc(roleDto);
         redirectAttributes.addFlashAttribute("message", response.getMessage());
         redirectAttributes.addFlashAttribute("colour", response.getColour());
         return "redirect:/role/showRolesListJdbc";
     }
 
-
-    // JPA
-    @PostMapping("/addRoleJpa")
-    public String addRoleJpa(@ModelAttribute RoleDto roleDto,
-                             RedirectAttributes redirectAttributes) {
-        roleService.createRoleUsingJpa(roleDto);
-        redirectAttributes.addFlashAttribute("message", "Role added successfully!");
-        return "redirect:/role/showRolesListJpa";
-    }
-
-    // ================= LIST =================
-
     @GetMapping("/showRolesListJdbc")
     public String showRolesListJdbc(Model model) {
         model.addAttribute("rolesList", roleService.getAllRolesUsingJdbc());
         return "rolesList";
-    }
-
-    @GetMapping("/showRolesListJpa")
-    public String showRolesListJpa(Model model) {
-        model.addAttribute("rolesList", roleService.getAllRolesUsingJpa());
-        return "rolesList";
-    }
-
-    // ================= DELETE =================
-
-    @GetMapping("/deleteRoleJdbc/{id}")
-    public String deleteRoleJdbc(@PathVariable long id,
-                                 RedirectAttributes redirectAttributes) {
-        roleService.deleteRoleUsingIdJdbc(id);
-        redirectAttributes.addFlashAttribute("message", "Role deleted successfully!");
-        return "redirect:/role/showRolesListJdbc";
-    }
-
-    @GetMapping("/deleteRoleJpa/{id}")
-    public String deleteRoleJpa(@PathVariable long id,
-                                RedirectAttributes redirectAttributes) {
-        roleService.deleteRoleUsingIdJpa(id);
-        redirectAttributes.addFlashAttribute("message", "Role deleted successfully!");
-        return "redirect:/role/showRolesListJpa";
-    }
-
-    // ================= UPDATE =================
-
-    @PostMapping("/updateRoleJdbc")
-    public String updateRoleJdbc(@ModelAttribute RoleDto roleDto,
-                                 RedirectAttributes redirectAttributes) {
-        boolean updated = roleService.updateRoleUsingJdbc(roleDto);
-
-        if (updated) {
-            redirectAttributes.addFlashAttribute("message", "Role updated successfully!");
-        } else {
-            redirectAttributes.addFlashAttribute("message", "Role update failed!");
-        }
-
-        return "redirect:/role/showRolesListJdbc";
-    }
-
-    @PostMapping("/updateRoleJpa")
-    public String updateRoleJpa(@ModelAttribute RoleDto roleDto,
-                                RedirectAttributes redirectAttributes) {
-        RoleDto response = roleService.updateRoleUsingJpa(roleDto);
-        redirectAttributes.addFlashAttribute("message", response.getMessage());
-        return "redirect:/role/roleProfileJpaById/" + roleDto.getId();
-    }
-
-    // ================= PROFILE =================
-
-    @GetMapping("/roleProfileJpaById/{id}")
-    public String roleProfileJpa(@PathVariable long id, Model model) {
-        model.addAttribute("roleDto", roleService.getRoleByIdUsingJpa(id));
-        return "roleProfile";
     }
 
     @GetMapping("/roleProfileJdbcById/{id}")
@@ -115,4 +87,22 @@ public class RoleController {
         return "roleProfile";
     }
 
+    @PostMapping("/updateRoleJdbc")
+    public String updateRoleJdbc(@ModelAttribute RoleDto roleDto, RedirectAttributes redirectAttributes) {
+        boolean updated = roleService.updateRoleUsingJdbc(roleDto);
+
+        if (updated) {
+            redirectAttributes.addFlashAttribute("message", "Role updated successfully!");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Role update failed!");
+        }
+        return "redirect:/role/showRolesListJdbc";
+    }
+
+    @GetMapping("/deleteRoleJdbc/{id}")
+    public String deleteRoleJdbc(@PathVariable long id, RedirectAttributes redirectAttributes) {
+        roleService.deleteRoleUsingIdJdbc(id);
+        redirectAttributes.addFlashAttribute("message", "Role deleted successfully!");
+        return "redirect:/role/showRolesListJdbc";
+    }
 }

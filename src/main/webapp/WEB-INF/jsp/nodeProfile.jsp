@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Node Profile</title>
+    <title>Node Profile | ${nodeDto.name}</title>
 
     <style>
         body {
@@ -20,7 +20,7 @@
         }
 
         .profile-container {
-            width: 420px;
+            width: 450px;
             background: #ffffff;
             padding: 30px;
             border-radius: 28px;
@@ -42,47 +42,55 @@
             font-size: 34px;
             font-weight: 600;
             margin: 0 auto 10px auto;
+            text-transform: uppercase;
         }
 
         .profile-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 0;
+            padding: 15px 0;
             border-bottom: 1px solid #eee;
             font-size: 14px;
         }
 
         .label {
             font-weight: 600;
-            width: 40%;
+            color: #4b5563;
+            width: 35%;
         }
 
         .value {
             width: 60%;
             text-align: right;
+            color: #1f2937;
         }
 
-        input[type="text"] {
-            width: 60%;
-            padding: 7px 10px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
+        /* Hide edit fields by default */
+        .edit-field {
             display: none;
+            width: 60%;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            box-sizing: border-box;
         }
 
         .actions {
             text-align: center;
-            margin-top: 25px;
+            margin-top: 30px;
         }
 
         button {
-            padding: 9px 22px;
-            border-radius: 20px;
+            padding: 10px 24px;
+            border-radius: 25px;
             border: none;
             cursor: pointer;
-            margin: 5px;
+            font-weight: 600;
+            transition: transform 0.2s;
         }
+
+        button:active { transform: scale(0.95); }
 
         .edit-btn {
             background: linear-gradient(120deg, #36d1dc, #5b86e5);
@@ -96,84 +104,94 @@
         }
 
         .back-btn {
-            background: #e5e7eb;
-            color: #111827;
+            background: #f3f4f6;
+            color: #374151;
+            text-decoration: none;
+            display: inline-block;
         }
 
-        /* ✅ Toast */
+        /* Toast Notifications */
         .toast {
             position: fixed;
-            top: 20px;
+            top: 25px;
             right: -400px;
-            min-width: 260px;
-            padding: 14px 20px;
+            min-width: 280px;
+            padding: 16px 20px;
             border-radius: 12px;
             color: #fff;
             font-weight: 600;
-            opacity: 0;
-            transition: all 0.5s ease;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1000;
         }
 
-        .toast-success {
-            background: linear-gradient(120deg, #22c55e, #16a34a);
-        }
-
-        .toast-error {
-            background: linear-gradient(120deg, #ef4444, #dc2626);
-        }
-
-        .toast.show {
-            right: 20px;
-            opacity: 1;
-        }
+        .toast-success { background: #10b981; }
+        .toast-error { background: #ef4444; }
+        .toast.show { right: 25px; }
     </style>
 </head>
 
 <body>
 
-<!-- ✅ Toast Message -->
-<c:set var="toastClass"
-       value="${colour eq 'red' ? 'toast-error' : 'toast-success'}" />
-
 <c:if test="${not empty message}">
-    <div id="toast" class="toast ${toastClass}">
+    <div id="toast" class="toast ${colour eq 'red' ? 'toast-error' : 'toast-success'}">
         ${message}
     </div>
 </c:if>
 
 <div class="profile-container">
-
-    <form action="${pageContext.request.contextPath}/node/updateNode" method="post">
+    <form action="${pageContext.request.contextPath}/node/update" method="post">
 
         <input type="hidden" name="id" value="${nodeDto.id}" />
 
         <div class="profile-header">
             <div class="avatar">
-                ${nodeDto.name.substring(0,1)}
+                ${not empty nodeDto.name ? nodeDto.name.substring(0,1) : '?'}
             </div>
-            <h2>Node Profile</h2>
+            <h2>Node Details</h2>
         </div>
 
-        <!-- ✅ Node Name -->
         <div class="profile-row">
             <span class="label">Node Name</span>
-            <span class="value">${nodeDto.name}</span>
-            <input type="text" name="name" value="${nodeDto.name}" />
+            <span class="value display-mode">${nodeDto.name}</span>
+            <input type="text" name="name" class="edit-field" value="${nodeDto.name}" required />
         </div>
 
-        <!-- ✅ Node Path -->
         <div class="profile-row">
             <span class="label">Path</span>
-            <span class="value">${nodeDto.path}</span>
-            <input type="text" name="path" value="${nodeDto.path}" />
+            <span class="value display-mode">${nodeDto.path}</span>
+            <input type="text" name="path" class="edit-field" value="${nodeDto.path}" required />
+        </div>
+
+        <div class="profile-row">
+            <span class="label">Assigned Roles</span>
+            <span class="value display-mode">
+                <c:choose>
+                    <c:when test="${not empty nodeDto.roles}">
+                        <c:forEach var="r" items="${nodeDto.roles}" varStatus="s">
+                            ${r}<c:if test="${!s.last}">, </c:if>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise><i style="color: #9ca3af;">No roles assigned</i></c:otherwise>
+                </c:choose>
+            </span>
+
+            <select name="roles" class="edit-field" multiple style="height: 100px;">
+                <c:forEach var="role" items="${rolesList}">
+                    <option value="${role}"
+                        <c:if test="${nodeDto.roles != null && nodeDto.roles.contains(role)}">selected</c:if>>
+                        ${role}
+                    </option>
+                </c:forEach>
+            </select>
         </div>
 
         <div class="actions">
             <button type="button" class="edit-btn" onclick="enableEdit()">Edit Node</button>
             <button type="submit" class="save-btn">Save Changes</button>
 
-            <a href="${pageContext.request.contextPath}/node/nodesList">
-                <button type="button" class="back-btn">← Back</button>
+            <a href="${pageContext.request.contextPath}/node/list" class="back-btn">
+                <button type="button" style="background:none; color:inherit; padding:0;">← Back</button>
             </a>
         </div>
     </form>
@@ -181,18 +199,26 @@
 
 <script>
     function enableEdit() {
-        document.querySelectorAll('.value').forEach(v => v.style.display = 'none');
-        document.querySelectorAll('input[type="text"]').forEach(i => i.style.display = 'inline-block');
+        // Hide display spans
+        document.querySelectorAll('.display-mode').forEach(el => el.style.display = 'none');
+
+        // Show input and select fields
+        document.querySelectorAll('.edit-field').forEach(el => el.style.display = 'inline-block');
+
+        // Toggle buttons
         document.querySelector('.edit-btn').style.display = 'none';
         document.querySelector('.save-btn').style.display = 'inline-block';
     }
 
+    // Toast Handling
     document.addEventListener("DOMContentLoaded", function () {
         const toast = document.getElementById("toast");
         if (toast) {
-            setTimeout(() => toast.classList.add("show"), 200);
-            setTimeout(() => toast.classList.remove("show"), 3200);
-            setTimeout(() => toast.remove(), 3800);
+            setTimeout(() => toast.classList.add("show"), 100);
+            setTimeout(() => {
+                toast.classList.remove("show");
+                setTimeout(() => toast.remove(), 500);
+            }, 4000);
         }
     });
 </script>
