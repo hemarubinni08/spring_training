@@ -14,4 +14,5 @@ public interface NodeService {
     void deleteNode(Long id);
 
     List<NodeDto> getAllNodes();
+    NodeDto getNode(Long id);
 }

@@ -3,6 +3,7 @@ package com.ust.pos.model;
 import jakarta.persistence.Entity;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class User extends CommonField {
@@ -13,6 +14,15 @@ public class User extends CommonField {
     private int age;
     private Date dateOfBirth;
     private String role;
+    private List<String> roles;
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
 
     public String getRole() {
         return role;

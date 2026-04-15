@@ -246,6 +246,7 @@
                 <th>Phone</th>
                 <th>Username</th>
                 <th>Role</th>
+                <th>Roles</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -269,6 +270,16 @@
                             </c:choose>
                         </span>
                     </td>
+                    <td>
+                                            <span class="badge">
+                                                <c:choose>
+                                                    <c:when test="${not empty user.roles}">
+                                                        ${user.roles}
+                                                    </c:when>
+                                                    <c:otherwise>No Role</c:otherwise>
+                                                </c:choose>
+                                            </span>
+                                        </td>
 
                     <td>
                         <div class="actions">

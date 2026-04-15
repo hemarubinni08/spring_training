@@ -50,38 +50,26 @@ public class NodeServiceImpl implements NodeService {
         return node_list;
     }
 
+    @Override
+    public NodeDto getNode(Long id) {
+        Optional<Node> node=nodeRepository.findById(id);
+        return modelMapper.map(node,NodeDto.class);
+    }
+
 
     @Override
     public boolean updateNode(NodeDto nodeDto) {
-
-        boolean nameTaken =
-                nodeRepository.existsByNameAndIdNot(
-                        nodeDto.getName(), nodeDto.getId());
-
-        if (nameTaken) {
+        boolean flag = nodeRepository.existsByName(nodeDto.getName());
+        Node existingNode = nodeRepository.findById(nodeDto.getId()).orElseThrow();
+        if (flag != false && existingNode.getId() != nodeDto.getId()) {
+            nodeDto.setSuccess(false);
+            return false;
+        } else {
+            Node node = modelMapper.map(nodeDto, Node.class);
+            nodeRepository.save(node);
+            nodeDto.setSuccess(true);
             return false;
         }
-
-        boolean pathTaken =
-                nodeRepository.existsByPathAndIdNot(
-                        nodeDto.getPath(), nodeDto.getId());
-
-        if (pathTaken) {
-            return false;
-        }
-
-        Optional<Node> nodeOpt = nodeRepository.findById(nodeDto.getId());
-
-        if (nodeOpt.isEmpty()) {
-            return false;
-        }
-
-        Node node = nodeOpt.get();
-        node.setName(nodeDto.getName());
-        node.setPath(nodeDto.getPath());
-
-        nodeRepository.save(node);
-        return true;
     }
 
     @Override

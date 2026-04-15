@@ -1,5 +1,7 @@
 package com.ust.pos.dto;
 
+import java.util.List;
+
 public class UserDto extends CommonDto {
 
     private String email;
@@ -8,6 +10,15 @@ public class UserDto extends CommonDto {
     private String password;
     private int age;
     private String role;
+    private List<String> roles;
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
 
     public String getRole() {
         return role;

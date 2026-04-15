@@ -16,7 +16,6 @@ body{
     color:#1f2937;
 }
 
-/* BACK */
 .back-arrow{
     position:fixed;
     top:16px;
@@ -32,21 +31,14 @@ body{
     color:#4f46e5;
     font-size:20px;
     box-shadow:0 4px 15px rgba(0,0,0,0.12);
-    transition:0.2s;
-}
-.back-arrow:hover{
-    transform:translateX(-3px);
-    background:#eef2ff;
 }
 
-/* LAYOUT */
 .container{
     max-width:1100px;
     margin:60px auto;
     padding:0 20px;
 }
 
-/* CARD */
 .card{
     background:#fff;
     padding:25px;
@@ -55,21 +47,18 @@ body{
     margin-bottom:20px;
 }
 
-/* TITLE */
 h2{
     margin-bottom:15px;
     font-weight:600;
-    color:#111827;
 }
 
-/* FORM */
 .form-row{
     display:flex;
     gap:12px;
     flex-wrap:wrap;
 }
 
-input{
+input, select{
     flex:1;
     min-width:220px;
     padding:10px 12px;
@@ -78,16 +67,14 @@ input{
     outline:none;
 }
 
-input:focus{
-    border-color:#6366f1;
-    box-shadow:0 0 0 3px rgba(99,102,241,0.2);
+select[multiple]{
+    min-height:110px;
 }
 
-/* BUTTONS */
 .btn{
-    padding:8px 12px;
+    padding:10px 14px;
     border:none;
-    border-radius:6px;
+    border-radius:8px;
     cursor:pointer;
     font-weight:500;
 }
@@ -96,21 +83,17 @@ input:focus{
     background:#4f46e5;
     color:#fff;
 }
-.primary:hover{background:#4338ca;}
 
 .edit{
     background:#3b82f6;
     color:#fff;
 }
-.edit:hover{background:#2563eb;}
 
 .delete{
     background:#ef4444;
     color:#fff;
 }
-.delete:hover{background:#dc2626;}
 
-/* TABLE */
 table{
     width:100%;
     border-collapse:collapse;
@@ -119,8 +102,6 @@ table{
 
 th{
     background:#eef2ff;
-    color:#374151;
-    text-align:left;
     padding:12px;
 }
 
@@ -129,11 +110,6 @@ td{
     border-bottom:1px solid #e5e7eb;
 }
 
-tr:hover{
-    background:#f9fafb;
-}
-
-/* TOAST */
 .toast{
     position:fixed;
     bottom:20px;
@@ -143,99 +119,54 @@ tr:hover{
     padding:12px 16px;
     border-radius:8px;
     display:none;
-    z-index:10000;
 }
 
-/* MODAL */
 .modal-backdrop{
     position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(17,24,39,0.6);
+    inset:0;
+    background:rgba(0,0,0,0.6);
     display:none;
     align-items:center;
     justify-content:center;
-    z-index:9999;
 }
 
 .modal{
     background:#fff;
-    width:360px;
     padding:22px;
     border-radius:14px;
+    width:360px;
     text-align:center;
-    box-shadow:0 20px 60px rgba(0,0,0,0.3);
-}
-
-.modal h3{
-    margin:0 0 10px;
-    font-size:18px;
-}
-
-.modal p{
-    font-size:14px;
-    color:#6b7280;
-    margin-bottom:16px;
-}
-
-.modal-actions{
-    display:flex;
-    gap:10px;
-    justify-content:center;
-}
-
-.btn-cancel{
-    background:#e5e7eb;
-    border:none;
-    padding:8px 14px;
-    border-radius:8px;
-    cursor:pointer;
-}
-
-.btn-confirm{
-    background:#ef4444;
-    color:#fff;
-    border:none;
-    padding:8px 14px;
-    border-radius:8px;
-    cursor:pointer;
 }
 </style>
 
 <script>
-let deleteUrl = "";
+let deleteUrl="";
 
-function toast(msg){
-    const t=document.getElementById("toast");
-    t.innerText=msg;
-    t.style.display="block";
-    setTimeout(()=>t.style.display="none",2000);
-}
-
-function editNode(id,name,path){
+function editNode(id,name,path,role,roles){
     document.getElementById("nodeId").value=id;
     document.getElementById("nodeName").value=name;
     document.getElementById("nodePath").value=path;
-    toast("Editing node: " + name);
+    document.getElementById("role").value=role;
+
+    const multi=document.getElementById("roles");
+    [...multi.options].forEach(o=>o.selected=false);
+    roles.split(",").forEach(r=>{
+        const opt=[...multi.options].find(o=>o.value===r.trim());
+        if(opt) opt.selected=true;
+    });
 }
 
 function confirmDelete(url){
-    deleteUrl = url;
+    deleteUrl=url;
     document.getElementById("modal").style.display="flex";
 }
-
 function closeModal(){
     document.getElementById("modal").style.display="none";
-    deleteUrl="";
 }
-
 function proceedDelete(){
-    window.location.href = deleteUrl;
+    window.location.href=deleteUrl;
 }
 </script>
-
 </head>
 
 <body>
@@ -244,71 +175,96 @@ function proceedDelete(){
 
 <div class="container">
 
-<!-- FORM -->
+<!-- ✅ ADD / EDIT NODE -->
 <div class="card">
-    <h2>Node Management</h2>
+<h2>Node Management</h2>
 
-    <form method="post" action="${pageContext.request.contextPath}/node/addnodes">
-        <input type="hidden" id="nodeId" name="id"/>
+<form method="post" action="${pageContext.request.contextPath}/node/addnodes">
+    <input type="hidden" id="nodeId" name="id"/>
 
-        <div class="form-row">
-            <input type="text" id="nodeName" name="name" placeholder="Node Name" required/>
-            <input type="text" id="nodePath" name="path" placeholder="Node Path" required/>
-            <button class="btn primary" type="submit">Save Node</button>
-        </div>
-    </form>
+    <div class="form-row">
+        <input type="text" id="nodeName" name="name" placeholder="Node Name" required />
+        <input type="text" id="nodePath" name="path" placeholder="Node Path" required />
+
+        <!-- ✅ PRIMARY ROLE -->
+        <select id="role" name="role" required>
+            <option value="">Primary Role</option>
+            <c:forEach var="r" items="${roles}">
+                <option value="${r.name}">${r.name}</option>
+            </c:forEach>
+        </select>
+
+        <!-- ✅ MULTI ROLES -->
+        <select id="roles" name="roles" multiple>
+            <c:forEach var="r" items="${roles}">
+                <option value="${r.name}">${r.name}</option>
+            </c:forEach>
+        </select>
+
+        <button class="btn primary" type="submit">Save Node</button>
+    </div>
+</form>
 </div>
 
-<!-- TABLE -->
+<!-- ✅ NODE TABLE -->
 <div class="card">
-    <h2>All Nodes</h2>
+<h2>All Nodes</h2>
 
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Path</th>
-            <th>Action</th>
-        </tr>
+<table>
+<tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Path</th>
+    <th>Primary Role</th>
+    <th>Additional Roles</th>
+    <th>Action</th>
+</tr>
 
-        <c:forEach var="n" items="${nodes}">
-        <tr>
-            <td>${n.id}</td>
-            <td>${n.name}</td>
-            <td>${n.path}</td>
-            <td>
-                <button class="btn edit"
-                        onclick="editNode('${n.id}','${n.name}','${n.path}')">
-                    Edit
-                </button>
-
-                <button class="btn delete"
-                        onclick="confirmDelete('${pageContext.request.contextPath}/node/deleteNode/${n.id}')">
-                    Delete
-                </button>
-            </td>
-        </tr>
+<c:forEach var="n" items="${nodes}">
+<tr>
+    <td>${n.id}</td>
+    <td>${n.name}</td>
+    <td>${n.path}</td>
+    <td>${n.role}</td>
+    <td>
+        <c:forEach var="r" items="${n.roles}" varStatus="s">
+            ${r}<c:if test="${!s.last}">, </c:if>
         </c:forEach>
-    </table>
+    </td>
+    <td>
+        <button class="btn edit"
+            onclick="editNode(
+                '${n.id}',
+                '${n.name}',
+                '${n.path}',
+                '${n.role}',
+                '<c:forEach var="r" items="${n.roles}">${r},</c:forEach>'
+            )">
+            Edit
+        </button>
+
+        <button class="btn delete"
+            onclick="confirmDelete('${pageContext.request.contextPath}/node/deleteNode/${n.id}')">
+            Delete
+        </button>
+    </td>
+</tr>
+</c:forEach>
+</table>
 </div>
 
 </div>
-
-<!-- TOAST -->
-<div id="toast" class="toast"></div>
 
 <!-- MODAL -->
 <div id="modal" class="modal-backdrop">
     <div class="modal">
         <h3>Delete Node?</h3>
         <p>This action cannot be undone.</p>
-
-        <div class="modal-actions">
-            <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-            <button class="btn-confirm" onclick="proceedDelete()">Delete</button>
-        </div>
+        <button onclick="closeModal()">Cancel</button>
+        <button onclick="proceedDelete()" class="delete">Delete</button>
     </div>
 </div>
 
 </body>
 </html>
+``

@@ -22,6 +22,7 @@ public class NodeController {
     public String showNodes(Model model) {
         model.addAttribute("node", new NodeDto());
         model.addAttribute("nodes", nodeService.getAllNodes());
+        model.addAttribute("roles",roleService.getAllRoles());
         return "addNode";
     }
 
@@ -43,6 +44,16 @@ public class NodeController {
         return "addNode";
     }
 
+    @GetMapping("/updateNode")
+    public String update(Model model,@RequestParam Long id, String path) {
+        NodeDto updated = nodeService.getNode(id);
+        model.addAttribute("node", new NodeDto());
+        model.addAttribute("nodes", nodeService.getAllNodes());
+        model.addAttribute("roles",roleService.getAllRoles());
+        return "addNode";
+    }
+
+
     @PostMapping("/updateNode")
     public String updateNode(
             @ModelAttribute("node") NodeDto nodeDto,
@@ -56,8 +67,8 @@ public class NodeController {
             model.addAttribute("successMessage", "Node updated successfully");
         }
 
-        model.addAttribute("node", new NodeDto());
         model.addAttribute("nodes", nodeService.getAllNodes());
+        model.addAttribute("roles", roleService.getAllRoles());
         return "addNode";
     }
 
