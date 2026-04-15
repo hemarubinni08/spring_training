@@ -22,53 +22,31 @@ public class NodeController {
     public String showNodes(Model model) {
         model.addAttribute("node", new NodeDto());
         model.addAttribute("nodes", nodeService.getAllNodes());
-        model.addAttribute("roles",roleService.getAllRoles());
+        model.addAttribute("roles", roleService.getAllRoles());
         return "addNode";
     }
 
     @PostMapping("/addnodes")
-    public String addNode(
-            @ModelAttribute("node") NodeDto nodeDto,
-            Model model) {
+    public String addNode(@ModelAttribute("node") NodeDto nodeDto,
+                          Model model) {
 
         boolean added = nodeService.createNode(nodeDto);
 
-        if (!added) {
-            model.addAttribute("errorMessage", "Node name already exists");
-        } else {
-            model.addAttribute("successMessage", "Node added successfully");
-        }
-
-        model.addAttribute("node", new NodeDto());
         model.addAttribute("nodes", nodeService.getAllNodes());
+        model.addAttribute("roles", roleService.getAllRoles());
+
         return "addNode";
     }
-
-    @GetMapping("/updateNode")
-    public String update(Model model,@RequestParam Long id, String path) {
-        NodeDto updated = nodeService.getNode(id);
-        model.addAttribute("node", new NodeDto());
-        model.addAttribute("nodes", nodeService.getAllNodes());
-        model.addAttribute("roles",roleService.getAllRoles());
-        return "addNode";
-    }
-
 
     @PostMapping("/updateNode")
-    public String updateNode(
-            @ModelAttribute("node") NodeDto nodeDto,
-            Model model) {
+    public String updateNode(@ModelAttribute("node") NodeDto nodeDto,
+                             Model model) {
 
         boolean updated = nodeService.updateNode(nodeDto);
 
-        if (!updated) {
-            model.addAttribute("errorMessage", "Node name already exists");
-        } else {
-            model.addAttribute("successMessage", "Node updated successfully");
-        }
-
         model.addAttribute("nodes", nodeService.getAllNodes());
         model.addAttribute("roles", roleService.getAllRoles());
+
         return "addNode";
     }
 
