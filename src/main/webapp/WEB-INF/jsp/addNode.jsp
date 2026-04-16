@@ -34,6 +34,13 @@ body {
     text-decoration: none;
     font-size: 20px;
     color: #4f46e5;
+    transition: 0.2s;
+    z-index: 1000;
+}
+
+.back-arrow:hover {
+    transform: translateX(-3px);
+    background: #eef2ff;
 }
 
 /* LAYOUT */
@@ -179,6 +186,15 @@ tr:hover {
 </style>
 
 <script>
+/* BACK BUTTON */
+function goBack(){
+    if(document.referrer){
+        window.history.back();
+    } else {
+        window.location.href = "${pageContext.request.contextPath}/";
+    }
+}
+
 function editNode(id,name,path,role,roles){
 
     document.getElementById("nodeId").value=id;
@@ -220,7 +236,8 @@ function searchTable(){
 
 <body>
 
-<a class="back-arrow" href="${pageContext.request.contextPath}/">←</a>
+<!-- UPDATED BACK BUTTON -->
+<a class="back-arrow" href="javascript:void(0)" onclick="goBack()">←</a>
 
 <div class="container">
 

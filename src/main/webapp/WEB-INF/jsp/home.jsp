@@ -166,7 +166,7 @@ ${node.name}
 <div class="title">Home Dashboard</div>
 
 <a class="logout"
-href="${pageContext.request.contextPath}/user/register">
+href="${pageContext.request.contextPath}/login">
 <svg viewBox="0 0 24 24">
 <path d="M10 17l5-5-5-5v10z"/>
 </svg>
