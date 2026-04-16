@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Add User</title>
+    <title>Edit User</title>
 
     <style>
         body {
@@ -15,7 +15,7 @@
         }
 
         .container {
-            max-width: 450px;
+            max-width: 460px;
             margin: 50px auto;
             background: #ffffff;
             padding: 20px;
@@ -51,7 +51,7 @@
         .hint {
             font-size: 12px;
             color: #666;
-            margin-top: -10px;
+            margin-top: -8px;
             margin-bottom: 15px;
         }
 
@@ -72,8 +72,8 @@
 
         .back-link {
             display: block;
-            margin-top: 12px;
             text-align: center;
+            margin-top: 12px;
             text-decoration: none;
             color: #007bff;
             font-size: 14px;
@@ -88,35 +88,49 @@
 <body>
 
 <div class="container">
-    <h2>Add User</h2>
+    <h2>Edit User</h2>
 
-    <form action="/user/register" method="post">
+    <c:if test="${error != null}">
+                <div class="alert alert-error">${error}</div>
+            </c:if>
+
+            <c:if test="${success != null}">
+                <div class="alert alert-success">${success}</div>
+            </c:if>
+
+
+    <form action="/user/editUser/${user.id}" method="post">
+
+        <!-- USER ID -->
+        <input type="hidden" name="id" value="${user.id}">
 
         <!-- BASIC DETAILS -->
         <label>Full Name</label>
-        <input type="text" name="name" required>
+        <input type="text" name="name" value="${user.name}" required>
 
         <label>Username</label>
-        <input type="text" name="userName" required>
+        <input type="text" name="userName" value="${user.userName}" required>
 
         <label>Email</label>
-        <input type="email" name="email" required>
+        <input type="email" name="email" value="${user.email}" required>
 
         <label>Phone Number</label>
-        <input type="tel" name="phoneNo" required>
+        <input type="tel" name="phoneNo" value="${user.phoneNo}" required>
 
         <label>Date of Birth</label>
-        <input type="date" name="dateOfBirth" required>
+        <input type="date" name="dateOfBirth" value="${user.dateOfBirth}" required>
 
         <label>Age</label>
-        <input type="number" name="age" min="1" required>
+        <input type="number" name="age" value="${user.age}" />
 
         <!-- PRIMARY ROLE -->
         <label>Primary Role</label>
-        <select name="role" required>
+        <select name="role">
             <option value="">-- Select Primary Role --</option>
             <c:forEach items="${roleList}" var="roleObj">
-                <option value="${roleObj.name}">${roleObj.name}</option>
+                <option value="${roleObj.name}">
+                    ${roleObj.name}
+                </option>
             </c:forEach>
         </select>
 
@@ -124,7 +138,9 @@
         <label>Additional Roles</label>
         <select name="roles" multiple>
             <c:forEach items="${roleList}" var="roleObj">
-                <option value="${roleObj.name}">${roleObj.name}</option>
+                <option value="${roleObj.name}">
+                    ${roleObj.name}
+                </option>
             </c:forEach>
         </select>
 
@@ -132,7 +148,7 @@
             Hold Ctrl (Windows) or Cmd (Mac) to select multiple roles
         </div>
 
-        <button type="submit">Add User</button>
+        <button type="submit">Update User</button>
 
         <a href="/user/getAllUsers" class="back-link">
             Back to User List

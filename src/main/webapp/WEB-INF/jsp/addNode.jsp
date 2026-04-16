@@ -1,10 +1,10 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Add User</title>
+    <title>Add Node</title>
 
     <style>
         body {
@@ -15,8 +15,8 @@
         }
 
         .container {
-            max-width: 450px;
-            margin: 50px auto;
+            max-width: 380px;
+            margin: 60px auto;
             background: #ffffff;
             padding: 20px;
             border-radius: 6px;
@@ -31,14 +31,14 @@
         label {
             display: block;
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             font-size: 14px;
         }
 
         input, select {
             width: 100%;
             padding: 8px;
-            margin-bottom: 14px;
+            margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 14px;
@@ -72,8 +72,8 @@
 
         .back-link {
             display: block;
-            margin-top: 12px;
             text-align: center;
+            margin-top: 12px;
             text-decoration: none;
             color: #007bff;
             font-size: 14px;
@@ -82,49 +82,42 @@
         .back-link:hover {
             text-decoration: underline;
         }
+
+        .error {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .success {
+            color: green;
+            text-align: center;
+            margin-top: 10px;
+        }
     </style>
 </head>
 
 <body>
 
 <div class="container">
-    <h2>Add User</h2>
+    <h2>Add Node</h2>
 
-    <form action="/user/register" method="post">
+    <!-- ✅ ✅ ✅ FIX: FORM OPEN TAG ADDED -->
+    <form action="/node/addNode" method="post">
 
-        <!-- BASIC DETAILS -->
-        <label>Full Name</label>
-        <input type="text" name="name" required>
+        <!-- Node Name -->
+        <label>Node Name</label>
+        <input type="text" name="name" placeholder="Enter node name" required>
 
-        <label>Username</label>
-        <input type="text" name="userName" required>
+        <!-- Path -->
+        <label>Path</label>
+        <input type="text" name="path" placeholder="/user/all , /role/all" required>
 
-        <label>Email</label>
-        <input type="email" name="email" required>
-
-        <label>Phone Number</label>
-        <input type="tel" name="phoneNo" required>
-
-        <label>Date of Birth</label>
-        <input type="date" name="dateOfBirth" required>
-
-        <label>Age</label>
-        <input type="number" name="age" min="1" required>
-
-        <!-- PRIMARY ROLE -->
-        <label>Primary Role</label>
-        <select name="role" required>
-            <option value="">-- Select Primary Role --</option>
-            <c:forEach items="${roleList}" var="roleObj">
-                <option value="${roleObj.name}">${roleObj.name}</option>
-            </c:forEach>
-        </select>
-
-        <!-- MULTIPLE ROLES -->
-        <label>Additional Roles</label>
-        <select name="roles" multiple>
-            <c:forEach items="${roleList}" var="roleObj">
-                <option value="${roleObj.name}">${roleObj.name}</option>
+        <!-- Allowed Roles -->
+        <label>Allowed Roles</label>
+        <select name="roles" multiple required>
+            <c:forEach items="${roleList}" var="role">
+                <option value="${role.name}">${role.name}</option>
             </c:forEach>
         </select>
 
@@ -132,13 +125,25 @@
             Hold Ctrl (Windows) or Cmd (Mac) to select multiple roles
         </div>
 
-        <button type="submit">Add User</button>
+        <button type="submit">Add Node</button>
 
-        <a href="/user/getAllUsers" class="back-link">
-            Back to User List
+        <a href="/node/getAllNode" class="back-link">
+            Back to Node List
         </a>
 
+        <!-- MESSAGE SECTION -->
+        <c:choose>
+            <c:when test="${not empty node.message}">
+                <p class="error">${node.message}</p>
+            </c:when>
+            <c:when test="${not empty success}">
+                <p class="success">${success}</p>
+            </c:when>
+        </c:choose>
+
     </form>
+    <!-- ✅ ✅ ✅ FORM CLOSE TAG (already existed) -->
+
 </div>
 
 </body>

@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Add Role</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -45,41 +45,32 @@
         .register-container button:hover {
             background: #45a049;
         }
-        .login-link {
-            text-align: center;
-            margin-top: 15px;
-        }
     </style>
 </head>
+
 <body>
-<h2>Registeration Page</h2>
-<a href="/user/registerJdbc">Go to Voter Search</a>
-<div class="register-container" modelAttribute="userDto">
+
+<div class="register-container">
+    <h2>Add Role</h2>
+
+    <!-- ✅ Plain HTML form (LIKE YOUR USER PAGE) -->
+    <form method="post" action="/Role/addRole">
+        <label for="roleName">Role Name</label>
+        <input type="text" id="roleName" name="name" required>
+
+         <c:if test="${not empty status.message}">
+                    <p style="color:red">${status.message}</p>
+                </c:if>
+
+        <c:otherwise>
+            <p style="color:green">${success}</p>
+        </c:otherwise>
 
 
-    <form : form method="post" modelAttribute="userDto" action="/user/registerJdbc">
-        <label for="name">Full Name</label>
-        <input type="text" id="name" name="name" required>
-
-        <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" required>
-
-        <label for="userName">Username</label>
-        <input type="text" id="username" name="userName" required>
-
-        <label for="dateOfBirth">Date of Birth</label>
-        <input type="date" id="dateOfBirth" name="dateOfBirth" required>
-
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required minlength="6">
-
-        <label for="phoneNumber">phone no</label>
-        <input type="text" id="username" name="phoneNo" required>
-
-
-        <button type="submit" value="Register">Create Account</button>
+        <button type="submit">Add Role</button>
     </form>
 </div>
+
 </body>
 </html>
-
+``
