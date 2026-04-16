@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JDBC User Registration</title>
+    <title>Edit User - ${u.name}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,7 +19,7 @@
         }
 
         .container {
-            max-width: 500px;
+            max-width: 450px;
             width: 100%;
             background: #ffffff;
             padding: 30px;
@@ -36,17 +36,6 @@
 
         h2 { margin: 0; color: #2c3e50; }
         .subtitle { font-size: 14px; color: #7f8c8d; margin-top: 5px; }
-
-        .error-banner {
-            background-color: #f8d7da;
-            color: #721c24;
-            padding: 10px;
-            border-radius: 4px;
-            font-size: 13px;
-            margin-bottom: 20px;
-            border: 1px solid #f5c6cb;
-            text-align: center;
-        }
 
         .form-group { margin-bottom: 15px; }
 
@@ -68,12 +57,12 @@
             font-size: 14px;
         }
 
-        /* Side-by-side grid for compact fields */
-        .form-row {
-            display: flex;
-            gap: 15px;
+        .readonly-field {
+            background-color: #f9f9f9;
+            color: #999;
+            cursor: not-allowed;
+            border-style: dashed;
         }
-        .form-row .form-group { flex: 1; }
 
         .btn-container {
             display: flex;
@@ -94,8 +83,8 @@
             transition: 0.2s;
         }
 
-        .btn-add { background-color: #2ecc71; color: white; }
-        .btn-add:hover { background-color: #27ae60; }
+        .btn-save { background-color: #3498db; color: white; }
+        .btn-save:hover { background-color: #2980b9; }
 
         .btn-cancel {
             background-color: #f8f9fa;
@@ -103,63 +92,68 @@
             border: 1px solid #ccc;
         }
         .btn-cancel:hover { background-color: #eeeeee; }
+
+        .status-msg {
+            font-size: 12px;
+            color: #27ae60;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="header">
-        <h2>Register SQL User</h2>
-        <p class="subtitle">Direct JDBC Database Insertion</p>
+        <h2>User Profile</h2>
+        <p class="subtitle">Modify record in SQL Database</p>
     </div>
 
-    <%-- Error handling --%>
-    <c:if test="${not empty error}">
-        <div class="error-banner">
-            ${error}
-        </div>
+    <%-- Optional message from server --%>
+    <c:if test="${not empty u.message}">
+        <div class="status-msg" style="text-align: center;">${u.message}</div>
     </c:if>
 
-    <form action="/user/registerJdbc" method="POST">
+    <form action="/user/updateJdbc" method="POST">
+
+        <div class="form-group">
+            <label>Database ID (PK)</label>
+            <input type="text" name="id" value="${u.id}" class="input-field readonly-field" readonly>
+        </div>
 
         <div class="form-group">
             <label>Full Name</label>
-            <input type="text" name="name" class="input-field" placeholder="John Doe" required>
-        </div>
-
-        <div class="form-group">
-            <label>Email Address</label>
-            <input type="email" name="email" class="input-field" placeholder="john@example.com" required>
-        </div>
-
-        <div class="form-group">
-            <label>Phone Number</label>
-            <input type="tel" name="phoneNo" class="input-field" placeholder="10-digit mobile" pattern="[0-9]{10}" required>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label>Date of Birth</label>
-                <input type="date" name="dateOfBirth" class="input-field" required>
-            </div>
-            <div class="form-group">
-                <label>Age</label>
-                <input type="number" name="age" class="input-field" min="1" max="120" placeholder="0" required>
-            </div>
+            <input type="text" name="name" value="${u.name}" class="input-field" required>
         </div>
 
         <div class="form-group">
             <label>SQL Username</label>
-            <input type="text" name="userName" class="input-field" placeholder="Identifier" required>
+            <input type="text" name="userName" value="${u.userName}" class="input-field" required>
         </div>
 
         <div class="form-group">
-            <label>Password</label>
-            <input type="password" name="password" class="input-field" placeholder="••••••••" required>
+            <label>Email Address</label>
+            <input type="email" name="email" value="${u.email}" class="input-field" required>
+        </div>
+
+        <div style="display: flex; gap: 15px;">
+            <div class="form-group" style="flex: 1;">
+                <label>Age</label>
+                <input type="number" name="age" value="${u.age}" class="input-field" required>
+            </div>
+            <div class="form-group" style="flex: 2;">
+                <label>Date of Birth</label>
+                <input type="date" name="dateOfBirth" value="${u.dateOfBirth}" class="input-field" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Phone Number</label>
+            <input type="text" name="phoneNo" value="${u.phoneNo}" class="input-field" required>
         </div>
 
         <div class="btn-container">
-            <button type="submit" class="btn btn-add">Execute Registration</button>
+            <button type="submit" class="btn btn-save">Execute Update</button>
             <a href="/user/getAllUsersJdbc" class="btn btn-cancel">Cancel and Return</a>
         </div>
     </form>

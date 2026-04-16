@@ -35,4 +35,28 @@ public class UserDaoImpl implements UserDao {
         jdbcTemplate.update(sqlQ, userDto.getAge(), userDto.getDateOfBirth(), userDto.getEmail(), userDto.getName(), encodePass, userDto.getPhoneNo(), userDto.getUserName());
         return false;
     }
+
+    @Override
+    public List<User> getUsersJdbc() {
+        String sq1 = "SELECT * FROM user";
+        List<User> usersJdbc = jdbcTemplate.query(
+                sq1,
+                new BeanPropertyRowMapper<>(User.class));
+        return usersJdbc;
+    }
+
+    @Override
+    public void deleteByEmail(String email) {
+        String sq1 = "DELETE FROM user WHERE email = ?";
+        jdbcTemplate.update(sq1, email);
+    }
+
+    @Override
+    public void updateValue(UserDto userDto) {
+        String encodePass = passwordEncoder.encode(userDto.getPassword());
+        String sq1 = "UPDATE user SET age = ?, date_of_birth = ?, email = ?, name = ?, phone_no = ?, user_name =? WHERE id = ? ";
+        jdbcTemplate.update(sq1, userDto.getAge(), userDto.getDateOfBirth(), userDto.getEmail(), userDto.getName(), userDto.getPhoneNo(), userDto.getUserName(), userDto.getId());
+
+    }
+
 }

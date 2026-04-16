@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JDBC User Registration</title>
+    <title>Add New Node</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,11 +15,11 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
         }
 
         .container {
-            max-width: 500px;
+            max-width: 450px;
             width: 100%;
             background: #ffffff;
             padding: 30px;
@@ -37,43 +37,52 @@
         h2 { margin: 0; color: #2c3e50; }
         .subtitle { font-size: 14px; color: #7f8c8d; margin-top: 5px; }
 
-        .error-banner {
-            background-color: #f8d7da;
-            color: #721c24;
-            padding: 10px;
-            border-radius: 4px;
-            font-size: 13px;
-            margin-bottom: 20px;
-            border: 1px solid #f5c6cb;
-            text-align: center;
-        }
-
-        .form-group { margin-bottom: 15px; }
+        .form-group { margin-bottom: 20px; }
 
         .form-group label {
             display: block;
             font-weight: bold;
             margin-bottom: 8px;
-            font-size: 12px;
+            font-size: 13px;
             color: #555;
             text-transform: uppercase;
         }
 
         .input-field {
             width: 100%;
-            padding: 10px 12px;
+            padding: 12px;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
-            font-size: 14px;
+            font-size: 15px;
+            font-family: Arial, sans-serif;
         }
 
-        /* Side-by-side grid for compact fields */
-        .form-row {
-            display: flex;
-            gap: 15px;
+        /* Specialized styling for the Path input to look technical */
+        .path-input {
+            font-family: 'Courier New', monospace;
+            background-color: #fcfcfc;
+            color: #2980b9;
         }
-        .form-row .form-group { flex: 1; }
+
+        /* Scrollable box for multi-role selection */
+        .role-selector {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+            max-height: 120px;
+            overflow-y: auto;
+            background: #fafafa;
+        }
+
+        .role-option {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .role-option input { margin-right: 10px; }
 
         .btn-container {
             display: flex;
@@ -85,7 +94,7 @@
         .btn {
             padding: 12px;
             border-radius: 4px;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: bold;
             text-decoration: none;
             text-align: center;
@@ -107,60 +116,42 @@
 </head>
 <body>
 
+
 <div class="container">
     <div class="header">
-        <h2>Register SQL User</h2>
-        <p class="subtitle">Direct JDBC Database Insertion</p>
+        <h2>Register System Node</h2>
+        <p class="subtitle">Define a new entry in the JPA architecture</p>
     </div>
 
-    <%-- Error handling --%>
-    <c:if test="${not empty error}">
-        <div class="error-banner">
-            ${error}
-        </div>
-    </c:if>
-
-    <form action="/user/registerJdbc" method="POST">
-
+    <form action="/node/addNode" method="POST">
         <div class="form-group">
-            <label>Full Name</label>
-            <input type="text" name="name" class="input-field" placeholder="John Doe" required>
+            <label>Node Identity (Name)</label>
+            <input type="text" name="name" class="input-field" placeholder="e.g. Data_Server_01" required autofocus>
         </div>
 
         <div class="form-group">
-            <label>Email Address</label>
-            <input type="email" name="email" class="input-field" placeholder="john@example.com" required>
+            <label>System Directory (Path)</label>
+            <input type="text" name="path" class="input-field path-input" placeholder="/srv/nodes/data" required>
         </div>
 
         <div class="form-group">
-            <label>Phone Number</label>
-            <input type="tel" name="phoneNo" class="input-field" placeholder="10-digit mobile" pattern="[0-9]{10}" required>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label>Date of Birth</label>
-                <input type="date" name="dateOfBirth" class="input-field" required>
+            <label>Access Roles</label>
+            <div class="role-selector">
+                <c:forEach var="r" items="${roles}">
+                    <label class="role-option">
+                        <input type="checkbox" name="roles" value="${r.name}">
+                        ${r.name}
+                    </label>
+                </c:forEach>
+                <c:if test="${empty roles}">
+                    <span style="color: #999; font-size: 12px;">No roles available. Create roles first.</span>
+                </c:if>
             </div>
-            <div class="form-group">
-                <label>Age</label>
-                <input type="number" name="age" class="input-field" min="1" max="120" placeholder="0" required>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>SQL Username</label>
-            <input type="text" name="userName" class="input-field" placeholder="Identifier" required>
-        </div>
-
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" name="password" class="input-field" placeholder="••••••••" required>
         </div>
 
         <div class="btn-container">
-            <button type="submit" class="btn btn-add">Execute Registration</button>
-            <a href="/user/getAllUsersJdbc" class="btn btn-cancel">Cancel and Return</a>
+            <button type="submit" class="btn btn-add">Initialize Node</button>
+            <a href="/node/getAllNodes" class="btn btn-cancel">Cancel and Return</a>
         </div>
     </form>
 </div>
