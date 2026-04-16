@@ -1,92 +1,99 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Registration Status</title>
+<title>Success</title>
 
 <style>
+    * {
+        box-sizing: border-box;
+    }
+
     body {
-        margin: 0;
-        height: 100vh;
-        background: linear-gradient(135deg, #e3f2fd, #f5f5f5);
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background: #f1f5f9;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+        height: 100vh;
+        margin: 0;
+        color: #1e293b;
     }
 
     .card {
-        width: 420px;
-        padding: 35px;
-        background: white;
+        width: 380px;
+        background: #ffffff;
+        padding: 30px;
         border-radius: 12px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
         text-align: center;
     }
 
     h2 {
-        color: #2c3e50;
-        margin-bottom: 22px;
-    }
-
-    /* SUCCESS MESSAGE */
-    .success {
-        color: #1565c0;
-        font-size: 22px;
-        font-weight: 700;
-        letter-spacing: 1px;
-        margin-bottom: 28px;
-        text-transform: uppercase;
-    }
-
-    /* ERROR MESSAGE */
-    .error {
-        color: #d32f2f;
-        font-size: 16px;
+        margin-bottom: 20px;
         font-weight: 600;
-        margin-bottom: 28px;
+        color: #16a34a; /* success green */
+        font-size: 20px;
+    }
+
+    .btn-container {
+        margin-top: 20px;
     }
 
     .btn {
-        padding: 12px 24px;
-        background: #1976d2;
-        color: white;
+        display: block;
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border-radius: 8px;
         text-decoration: none;
-        border-radius: 6px;
+        font-size: 14px;
         font-weight: 600;
-        display: inline-block;
+        color: white;
+        transition: 0.2s;
     }
 
-    .btn:hover {
-        background: #125aa2;
+    .primary-btn {
+        background: #6366f1;
     }
+
+    .primary-btn:hover {
+        background: #4f46e5;
+    }
+
+    .secondary-btn {
+        background: #0ea5e9;
+    }
+
+    .secondary-btn:hover {
+        background: #0284c7;
+    }
+
 </style>
 </head>
 
 <body>
 
 <div class="card">
-    <h2>Registration Status</h2>
 
-    <%
-        String message = (String) request.getAttribute("message");
-        if (message != null) {
-    %>
-        <!-- ERROR CASE -->
-        <p class="error"><%= message %></p>
-    <%
-        } else {
-    %>
-        <!-- SUCCESS CASE -->
-        <p class="success">USER SUCCESSFULLY REGISTERED ✅</p>
-    <%
-        }
-    %>
+    <h2>${message}</h2>
 
-    <!-- ✅ GOES TO register.jsp VIA CONTROLLER -->
-    <a class="btn" href="<%= request.getContextPath() %>/user/register">Go back to Login</a>
+    <div class="btn-container">
+
+        <a class="btn primary-btn"
+           href="${pageContext.request.contextPath}/login">
+            Go to Register
+        </a>
+
+        <a class="btn secondary-btn"
+           href="${pageContext.request.contextPath}/user/showAllUsers">
+            View All Users
+        </a>
+
+    </div>
+
 </div>
 
 </body>
