@@ -119,7 +119,7 @@
 <div class="container">
     <h2>User Register</h2>
 
-    <form action="${pageContext.request.contextPath}/user/register" method="post" modelAttribute="userDto">
+    <form action="${pageContext.request.contextPath}/user/registerJdbc" method="post" modelAttribute="userDto">
 
         <label>Name:</label>
         <input type="text" name="name" required/>

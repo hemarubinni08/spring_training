@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="ISO-8859-1">
+    <meta charset="UTF-8">
     <title>Registration Successful</title>
 
     <style>
@@ -77,23 +77,25 @@
 
 <div class="container">
 
-    <h2>${message}</h2>
-    <p>${message}</p>
+    <!-- MESSAGE -->
+    <h2>${message != null ? message : "Registration Completed"}</h2>
+    <p>Operation completed successfully.</p>
 
     <!-- BUTTONS -->
     <div class="btn-group">
 
-        <!-- HOME BUTTON -->
-        <a href="${pageContext.request.contextPath}/">
+        <!-- HOME -->
+        <a href="${pageContext.request.contextPath}/user/registerJdbc">
             Home
         </a>
 
         <!-- REGISTER AGAIN -->
-        <a href="${pageContext.request.contextPath}/user/register">
+        <a href="${pageContext.request.contextPath}/user/registerJdbc">
             Register Again
         </a>
     </div>
 
 </div>
+
 </body>
 </html>

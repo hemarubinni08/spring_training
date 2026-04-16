@@ -1,125 +1,116 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Registration Form</title>
 
-   <style>
-       * {
-           box-sizing: border-box;
-       }
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-       body {
-           margin: 0;
-           padding: 0;
-           min-height: 100vh;
-           background: linear-gradient(135deg, #667eea, #764ba2);
-           font-family: "Segoe UI", Arial, sans-serif;
-           display: flex;
-           align-items: center;
-           justify-content: center;
-       }
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-color: #eef2f7;
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-       .container {
-           width: 360px;
-           padding: 30px 25px;
-           background-color: #ffffff;
-           border-radius: 12px;
-           box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-           text-align: center;
-           animation: fadeIn 0.6s ease-in-out;
-       }
+        /* Card */
+        .container {
+            width: 380px;
+            padding: 32px 28px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            text-align: center;
+        }
 
-       @keyframes fadeIn {
-           from {
-               transform: translateY(20px);
-               opacity: 0;
-           }
-           to {
-               transform: translateY(0);
-               opacity: 1;
-           }
-       }
+        /* Title */
+        h2 {
+            margin-bottom: 25px;
+            color: #2c3e50;
+            font-weight: bold;
+        }
 
-       h2 {
-           margin-bottom: 25px;
-           color: #333;
-           font-weight: 600;
-           letter-spacing: 0.5px;
-       }
+        /* Labels */
+        label {
+            display: block;
+            text-align: left;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #2c3e50;
+            font-size: 14px;
+        }
 
-       label {
-           display: block;
-           text-align: left;
-           font-weight: 600;
-           margin-bottom: 6px;
-           color: #555;
-           font-size: 14px;
-       }
+        /* Inputs */
+        input,
+        select {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
 
-       input {
-           width: 100%;
-           padding: 12px;
-           margin-bottom: 18px;
-           border-radius: 6px;
-           border: 1px solid #ccc;
-           font-size: 14px;
-           transition: all 0.3s ease;
-           background-color: #fafafa;
-       }
+        input:focus,
+        select:focus {
+            border-color: #2c3e50;
+            outline: none;
+        }
 
-       input:focus {
-           border-color: #667eea;
-           box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
-           outline: none;
-           background-color: #ffffff;
-       }
+        /* Button group */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
 
-       input:required:invalid {
-           border-color: #ffb4b4;
-       }
+        /* Home button */
+        .home-btn {
+            flex: 1;
+            padding: 12px;
+            background-color: #2c3e50;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 5px;
+            font-weight: bold;
+        }
 
-       input:required:valid {
-           border-color: #7bd389;
-       }
+        /* Register button */
+        .register-btn {
+            flex: 1;
+            padding: 12px;
+            background-color: #34495e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
 
-       button {
-           width: 100%;
-           padding: 12px;
-           background: linear-gradient(135deg, #667eea, #764ba2);
-           color: #ffffff;
-           border: none;
-           border-radius: 6px;
-           font-size: 16px;
-           font-weight: 600;
-           letter-spacing: 0.6px;
-           cursor: pointer;
-           transition: all 0.3s ease;
-       }
-
-       button:hover {
-           transform: translateY(-2px);
-           box-shadow: 0 8px 18px rgba(118, 75, 162, 0.35);
-       }
-
-       button:active {
-           transform: translateY(0);
-           box-shadow: 0 4px 10px rgba(118, 75, 162, 0.25);
-       }
-
-       @media (max-width: 420px) {
-           .container {
-               width: 90%;
-               padding: 25px 20px;
-           }
-       }
-   </style>
+        /* Hover */
+        .home-btn:hover,
+        .register-btn:hover {
+            opacity: 0.9;
+        }
+    </style>
 </head>
 
 <body>
+
 <div class="container">
+
     <h2>User Register</h2>
 
-    <form action="${pageContext.request.contextPath}/user/register" method="post" modelAttribute="userDto">
+    <!-- FORM -->
+    <form id="regForm" action="${pageContext.request.contextPath}/user/register" method="post" modelAttribute="userDto">
 
         <label>Name:</label>
         <input type="text" name="name" required/>
@@ -130,9 +121,33 @@
         <label>Password:</label>
         <input type="password" name="password" required/>
 
-        <button type="submit">Register</button>
+        <label>Role:</label>
+        <select name="role">
+            <option value="">--Select Role--</option>
+            <c:forEach var="role" items="${roles}">
+                <option value="${role.name}">${role.name}</option>
+            </c:forEach>
+        </select>
+
+        <label>Roles (Multiple):</label>
+        <select name="roles[]" multiple size="5">
+            <c:forEach var="role" items="${roles}">
+                <option value="${role.name}">${role.name}</option>
+            </c:forEach>
+        </select>
 
     </form>
+
+    <!-- BUTTONS -->
+    <div class="btn-group">
+        <a href="${pageContext.request.contextPath}/" class="home-btn">Home</a>
+
+        <button type="submit" form="regForm" class="register-btn">
+            Register
+        </button>
+    </div>
+
 </div>
+
 </body>
 </html>

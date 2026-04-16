@@ -20,14 +20,6 @@ public class UserDaoImpl implements UserDao {
     PasswordEncoder passwordEncoder;
 
     @Override
-    public User update(UserDto userDto) {
-        String encodedPass = passwordEncoder.encode(userDto.getPassword());
-        String sqlQ = "INSERT INTO user SET age=?, email=?, name=?, password=?, phone_no=?";
-        jdbcTemplate.update(sqlQ, userDto.getAge(), userDto.getEmail(), userDto.getName(), encodedPass, userDto.getPhoneNo());
-        return null;
-    }
-
-    @Override
     public boolean createUser(UserDto userDto) {
         String encodedPass = passwordEncoder.encode(userDto.getPassword());
         String sqlQ = "INSERT INTO user SET age=?, email=?, name=?, password=?, phone_no=?";
@@ -40,11 +32,48 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findByEmail(String email) {
-        String sql1 = "SELECT * FROM user WHERE email=?";
+        String sql = "SELECT * FROM user WHERE email=?";
         List<User> userList = jdbcTemplate.query(
-                sql1,
+                sql,
                 new Object[]{email},
-                new BeanPropertyRowMapper(User.class));
+                new BeanPropertyRowMapper<>(User.class)
+        );
         return userList.isEmpty() ? null : userList.get(0);
+    }
+
+    @Override
+    public User findById(long id) {
+        String sql = "SELECT * FROM user WHERE id=?";
+        List<User> userList = jdbcTemplate.query(
+                sql,
+                new Object[]{id},
+                new BeanPropertyRowMapper<>(User.class)
+        );
+        return userList.isEmpty() ? null : userList.get(0);
+    }
+
+    @Override
+    public List<User> listOfUsers() {
+        String sqlQ = "SELECT * FROM user";
+        return jdbcTemplate.query(
+                sqlQ,
+                new BeanPropertyRowMapper<>(User.class));
+    }
+
+    @Override
+    public boolean updateUser(UserDto userDto) {
+        String encodedPass = passwordEncoder.encode(userDto.getPassword());
+        String sqlUpdate = "UPDATE user SET age=?, email=?, name=?, password=?, phone_no=? WHERE id=?";
+        int count = jdbcTemplate.update(sqlUpdate, userDto.getAge(), userDto.getEmail(), userDto.getName(), encodedPass, userDto.getPhoneNo(), userDto.getId());
+        if (count > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void deleteByEmail(String email) {
+        String sq12 = "DELETE FROM user WHERE email=?";
+        jdbcTemplate.update(sq12, email);
     }
 }
