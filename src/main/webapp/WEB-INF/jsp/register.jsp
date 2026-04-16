@@ -1,4 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,17 +12,6 @@
 <style>
     body {
         background: linear-gradient(to right, #6a11cb, #2575fc);
-        height: 100vh;
-    }
-    .card {
-        border-radius: 15px;
-    }
-    .form-control {
-        border-radius: 10px;
-    }
-    .btn-primary {
-        border-radius: 10px;
-        width: 100%;
     }
     .login-link {
         text-align: center;
@@ -31,10 +22,8 @@
 </head>
 <body>
 
-<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
-
+<div class="container d-flex justify-content-center align-items-center">
     <div class="card shadow p-4" style="width: 400px;">
-
         <h3 class="text-center mb-4">Create Account</h3>
 
         <form action="/user/register" method="post" modelAttribute="userDto">
@@ -55,6 +44,11 @@
             </div>
 
             <div class="form-group">
+                 <label>Phone</label>
+                 <input type="phone" class="form-control" name="phoneNo" placeholder="Enter your phone no" required>
+            </div>
+
+            <div class="form-group">
                 <label>Username</label>
                 <input type="text" class="form-control" name="userName" placeholder="Choose a username" required>
             </div>
@@ -64,17 +58,25 @@
                 <input type="password" class="form-control" name="password" placeholder="Enter password" required>
             </div>
 
-            <button type="submit" class="btn btn-primary">Register</button>
+            <div class="form-group">
+                <label>Roles</label>
+                <select class="form-control"
+                        name="roles"
+                        multiple
+                        size="4"
+                        required>
+                    <c:forEach items="${rolesList}" var="role">
+                        <option value="${role.name}">
+                            ${role.name}
+                        </option>
+                    </c:forEach>
+                </select>
+            </div>
 
+            <button type="submit" class="btn btn-primary">Register</button>
         </form>
 
-        <div class="login-link">
-            <small>Already have an account?</small>
-            <a href="/user/login" class="btn btn-sm">Login</a>
-        </div>
-
     </div>
-
 </div>
 
 </body>
