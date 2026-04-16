@@ -26,7 +26,7 @@ public class NodeController {
     }
 
     @PostMapping("/addNode")
-    public String doAddNode(RedirectAttributes ra, @ModelAttribute NodeDto nodeDto, Model model) {
+    public String doAddNode(RedirectAttributes ra, @ModelAttribute NodeDto nodeDto) {
         nodeService.addNode(nodeDto);
         ra.addFlashAttribute("message", nodeDto.getMessage());
         ra.addFlashAttribute("success", nodeDto.isSuccess());
@@ -34,7 +34,7 @@ public class NodeController {
     }
 
     @GetMapping("/getAllNodes")
-    public String getAllNodes(Model model, @ModelAttribute NodeDto nodeDto) {
+    public String getAllNodes(Model model) {
         List<NodeDto> nodeDtoList = nodeService.getNodes();
         model.addAttribute("node", nodeDtoList);
         return "getAllNodes";

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System Home</title>
     <style>
+        /* Force border-box for everything to prevent height overflow */
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -15,12 +21,10 @@
             overflow-x: hidden;
         }
 
-        /* The Checkbox Hack */
         #nav-toggle {
             display: none;
         }
 
-        /* Menu Button Styling */
         .menu-label {
             position: fixed;
             top: 20px;
@@ -34,20 +38,22 @@
             font-weight: bold;
         }
 
-        /* Sidebar Styling */
         .sidebar {
             width: 250px;
-            height: 100vh;
+            height: 100%; /* Changed to 100% for better mobile/browser stability */
             background-color: #2c3e50;
             color: white;
             position: fixed;
+            top: 0;
+            bottom: 0;
             left: -250px;
             transition: 0.3s;
             z-index: 1000;
-            padding-top: 70px;
+            padding-top: 70px; /* Space for the Menu label */
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Logic: If checkbox is checked, move sidebar to left: 0 */
         #nav-toggle:checked ~ .sidebar {
             left: 0;
         }
@@ -58,6 +64,12 @@
             color: #95a5a6;
             text-transform: uppercase;
             border-bottom: 1px solid #3e4f5f;
+        }
+
+        /* The scrollable list of nodes */
+        .nav-content {
+            flex: 1;
+            overflow-y: auto;
         }
 
         .nav-item {
@@ -72,7 +84,30 @@
             background-color: #34495e;
         }
 
-        /* Overlay Styling */
+        /* Fixed Footer at the very bottom of the sidebar */
+        .sidebar-footer {
+            background-color: #1a252f;
+            padding: 15px;
+            border-top: 1px solid #3e4f5f;
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 13px;
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
+        }
+
         .overlay {
             position: fixed;
             top: 0;
@@ -84,12 +119,10 @@
             z-index: 999;
         }
 
-        /* Logic: If checkbox is checked, show overlay */
         #nav-toggle:checked ~ .overlay {
             display: block;
         }
 
-        /* Main Content */
         .content {
             height: 100vh;
             display: flex;
@@ -97,6 +130,13 @@
             justify-content: center;
             align-items: center;
             text-align: center;
+        }
+
+        .user-greeting {
+            font-size: 20px;
+            color: #3498db;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
 
         .content h1 {
@@ -129,18 +169,29 @@
     <nav class="sidebar">
         <div class="sidebar-header">System Nodes</div>
 
-        <c:forEach var="nodeItem" items="${node}">
-            <a href="${nodeItem.path}" class="nav-item">
-                ${nodeItem.name}
-            </a>
-        </c:forEach>
+        <div class="nav-content">
+            <c:forEach var="nodeItem" items="${node}">
+                <a href="${nodeItem.path}" class="nav-item">
+                    ${nodeItem.name}
+                </a>
+            </c:forEach>
 
-        <c:if test="${empty node}">
-            <div class="empty-msg">No nodes registered</div>
-        </c:if>
+            <c:if test="${empty node}">
+                <div class="empty-msg">No nodes registered</div>
+            </c:if>
+        </div>
+
+        <div class="sidebar-footer">
+            <form action="/logout" method="post" style="margin: 0;">
+                <button type="submit" class="logout-btn">Sign Out</button>
+            </form>
+        </div>
     </nav>
 
     <div class="content">
+        <div class="user-greeting">
+            Hi, <sec:authentication property="principal.username" />
+        </div>
         <h1>System Administration</h1>
         <p>Click Menu to view registered system nodes.</p>
     </div>

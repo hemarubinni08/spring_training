@@ -130,6 +130,7 @@
                 <th>ID</th>
                 <th>Full Name</th>
                 <th>Email</th>
+                <th>Phone</th>
                 <th>Primary Role</th>
                 <th>Additional Roles</th>
                 <th>Username</th>
@@ -145,6 +146,7 @@
                         <small>Age: ${u.age}</small>
                     </td>
                     <td>${u.email}</td>
+                    <td>${u.phoneNo}</td>
                     <td><span class="role-badge">${u.role}</span></td>
                     <td>
                         <c:forEach var="r" items="${u.roles}">

@@ -9,7 +9,6 @@ import com.ust.pos.service.RoleService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,8 +19,6 @@ import java.util.Optional;
 public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleRepository roleRepository;
-    @Autowired
-    PasswordEncoder passwordEncoder;
     @Autowired
     private ModelMapper modelMapper;
     @Autowired

@@ -20,7 +20,7 @@ public class UserController {
     RoleService roleService;
 
     @PostMapping("/register")
-    public String register(RedirectAttributes ra, Model model, @ModelAttribute UserDto userDto) {
+    public String register(RedirectAttributes ra, @ModelAttribute UserDto userDto) {
         String message = userService.register(userDto);
         ra.addFlashAttribute("message", message);
         ra.addFlashAttribute("success", userDto.isSuccess());
@@ -28,33 +28,33 @@ public class UserController {
     }
 
     @GetMapping("/register")
-    public String doRegister(Model model, @ModelAttribute UserDto userDto) {
+    public String doRegister(Model model) {
         model.addAttribute("roles", roleService.getRoles());
         return "register";
     }
 
     @PostMapping("/registerJdbc")
-    public String registerJdbc(RedirectAttributes ra, Model model, @ModelAttribute UserDto userDto) {
+    public String registerJdbc(RedirectAttributes ra, @ModelAttribute UserDto userDto) {
         userService.registerUsingJdbc(userDto);
         ra.addFlashAttribute("message", userDto.getMessage());
         ra.addFlashAttribute("success", userDto.isSuccess());
-        return "successJdbc";
+        return "redirect:/user/getAllUsers";
     }
 
     @GetMapping("/registerJdbc")
-    public String doRegisterJdbc(Model model, @ModelAttribute UserDto userDto) {
+    public String doRegisterJdbc() {
         return "registerJdbc";
     }
 
     @GetMapping("/getAllUsers")
-    public String getAllUsers(Model model, @ModelAttribute UserDto userDto) {
+    public String getAllUsers(Model model) {
         List<UserDto> users = userService.getUsers();
         model.addAttribute("users", users);
         return "userDetails";
     }
 
     @GetMapping("/getAllUsersJdbc")
-    public String getAllUsersJdbc(Model model, @ModelAttribute UserDto userDto) {
+    public String getAllUsersJdbc(Model model) {
         List<UserDto> users = userService.getUsersJdbc();
         model.addAttribute("users", users);
         return "userDetailsJdbc";
@@ -85,13 +85,6 @@ public class UserController {
     public String deletePageJdbc(@RequestParam("email") String email) {
         userService.deleteDetailsJdbc(email);
         return "redirect:/user/getAllUsersJdbc";
-    }
-
-    @GetMapping("/profileId")
-    public String profileId(Model model, @RequestParam Long id) {
-        UserDto userDto = userService.findDetailsId(id);
-        model.addAttribute("u", userDto);
-        return "profilePage";
     }
 
     @PostMapping("/updateJdbc")

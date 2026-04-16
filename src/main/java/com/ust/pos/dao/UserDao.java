@@ -8,12 +8,11 @@ import java.util.List;
 public interface UserDao {
     User findByEmailCustom(String email);
 
-    boolean update(UserDto userDto);
+    boolean register(UserDto userDto);
 
     List<User> getUsersJdbc();
 
     void deleteByEmail(String email);
 
     void updateValue(UserDto userDto);
-
 }

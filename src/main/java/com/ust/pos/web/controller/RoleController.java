@@ -1,7 +1,6 @@
 package com.ust.pos.web.controller;
 
 import com.ust.pos.dto.RoleDto;
-import com.ust.pos.dto.UserDto;
 import com.ust.pos.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,12 +25,12 @@ public class RoleController {
     }
 
     @GetMapping("/addRole")
-    public String doRegisterRole(Model model, @ModelAttribute RoleDto roleDto) {
+    public String doRegisterRole() {
         return "registerRole";
     }
 
     @GetMapping("/getAllRole")
-    public String getAllRole(Model model, @ModelAttribute RoleDto roleDto) {
+    public String getAllRole(Model model) {
         List<RoleDto> roles = roleService.getRoles();
         model.addAttribute("roles", roles);
         return "roleDetails";
@@ -46,7 +45,7 @@ public class RoleController {
     }
 
     @GetMapping("/getAllRoleJdbc")
-    public String getAllRoleJdbc(Model model, @ModelAttribute RoleDto roleDto) {
+    public String getAllRoleJdbc(Model model) {
         List<RoleDto> roles = roleService.getRolesJdbc();
         model.addAttribute("roles", roles);
         return "roleDetailsJdbc";
@@ -88,7 +87,7 @@ public class RoleController {
     }
 
     @GetMapping("/addRoleJdbc")
-    public String doAddRoleJdbc(Model model, @ModelAttribute UserDto userDto) {
+    public String doAddRoleJdbc() {
         return "registerRoleJdbc";
     }
 
@@ -99,7 +98,7 @@ public class RoleController {
     }
 
     @PostMapping("/editRoleJdbc")
-    public String updateJdbcRole(Model model, RedirectAttributes ra, @ModelAttribute RoleDto roleDto) {
+    public String updateJdbcRole(RedirectAttributes ra, @ModelAttribute RoleDto roleDto) {
         RoleDto result = roleService.updateValueRoleJdbc(roleDto);
 
         ra.addFlashAttribute("toastMessage", result.getMessage());

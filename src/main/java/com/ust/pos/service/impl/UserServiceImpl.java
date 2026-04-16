@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
             userDto.setSuccess(false);
             return "Email already exists";
         } else {
-            userDao.update(userDto);
+            userDao.register(userDto);
             return "Successfully created";
         }
     }
@@ -126,6 +126,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> userOptional = userRepository.findById(userDto.getId());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
+            String password = user.getPassword();
             if (!user.getEmail().equals(userDto.getEmail())) {
                 if (userRepository.existsByEmail(userDto.getEmail())) {
                     userDto.setSuccess(false);
@@ -133,9 +134,13 @@ public class UserServiceImpl implements UserService {
                     return userDto;
                 }
             }
+
             userDto.setMessage("Modified");
             userDto.setSuccess(true);
             modelMapper.map(userDto, user);
+            if (userDto.getPassword() == null) {
+                user.setPassword(password);
+            }
             userRepository.save(user);
         }
         return userDto;

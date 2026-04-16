@@ -25,11 +25,11 @@ public class UserDaoImpl implements UserDao {
                 sq1,
                 new Object[]{email},
                 new BeanPropertyRowMapper<>(User.class));
-        return userList.isEmpty() ? null : userList.get(0);
+        return userList.isEmpty() ? null : userList.getFirst();
     }
 
     @Override
-    public boolean update(UserDto userDto) {
+    public boolean register(UserDto userDto) {
         String encodePass = passwordEncoder.encode(userDto.getPassword());
         String sqlQ = "INSERT INTO user SET age = ?, date_of_birth = ?, email = ?, name = ?, password = ?, phone_no = ?, user_name =?";
         jdbcTemplate.update(sqlQ, userDto.getAge(), userDto.getDateOfBirth(), userDto.getEmail(), userDto.getName(), encodePass, userDto.getPhoneNo(), userDto.getUserName());
@@ -39,10 +39,9 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<User> getUsersJdbc() {
         String sq1 = "SELECT * FROM user";
-        List<User> usersJdbc = jdbcTemplate.query(
+        return jdbcTemplate.query(
                 sq1,
                 new BeanPropertyRowMapper<>(User.class));
-        return usersJdbc;
     }
 
     @Override
@@ -53,7 +52,6 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void updateValue(UserDto userDto) {
-        String encodePass = passwordEncoder.encode(userDto.getPassword());
         String sq1 = "UPDATE user SET age = ?, date_of_birth = ?, email = ?, name = ?, phone_no = ?, user_name =? WHERE id = ? ";
         jdbcTemplate.update(sq1, userDto.getAge(), userDto.getDateOfBirth(), userDto.getEmail(), userDto.getName(), userDto.getPhoneNo(), userDto.getUserName(), userDto.getId());
 

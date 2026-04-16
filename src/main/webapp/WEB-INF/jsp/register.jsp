@@ -110,7 +110,8 @@
             font-weight: bold;
             text-align: center;
         }
-        .success { background-color: #2ecc71; }
+        .success { background-color: #2ecc71; border: 1px solid #27ae60; }
+        .error { background-color: #e74c3c; border: 1px solid #c0392b; }
     </style>
 </head>
 <body>
@@ -121,7 +122,7 @@
     </div>
 
     <c:if test="${not empty message}">
-        <div class="toast success">
+        <div class="toast ${success ? 'success' : 'error'}">
             ${message}
         </div>
     </c:if>
@@ -135,6 +136,11 @@
         <div class="form-group">
             <label>Email Address</label>
             <input type="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" name="phoneNo" required>
         </div>
 
         <div class="form-group" style="display: flex; gap: 15px;">

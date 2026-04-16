@@ -4,8 +4,8 @@ import com.ust.pos.dao.RoleDao;
 import com.ust.pos.dto.RoleDto;
 import com.ust.pos.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -18,10 +18,9 @@ public class RoleDaoImpl implements RoleDao {
     @Override
     public List<Role> getUsersJdbc() {
         String sq1 = "SELECT * FROM role";
-        List<Role> rolesJdbc = jdbcTemplate.query(
+        return jdbcTemplate.query(
                 sq1,
                 new BeanPropertyRowMapper<>(Role.class));
-        return rolesJdbc;
     }
 
     @Override
@@ -50,6 +49,6 @@ public class RoleDaoImpl implements RoleDao {
                 sq1,
                 new Object[]{id},
                 new BeanPropertyRowMapper<>(Role.class));
-        return roleList.isEmpty() ? null : roleList.get(0);
+        return roleList.isEmpty() ? null : roleList.getFirst();
     }
 }
