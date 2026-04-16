@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -10,6 +10,9 @@
     <title>Home</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"/>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
           rel="stylesheet"/>
 
     <style>
@@ -28,15 +31,28 @@
         .sidebar a {
             color: white;
             text-decoration: none;
+            padding: 8px 12px;
+            display: block;
+            border-radius: 8px;
         }
 
         .sidebar a:hover {
-            background-color: rgba(255, 255, 255, 0.15);
-            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.2);
         }
 
         .content-area {
             padding: 30px;
+        }
+
+        .logout-btn {
+            border: none;
+            background: transparent;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .logout-btn:hover {
+            color: #ffdddd;
         }
     </style>
 </head>
@@ -46,7 +62,19 @@
 <div class="d-flex">
 
     <div class="sidebar p-3">
-        <h5 class="text-center mb-4">POS System</h5>
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h5 class="mb-0">POS System</h5>
+
+           <form action="/logout"
+                  method="post">
+                <button type="submit"
+                        class="logout-btn"
+                        title="Logout">
+                    <i class="bi bi-box-arrow-right"></i>
+                </button>
+            </form>
+        </div>
 
         <c:if test="${empty node}">
             <div class="alert alert-light text-center small">
@@ -55,11 +83,11 @@
         </c:if>
 
         <c:if test="${not empty node}">
-            <ul class="nav nav-pills flex-column gap-2">
+            <ul class="nav flex-column gap-2">
                 <c:forEach var="n" items="${node}">
                     <li class="nav-item">
-                        <a class="nav-link" href="${n.path}">
-                            ${n.name}
+                        <a href="${n.path}">
+                            <i class="bi bi-dot"></i> ${n.name}
                         </a>
                     </li>
                 </c:forEach>

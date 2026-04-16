@@ -125,8 +125,8 @@ public class UserServiceimpl implements UserService {
     }
 
     @Override
-    public User getUserByUsername(String username) {
-        return userRepository.findByUserName(username);
+    public UserDto getUserByUsername(String username) {
+        User user =  userRepository.findByUserName(username);
+        return modelMapper.map(user,UserDto.class);
     }
-
 }

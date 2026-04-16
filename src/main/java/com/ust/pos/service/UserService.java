@@ -34,5 +34,5 @@ public interface UserService {
 
     UserDto updateUserJpa(UserDto userDto);
 
-    User getUserByUsername(String username);
+    UserDto getUserByUsername(String username);
 }
