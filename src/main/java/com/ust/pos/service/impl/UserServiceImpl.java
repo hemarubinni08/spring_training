@@ -50,9 +50,11 @@ public class UserServiceImpl implements UserService {
         }
         User user = modelMapper.map(userDto, User.class);
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setUserName(userDto.getEmail());
         userRepository.save(user);
         return true;
     }
+
 
     /* ======================= LIST USERS ======================= */
 
@@ -107,6 +109,11 @@ public class UserServiceImpl implements UserService {
     public UserDto findByIdJdbc(Long id) {
         User user = userDao.findById(id);
         return user == null ? null : modelMapper.map(user, UserDto.class);
+    }
+
+    public UserDto getByUsername(String username) {
+        User user = userRepository.findByUserName(username);
+        return modelMapper.map(user, UserDto.class);
     }
 
     /* ======================= UPDATE JPA ======================= */

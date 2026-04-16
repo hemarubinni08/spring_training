@@ -19,3 +19,4 @@ public class UserDto extends CommonDto {
     private List<String> roles;
 
 }
+

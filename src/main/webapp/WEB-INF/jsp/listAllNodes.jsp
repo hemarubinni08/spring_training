@@ -63,7 +63,7 @@
                             <td>${node.name}</td>
                             <td class="text-muted">${node.path}</td>
 
-                            <!-- ✅ ROLES DISPLAY -->
+                            <!--  ROLES DISPLAY -->
                             <td>
                                 <c:if test="${empty node.roles}">
                                     <span class="text-muted">No Roles</span>

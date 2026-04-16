@@ -20,15 +20,11 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean registerjdbc(UserDto userDto) {
-        //String sql = "insert into user values(?,?,?,?)";
-        //no need to do it twice once is enough
-//        if(findByEmail(userDto.getEmail())==null){
-//            return false;
-//        }
+
         String sqlQ = "insert into user set name=?,user_name=?,password=?,phone_no=?,email=?,age=?";
         String encodePassword = passwordEncoder.encode(userDto.getPassword());
 
-        jdbcTemplate.update(sqlQ, userDto.getName(), userDto.getUserName(), encodePassword,userDto.getPhoneNo(),userDto.getEmail(), userDto.getAge());
+        jdbcTemplate.update(sqlQ, userDto.getName(), userDto.getUserName(), encodePassword, userDto.getPhoneNo(), userDto.getEmail(), userDto.getAge());
         return true;
     }
 
@@ -36,7 +32,6 @@ public class UserDaoImpl implements UserDao {
         String sqlQ = "select * from user where email=?";
         List<User> userList = jdbcTemplate.query(
                 sqlQ, new Object[]{email}, new BeanPropertyRowMapper(User.class));
-        // return jdbcTemplate.queryForObject(sqlQ,User.class,email);
         return userList.isEmpty() ? null : userList.get(0);
     }
 
@@ -63,8 +58,8 @@ public class UserDaoImpl implements UserDao {
         String encodePassword = passwordEncoder.encode(userDto.getPassword());
 
         jdbcTemplate.update(
-                sqlQ, userDto.getName(), userDto.getUserName(),encodePassword,userDto.getEmail(),
-                userDto.getAge(),userDto.getPhoneNo(),userDto.getId()
+                sqlQ, userDto.getName(), userDto.getUserName(), encodePassword, userDto.getEmail(),
+                userDto.getAge(), userDto.getPhoneNo(), userDto.getId()
         );
         return true;
     }

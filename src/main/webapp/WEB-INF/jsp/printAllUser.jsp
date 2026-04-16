@@ -57,7 +57,6 @@
                         <th>ID (Param)</th>
                         <th>ID (Path)</th>
                         <th>Name</th>
-                        <th>Age</th>
                         <th>Email (Param JDBC)</th>
                         <th>Email (Path JPA)</th>
                         <th>Phone</th>
@@ -85,7 +84,6 @@
                             </td>
 
                             <td>${user.name}</td>
-                            <td>${user.age}</td>
 
                             <td>
                                 <a href="/user/profilejdbc?email=${user.email}"
@@ -105,7 +103,7 @@
                             <td>${user.role}</td>
                             <td>${user.roles}</td>
 
-                            <!-- ✅ ACTION COLUMN -->
+                            <!--  ACTION COLUMN -->
                             <td class="text-center">
                                 <div class="d-grid gap-2">
                                     <a href="/user/getProfileById?id=${user.id}"

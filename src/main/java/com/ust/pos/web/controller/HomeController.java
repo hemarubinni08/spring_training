@@ -13,6 +13,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/")
 public class HomeController {
+
     @Autowired
     private NodeService nodeService;
 
@@ -21,5 +22,10 @@ public class HomeController {
         List<NodeDto> navList = nodeService.getAllNodes();
         model.addAttribute("navList", navList);
         return "home";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
     }
 }

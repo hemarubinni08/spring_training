@@ -29,7 +29,7 @@
 
 <body>
 
-<!-- ✅ HEADER -->
+<!--  HEADER -->
 <nav class="navbar navbar-dark bg-dark shadow">
     <div class="container-fluid">
         <span class="navbar-brand fw-bold">User Profile</span>
@@ -42,10 +42,10 @@
 
         <h4 class="text-center fw-bold mb-4">Update User</h4>
 
-        <!-- ✅ PROPER FORM TAG -->
+        <!--  PROPER FORM TAG -->
         <form action="/user/updateUser" method="post">
 
-            <!-- ✅ REQUIRED -->
+            <!--  REQUIRED -->
             <input type="hidden" name="id" value="${userDetails.id}" />
 
             <div class="mb-3">
@@ -76,7 +76,7 @@
                        value="${userDetails.phoneNo}" />
             </div>
 
-            <!-- ✅ SINGLE ROLE -->
+            <!--  SINGLE ROLE -->
             <div class="mb-3">
                 <label class="form-label">Role (Single)</label>
                 <select name="role" class="form-control">
@@ -90,7 +90,7 @@
                 </select>
             </div>
 
-            <!-- ✅ MULTIPLE ROLES (CHECKBOX) -->
+            <!--  MULTIPLE ROLES (CHECKBOX) -->
             <div class="mb-4">
                 <label class="form-label fw-semibold">Roles (Multiple)</label>
 
@@ -113,7 +113,7 @@
                 </div>
             </div>
 
-            <!-- ✅ BUTTONS -->
+            <!--  BUTTONS -->
             <div class="d-flex gap-2">
                 <button type="submit" class="btn btn-primary w-100">
                     Update
@@ -127,6 +127,7 @@
         </form>
 
     </div>
+
 </div>
 
 </body>

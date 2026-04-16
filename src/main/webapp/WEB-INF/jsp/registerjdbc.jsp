@@ -67,12 +67,15 @@
             <button type="submit" class="btn btn-primary">
                 Register
             </button>
+            <a href="/user/getuser" class="btn btn-outline-secondary w-100">
+                Cancel
+            </a>
 
         </form>
 
         <div class="login-link">
             <small>Already have an account?</small><br>
-            <a href="/user/login" class="btn btn-link btn-sm">Login</a>
+            <a href="/login" class="btn btn-link btn-sm">Login</a>
         </div>
 
     </div>

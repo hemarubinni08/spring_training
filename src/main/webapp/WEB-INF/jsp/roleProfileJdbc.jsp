@@ -32,7 +32,7 @@
 
         <h3 class="text-center mb-4 fw-bold">Update Role (JDBC)</h3>
 
-        <!-- ✅ JDBC Update Form -->
+        <!--  JDBC Update Form -->
         <form action="/role/updateroleJdbc" method="post">
 
             <!-- Role ID -->

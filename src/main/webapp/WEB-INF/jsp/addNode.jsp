@@ -64,6 +64,9 @@
             <button type="submit" class="btn btn-primary">
                 Submit
             </button>
+            <a href="/node/listallnodes" class="btn btn-outline-secondary w-100">
+                Cancel
+            </a>
 
         </form>
 

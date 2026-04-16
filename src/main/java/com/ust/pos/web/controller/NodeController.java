@@ -33,7 +33,7 @@ public class NodeController {
 
     @GetMapping("/listallnodes")
     public String getAllNodes(Model model) {
-        model.addAttribute("rolesList",roleService.getAllRoles());
+        model.addAttribute("rolesList", roleService.getAllRoles());
         model.addAttribute("nodes", nodeService.getAllNodes());
         return "listAllNodes";
     }

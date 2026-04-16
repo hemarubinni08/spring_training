@@ -35,7 +35,7 @@
 
         <h3 class="text-center mb-4 font-weight-bold">Create Account</h3>
 
-        <!-- ✅ PROPER FORM -->
+        <!--  PROPER FORM -->
         <form action="/user/register" method="post">
 
             <div class="form-group">
@@ -63,7 +63,7 @@
                 <input type="password" class="form-control" name="password" required>
             </div>
 
-            <!-- ✅ SINGLE ROLE -->
+            <!--  SINGLE ROLE -->
             <div class="form-group">
                 <label>Role (Single)</label>
                 <select class="form-control" name="role">
@@ -76,7 +76,7 @@
                 </select>
             </div>
 
-            <!-- ✅ MULTIPLE ROLES (CHECKBOX) -->
+            <!--  MULTIPLE ROLES (CHECKBOX) -->
             <div class="form-group">
                 <label class="font-weight-bold">Roles (Multiple)</label>
 
@@ -98,6 +98,13 @@
             <button type="submit" class="btn btn-primary">
                 Register
             </button>
+            <a href="/user/getuser" class="btn btn-outline-secondary w-100">
+                Cancel
+            </a>
+            <div class="login-link">
+                <small>Already have an account?</small><br>
+                <a href="/login" class="btn btn-link btn-sm">Login</a>
+            </div>
 
         </form>
 

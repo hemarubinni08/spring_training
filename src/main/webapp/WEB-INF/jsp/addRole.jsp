@@ -51,6 +51,9 @@
             <button type="submit" class="btn btn-primary">
                 Add Role
             </button>
+            <a href="/role/listallroles" class="btn btn-outline-secondary w-100">
+                Cancel
+            </a>
 
         </form>
 

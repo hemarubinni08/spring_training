@@ -26,7 +26,12 @@
 </head>
 
 <body>
-
+<nav class="navbar navbar-dark bg-dark shadow">
+    <div class="container-fluid">
+        <span class="navbar-brand fw-bold">User Profile</span>
+        <a href="/role/listallroles" class="btn btn-outline-light btn-sm">Back</a>
+    </div>
+</nav>
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
     <div class="card shadow p-4" style="width: 420px;">
 

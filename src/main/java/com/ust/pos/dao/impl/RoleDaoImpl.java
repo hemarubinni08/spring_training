@@ -17,34 +17,35 @@ public class RoleDaoImpl implements RoleDao {
     private JdbcTemplate jdbcTemplate;
 
     public void addRoleJdbc(RoleDto roleDto) {
-       String sqlQ="insert into role set name=?";
-       jdbcTemplate.update(sqlQ,roleDto.getName());
+        String sqlQ = "insert into role set name=?";
+        jdbcTemplate.update(sqlQ, roleDto.getName());
     }
 
     public void deleteRoleByIdJdbc(Long id) {
-        String sqlQ="delete from role where id=?";
-        jdbcTemplate.update(sqlQ,id);
+        String sqlQ = "delete from role where id=?";
+        jdbcTemplate.update(sqlQ, id);
     }
 
     public void updateRoleByJdbc(RoleDto roleDto) {
-        String sqlQ="update role set name=? where id=?";
-        jdbcTemplate.update(sqlQ,roleDto.getName(),roleDto.getId());
+        String sqlQ = "update role set name=? where id=?";
+        jdbcTemplate.update(sqlQ, roleDto.getName(), roleDto.getId());
     }
 
     public List<Role> printAllRoles() {
-        String sqlQ="select * from role";
-        List<Role> roleList=jdbcTemplate.query(sqlQ,new BeanPropertyRowMapper(Role.class));
+        String sqlQ = "select * from role";
+        List<Role> roleList = jdbcTemplate.query(sqlQ, new BeanPropertyRowMapper(Role.class));
         return roleList;
     }
 
     public Role getRoleProfileJdbc(Long id) {
-        String sqlQ="select * from role where id=?";
-        List<Role> rolel=jdbcTemplate.query(sqlQ,new Object[]{id},new BeanPropertyRowMapper(Role.class));
-        return rolel.isEmpty()?null:rolel.get(0);
+        String sqlQ = "select * from role where id=?";
+        List<Role> rolel = jdbcTemplate.query(sqlQ, new Object[]{id}, new BeanPropertyRowMapper(Role.class));
+        return rolel.isEmpty() ? null : rolel.get(0);
     }
-    public Role findByName(String name){
-        String sqlQ="select * from role where name=?";
-        List<Role> rolename=jdbcTemplate.query(sqlQ,new Object[]{name},new BeanPropertyRowMapper(Role.class));
-        return rolename.isEmpty()?null:rolename.get(0);
+
+    public Role findByName(String name) {
+        String sqlQ = "select * from role where name=?";
+        List<Role> rolename = jdbcTemplate.query(sqlQ, new Object[]{name}, new BeanPropertyRowMapper(Role.class));
+        return rolename.isEmpty() ? null : rolename.get(0);
     }
 }
