@@ -20,7 +20,7 @@ public class NodeController {
     RoleService roleService;
 
     @GetMapping("/addNode")
-    public String addNode(NodeDto nodeDto, Model model) {
+    public String addNode(Model model) {
         model.addAttribute("roles", roleService.getRoles());
         return "addNode";
     }

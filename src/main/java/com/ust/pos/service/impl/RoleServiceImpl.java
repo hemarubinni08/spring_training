@@ -2,7 +2,6 @@ package com.ust.pos.service.impl;
 
 import com.ust.pos.dao.RoleDao;
 import com.ust.pos.dto.RoleDto;
-import com.ust.pos.dto.UserDto;
 import com.ust.pos.model.*;
 import com.ust.pos.model.Role;
 import com.ust.pos.model.RoleRepository;

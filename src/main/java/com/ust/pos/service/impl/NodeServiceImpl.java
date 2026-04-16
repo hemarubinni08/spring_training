@@ -1,6 +1,7 @@
 package com.ust.pos.service.impl;
 
 import com.ust.pos.dto.NodeDto;
+import com.ust.pos.dto.UserDto;
 import com.ust.pos.model.Node;
 import com.ust.pos.model.NodeRepository;
 import com.ust.pos.service.NodeService;
@@ -23,17 +24,17 @@ public class NodeServiceImpl implements NodeService {
     private ModelMapper modelMapper;
 
     @Override
-    public String addNode(NodeDto nodeDto) {
+    public NodeDto addNode(NodeDto nodeDto) {
         if (nodeRepository.existsByName(nodeDto.getName())) {
             nodeDto.setMessage("Name Already exists");
             nodeDto.setSuccess(false);
-            return "Name Already Exists";
+            return nodeDto;
         }
         Node node = modelMapper.map(nodeDto, Node.class);
         nodeRepository.save(node);
         nodeDto.setMessage("success");
         nodeDto.setSuccess(true);
-        return "Successfully created";
+        return nodeDto;
     }
 
     @Override

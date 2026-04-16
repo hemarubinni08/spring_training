@@ -5,7 +5,7 @@ import com.ust.pos.dto.NodeDto;
 import java.util.List;
 
 public interface NodeService {
-    String addNode(NodeDto nodeDto);
+    NodeDto addNode(NodeDto nodeDto);
 
     List<NodeDto> getNodes();
 
