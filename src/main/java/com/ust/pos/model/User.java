@@ -1,21 +1,18 @@
 package com.ust.pos.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @Table
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    private String name;
+public class User extends Common {
     private String email;
     private String phoneNo;
     private String userName;
@@ -23,4 +20,7 @@ public class User {
     private int age;
     private Date dateOfBirth;
     private String gender;
+    private String role;
+    private String name;
+    private List<String> roles;
 }

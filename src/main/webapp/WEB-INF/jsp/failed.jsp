@@ -67,12 +67,11 @@
 <div class="error-container">
     <div class="error-icon">❌</div>
 
-    <h2>Registration Failed</h2>
+    <h2>Failed</h2>
     <h2>${message}</h2>
 
     <p>
-        Unfortunately, your registration could not be completed.<br>
-        The email address may already be registered or an error occurred.
+        Unfortunately, an error occurred.
     </p>
 
     <a href="${pageContext.request.contextPath}/user/registerJdbc" class="btn">Try Again</a>
