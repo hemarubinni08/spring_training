@@ -1,12 +1,8 @@
 package com.ust.pos;
-
-import com.ust.pos.dto.UserDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.security.autoconfigure.SecurityAutoConfiguration;
-import org.springframework.boot.security.autoconfigure.actuate.web.servlet.ManagementWebSecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
@@ -51,10 +47,5 @@ public class PosApplication {
         ds.setPassword(environment.getProperty("spring.datasource.password"));
         ds.setDriverClassName(environment.getProperty("spring.datasource.driver-class-name"));
         return ds;
-    }
-
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 }

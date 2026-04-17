@@ -112,6 +112,25 @@
             background-color: #3046c9;
             transform: translateY(-2px);
         }
+        .button-container
+        {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        }
+        .button-secondary
+        {
+        background-color: #64748b;
+        }
+        .button-secondary:hover
+        {
+        background-color: #475569;
+        }
+        .button-style:hover {
+                    background-color: #3046c9;
+                    transform: translateY(-2px);
+                }
     </style>
 </head>
 
@@ -144,8 +163,10 @@
             </c:forEach>
         </tbody>
     </table>
-
+    <div class="button-container">
     <a class="button-style" href="/node/addnode">+ Add New Node</a>
+    <a class="button-style button-secondary" href="/">Home</a>
+    </div>
 </div>
 
 <c:if test="${not empty msg}">

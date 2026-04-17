@@ -30,13 +30,6 @@ public class RoleDaoImpl implements RoleDao {
     }
 
     @Override
-    public Role findById(long id) {
-        String sql = "SELECT * FROM role WHERE id=?";
-        List<Role> roleList = jdbcTemplate.query(sql, new Object[]{id}, new BeanPropertyRowMapper(Role.class));
-        return roleList.get(0);
-    }
-
-    @Override
     public List<Role> displayrole() {
         String sql = "SELECT * FROM role";
         List<Role> roleList = jdbcTemplate.query(sql, new BeanPropertyRowMapper(Role.class));

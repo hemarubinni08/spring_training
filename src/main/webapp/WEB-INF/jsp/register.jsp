@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,10 +58,22 @@
             border-radius: 4px;
             font-size: 16px;
             cursor: pointer;
+            margin-bottom: 15px;
         }
 
         button:hover {
             background-color: #0056b3;
+        }
+
+        .back-btn
+        {
+        background-color: #6c757d;
+        margin-top: 10px;
+        }
+
+        .back-btn: hover
+        {
+        background-color:  #5a6268;
         }
     </style>
 </head>
@@ -75,7 +88,7 @@
         <input type="text" name="name" required/>
 
         <label>Email:</label>
-        <input type="email" name="email" required/>
+        <input type="email" name="userName" required/>
 
         <label>Phone Number:</label>
         <input type="text" name"phoneNo" required/>
@@ -86,7 +99,22 @@
         <label>Password:</label>
         <input type="password" name="password" required/>
 
+        <select name="role">
+            <option value="">--Select Primary Role--</option>
+            <c:forEach var="role" items="${roles}">
+                <option value="${role.name}">${role.name}</option>
+            </c:forEach>
+        </select>
+        <select name="roles" multiple="true">
+                    <option value="">--Select Secondary Roles--</option>
+                    <c:forEach var="role" items="${roles}">
+                        <option value="${role.name}">${role.name}</option>
+                    </c:forEach>
+                </select>
+
+
         <button type="submit">Register</button>
+        <button class="back-btn" href="/login">Back to Login</button>
 
     </form>
 </div>

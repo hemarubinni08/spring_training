@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <body>
     <div class="register-card">
         <div class="table-container">
@@ -47,6 +48,42 @@
 
                 <label>Age:</label>
                 <input type="number" name="age" value="${user.age}"/>
+
+                <!-- Primary Role Selector -->
+                <label>Primary Role:</label>
+                <select name="role">
+                    <c:forEach var="role" items="${roles}">
+                        <c:set var="isPrimarySelected" value="${role.name == user.role}" />
+                        <option value="${role.name}"
+                                ${isPrimarySelected ? 'selected' : ''}
+                                style="${isPrimarySelected ? 'background-color: #d3d3d3;' : ''}">
+                            ${role.name}
+                        </option>
+                    </c:forEach>
+                </select>
+
+                <!-- Secondary Role Selector -->
+                <label>Secondary Role:</label>
+                <select name="roles" multiple="true" style="min-height: 100px;">
+                    <option value="">--Select Secondary Roles--</option>
+                    <c:forEach var="role" items="${roles}">
+                        <c:set var="isSecondarySelected" value="false" />
+                        <c:forEach var="userRole" items="${user.roles}" varStatus="status">
+                            <c:if test="${role.name == userRole}">
+                                <c:set var="isSecondarySelected" value="true" />
+                            </c:if>
+                        </c:forEach>
+
+                        <option value="${role.name}"
+                                ${isSecondarySelected ? 'selected' : ''}
+                                style="${isSecondarySelected ? 'background-color: #d3d3d3;' : ''}">
+                            ${role.name}
+                        </option>
+                    </c:forEach>
+                </select>
+
+
+
 
                 <button class="button-style" type="submit">Save via JPA</button>
 

@@ -67,8 +67,8 @@
 
     <p>${message}</p>
 
-    <a href="${pageContext.request.contextPath}/user/login">
-        Go to Login
+    <a href="${pageContext.request.contextPath}/user/display">
+        View Users
     </a>
 </div>
 </body>

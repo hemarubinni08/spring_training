@@ -95,7 +95,6 @@
             text-decoration: underline;
         }
 
-        /* Add Button */
         .button-style {
             display: inline-block;
             padding: 12px 24px;
@@ -106,6 +105,20 @@
             font-weight: 600;
             box-shadow: 0 4px 6px rgba(67, 97, 238, 0.3);
             transition: transform 0.2s, background 0.3s;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .button-secondary {
+            background-color: #64748b;
+        }
+        .button-secondary:hover {
+            background-color: #475569;
         }
 
         .button-style:hover {
@@ -142,8 +155,10 @@
             </c:forEach>
         </tbody>
     </table>
-
+<div class="button-container">
     <a class="button-style" href="/role/addrole">+ Add New Role</a>
+    <a class="button-style button-secondary" href="/">Home</a>
+</div>
 </div>
 
 <c:if test="${not empty msg}">

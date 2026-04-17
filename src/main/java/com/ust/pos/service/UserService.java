@@ -1,14 +1,13 @@
 package com.ust.pos.service;
 
 import com.ust.pos.dto.UserDto;
-import com.ust.pos.model.User;
 
 import java.util.List;
 
 public interface UserService {
-    UserDto update(UserDto userDto);
+    UserDto register(UserDto userDto);
 
-    UserDto updateJDBC(UserDto userDto);
+    UserDto registerJDBC(UserDto userDto);
 
     List<UserDto> display();
 
@@ -25,4 +24,6 @@ public interface UserService {
     UserDto updateprofileJDBC(UserDto userDto);
 
     UserDto updateprofileJpa(UserDto userDto);
+
+    UserDto getUserByUserEmail(String email);
 }

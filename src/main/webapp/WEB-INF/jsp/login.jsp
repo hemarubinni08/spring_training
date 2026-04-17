@@ -95,10 +95,10 @@
         ${message}
     </div>
 
-    <form action="${pageContext.request.contextPath}/user/login" method="post">
+    <form action="${pageContext.request.contextPath}/login" method="post">
 
         <label>Email:</label>
-        <input type="email" name="email" required/>
+        <input type="email" name="username" required/>
 
         <label>Password:</label>
         <input type="password" name="password" required/>

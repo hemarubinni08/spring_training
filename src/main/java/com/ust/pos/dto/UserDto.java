@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Table
 @Getter
@@ -19,5 +20,6 @@ public class UserDto {
     private int age;
     private Date dateOfBirth;
     private boolean isSuccess;
-
+    private String role;
+    private List<String> roles;
 }

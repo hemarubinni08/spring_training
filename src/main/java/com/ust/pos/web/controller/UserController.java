@@ -1,11 +1,9 @@
 package com.ust.pos.web.controller;
 
 import com.ust.pos.dto.UserDto;
-import com.ust.pos.model.User;
+import com.ust.pos.service.RoleService;
 import com.ust.pos.service.UserService;
-import org.eclipse.tags.shaded.org.apache.xpath.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.webmvc.autoconfigure.WebMvcProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +15,13 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
     @Autowired
-    private UserService userService;
+    UserService userService;
+    @Autowired
+    RoleService roleService;
 
     @PostMapping("/register")
     public String userRegister(Model model, @ModelAttribute UserDto userDto) {
-        UserDto userDto1 = userService.update(userDto);
+        UserDto userDto1 = userService.register(userDto);
         model.addAttribute("user", userDto1);
         if (userDto1.isSuccess()) {
             model.addAttribute("message", "Registration Successful");
@@ -33,13 +33,13 @@ public class UserController {
 
     @GetMapping("/register")
     public String doRegister(Model model, @ModelAttribute UserDto userDto) {
-        model.addAttribute("name", "Akash");
+        model.addAttribute("roles", roleService.display());
         return "register";
     }
 
     @PostMapping("/registerJDBC")
     public String userRegisterJDBC(Model model, @ModelAttribute UserDto userDto) {
-        UserDto userDto1 = userService.updateJDBC(userDto);
+        UserDto userDto1 = userService.registerJDBC(userDto);
         model.addAttribute("user", userDto1);
         if (userDto1.isSuccess()) {
             model.addAttribute("message", "Registration Successful");
@@ -75,6 +75,7 @@ public class UserController {
     public String getProfile(Model model, @RequestParam String email)
     {
         UserDto userDto = userService.getProfile(email);
+        model.addAttribute("roles", roleService.display());
         model.addAttribute("user", userDto);
         return "getprofile";
     }
@@ -123,8 +124,9 @@ public class UserController {
     {
         UserDto userDto1 = userService.updateprofileJpa(userDto);
         model.addAttribute("userDto1", userDto1);
+        model.addAttribute("roles", roleService.display());
         if (userDto1.isSuccess()) {
-            model.addAttribute("message", "Registration Successful");
+            model.addAttribute("message", "Updation Successful");
         } else {
             model.addAttribute("message", "Email already exist");
         }

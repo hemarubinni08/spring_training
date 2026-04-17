@@ -1,10 +1,7 @@
 package com.ust.pos.web.controller;
 
 import com.ust.pos.dto.RoleDto;
-import com.ust.pos.model.Role;
-import com.ust.pos.model.RoleRepository;
 import com.ust.pos.service.RoleService;
-import org.eclipse.tags.shaded.org.apache.xpath.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

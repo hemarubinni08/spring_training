@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface RoleDao {
     boolean addrole(RoleDto roleDto);
-    Role findById(long id);
+
     List<Role> displayrole();
 }

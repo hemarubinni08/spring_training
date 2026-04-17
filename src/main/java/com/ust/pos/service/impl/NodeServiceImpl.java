@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class NodeServiceImpl implements NodeService {
     @Autowired
-    private NodeRepository nodeRepository;
+    NodeRepository nodeRepository;
     @Autowired
     ModelMapper modelMapper;
 
@@ -53,15 +53,15 @@ public class NodeServiceImpl implements NodeService {
     public NodeDto update(NodeDto nodeDto) {
         Optional<Node> nodeOptional = nodeRepository.findById(nodeDto.getId());
         Node node = nodeOptional.get();
-        if(nodeDto.getName().equalsIgnoreCase(node.getName()))
+        if (!nodeDto.getName().equalsIgnoreCase(node.getName()))
         {
-            nodeDto.setMessage("Node already exists");
+            if (nodeRepository.findByName(nodeDto.getName()) != null) {
+                nodeDto.setMessage("Node already exists");
+                return nodeDto;
+            }
         }
-        else
-        {
-            modelMapper.map(nodeDto, node);
-            nodeRepository.save(node);
-        }
+        modelMapper.map(nodeDto, node);
+        nodeRepository.save(node);
         return nodeDto;
     }
 

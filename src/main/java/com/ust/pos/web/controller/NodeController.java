@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/node")
 public class NodeController {
     @Autowired
-    private NodeService nodeService;
+    NodeService nodeService;
 
     @PostMapping("/addnode")
     public String nodeAdd(Model model, @ModelAttribute NodeDto nodeDto)

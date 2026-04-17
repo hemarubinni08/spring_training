@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class UserServiceImpl implements UserService {
     @Autowired
-    private UserRepository userRepository;
+    UserRepository userRepository;
     @Autowired
     ModelMapper modelMapper;
     @Autowired
@@ -28,11 +28,12 @@ public class UserServiceImpl implements UserService {
     UserDao userDao;
 
     @Override
-    public UserDto update(UserDto userDto) {
+    public UserDto register(UserDto userDto) {
         User user = userDao.findByEmail(userDto.getEmail());
         if (user == null) {
             User user1 = modelMapper.map(userDto, User.class);
             user1.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            user1.setEmail(userDto.getUserName());
             userRepository.save(user1);
             userDto.setSuccess(true);
             return userDto;
@@ -43,7 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto updateJDBC(UserDto userDto) {
+    public UserDto registerJDBC(UserDto userDto) {
         User user = userDao.findByEmail(userDto.getEmail());
         if (user == null) {
             if (userDao.update(userDto)) {
@@ -87,6 +88,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDto getUserByUserEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        return modelMapper.map(user, UserDto.class);
+    }
+
+    @Override
     public UserDto getProfileByIdJDBC(long id) {
         User user = userDao.findById(id);
         return modelMapper.map(user, UserDto.class);
@@ -110,7 +117,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto updateprofileJpa(UserDto userDto)
     {
-
         User user1 = modelMapper.map(userDto, User.class);
         userRepository.save(user1);
         return userDto;
