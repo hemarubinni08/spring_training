@@ -13,7 +13,6 @@
             background-color: #eef2f7;
         }
 
-        /* Layout */
         .layout {
             display: flex;
             height: 100vh;
@@ -65,12 +64,28 @@
             border-bottom: 1px solid #ddd;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             padding: 0 20px;
             color: #2c3e50;
             font-weight: bold;
         }
 
-        /* ✅ CENTER CONTENT */
+        /* Logout button */
+        .logout-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
+        }
+
+        /* Center content */
         .content {
             flex: 1;
             display: flex;
@@ -95,7 +110,7 @@
             <c:forEach var="node" items="${node}">
                 <li>
                     <a href="${node.path}">
-                        ${node.name}
+                        ${node.identifier}
                     </a>
                 </li>
             </c:forEach>
@@ -104,14 +119,25 @@
 
     <!-- Main Content -->
     <div class="main">
+
+        <!-- Header with Logout -->
         <div class="header">
-            Dashboard
+            <span>Dashboard</span>
+
+            <!-- ✅ Logout Form -->
+            <form action="${pageContext.request.contextPath}/logout" method="post">
+                <input type="hidden"
+                       name="${_csrf.parameterName}"
+                       value="${_csrf.token}" />
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
         </div>
 
-        <!-- ✅ CENTERED TEXT -->
+        <!-- Centered Text -->
         <div class="content">
             Welcome to My POS Application
         </div>
+
     </div>
 
 </div>
