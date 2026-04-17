@@ -18,5 +18,6 @@ public interface UserService {
     boolean updateUserByid(UserDto userDto);
     boolean updateUserByid2(UserDto userDto);
     boolean updateUserByIdJdbc(UserDto userDto);
-
+    List<UserDto> findByRoleId(Long id);
+    UserDto getUserByUserName(String userName);
 }

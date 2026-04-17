@@ -2,9 +2,7 @@ package com.ust.pos.service.impl;
 
 import com.ust.pos.dao.UserDao;
 import com.ust.pos.dto.UserDto;
-import com.ust.pos.model.CommonRepository;
-import com.ust.pos.model.User;
-import com.ust.pos.model.UserRepository;
+import com.ust.pos.model.*;
 import com.ust.pos.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +27,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -63,6 +64,8 @@ public class UserServiceImpl implements UserService {
         List<User> allUser = userRepository.findAll();
         for (User user : allUser){
             UserDto userDto = modelMapper.map(user,UserDto.class);
+            List<String> stringList = user.getRoleIds()== null ? List.of() : user.getRoleIds().stream().map(id -> roleRepository.findById(id).map(Role::getName).orElse(null)).toList();
+            userDto.setRoleListString(stringList);
             userDtoList.add(userDto);
         }
         return userDtoList;
@@ -118,12 +121,14 @@ public class UserServiceImpl implements UserService {
 
         if(userWithSameMail!=null){
             if(userDto.getId()==userWithSameMail.getId()){
+                userOptional.get().setRoleIds(null);
                 modelMapper.map(userDto, userOptional.get());
                 userOptional.get().setPassword(passwordEncoder.encode(userDto.getPassword()));
                 userRepository.save(userOptional.get());
                 return true;
             }
         }else {
+            userOptional.get().setRoleIds(null);
             modelMapper.map(userDto, userOptional.get());
             userOptional.get().setPassword(passwordEncoder.encode(userDto.getPassword()));
             userRepository.save(userOptional.get());
@@ -172,6 +177,20 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    @Override
+    public List<UserDto> findByRoleId(Long id) {
+        List<User> userList = userRepository.findByRoleId(id);
+        List<UserDto> userDtoList = new ArrayList<>();
+        for (User user : userList){
+            UserDto userDto = modelMapper.map(user,UserDto.class);
+            userDtoList.add(userDto);
+        }
+       return userDtoList;
+    }
 
-
+    @Override
+    public UserDto getUserByUserName(String userName) {
+       User user = userRepository.findByUserName(userName);
+       return modelMapper.map(user,UserDto.class);
+    }
 }

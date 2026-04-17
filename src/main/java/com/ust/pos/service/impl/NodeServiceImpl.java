@@ -63,12 +63,14 @@ public class NodeServiceImpl implements NodeService {
         Node nodeWithSameName = nodeRepository.findByName(nodeDto.getName());
 
         if (nodeWithSameName==null){
+            node.get().setRoleIds(null);
             modelMapper.map(nodeDto,node.get());
             nodeRepository.save(node.get());
             return true;
         }
         else {
             if (nodeWithSameName.getId() == node.get().getId()){
+                node.get().setRoleIds(null);
                 modelMapper.map(nodeDto,node.get());
                 nodeRepository.save(node.get());
                 return true;

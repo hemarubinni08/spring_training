@@ -1,8 +1,10 @@
 package com.ust.pos.web.controller;
 
 import com.ust.pos.dto.NodeDto;
+import com.ust.pos.dto.RoleDto;
 import com.ust.pos.model.Node;
 import com.ust.pos.service.NodeService;
+import com.ust.pos.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +19,13 @@ public class NodeController {
     @Autowired
     NodeService nodeService;
 
+    @Autowired
+    RoleService roleService;
+
     @GetMapping("/addNode")
     public String addNode(Model model){
+        List<RoleDto> roleDtoList = roleService.roleList();
+        model.addAttribute("roleDtoList",roleDtoList);
         model.addAttribute("nodeDto", new NodeDto());
         return "addNode";
     }
@@ -53,8 +60,10 @@ public class NodeController {
     @GetMapping("/updateNodeByid/{id}")
     public String updateNodeByid(Model model, @PathVariable Long id){
         NodeDto nodeDto = nodeService.getNodeDetails(id);
-        model.addAttribute("node", nodeDto);
-        model.addAttribute("nodeDto", new NodeDto());
+        model.addAttribute("nodeDto", nodeDto);
+      //  model.addAttribute("nodeDto", new NodeDto());
+        List<RoleDto> roleDtoList = roleService.roleList();
+        model.addAttribute("roleDtoList",roleDtoList);
         return "nodeDetails";
     }
 

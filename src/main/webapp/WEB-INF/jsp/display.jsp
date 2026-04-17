@@ -5,45 +5,106 @@
 <head>
 <title>Display</title>
 <style>
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        font-family: Arial, sans-serif;
-        background: #fff;
-    }
+   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
-    th {
-        background: #34495e;
-        color: white;
-        padding: 10px;
-    }
+   body {
+       font-family: 'Inter', Arial, sans-serif;
+       background: linear-gradient(135deg, #eef2f7, #dde6f1);
+       margin: 0;
+       padding: 30px;
+   }
 
-    td {
-        padding: 8px;
-        border-bottom: 1px solid #ddd;
-    }
+   table {
+       width: 100%;
+       border-collapse: collapse;
+       background: #ffffff;
+       border-radius: 12px;
+       overflow: hidden;
+       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+   }
 
-    tr:nth-child(even) {
-        background: #f2f2f2;
-    }
+   th {
+       background: linear-gradient(135deg, #2c3e50, #34495e);
+       color: #ffffff;
+       text-align: left;
+       padding: 14px 12px;
+       font-size: 13px;
+       text-transform: uppercase;
+       letter-spacing: 0.05em;
+       border-bottom: 1px solid rgba(255,255,255,0.1);
+   }
 
-    tr:hover {
-        background: #e6f0ff;
-    }
+   td {
+       padding: 12px;
+       font-size: 14px;
+       color: #333;
+       border-bottom: 1px solid #f0f0f0;
+       vertical-align: middle;
+   }
 
-    a {
-        color: #007bff;
-        text-decoration: none;
-    }
+   tr:nth-child(even) {
+       background: #fafafa;
+   }
 
-    a:hover {
-        text-decoration: underline;
-    }
+   tr {
+       transition: background 0.2s ease;
+   }
 
-    a[href*="delete"] {
-        color: red;
-        font-weight: bold;
-    }
+   tr:hover {
+       background: #eaf1ff;
+   }
+
+   a {
+       color: #2563eb;
+       text-decoration: none;
+       font-weight: 500;
+   }
+
+   a:hover {
+       text-decoration: underline;
+   }
+
+   a[href*="delete"] {
+       color: #dc2626;
+       background: rgba(220, 38, 38, 0.1);
+       padding: 6px 10px;
+       border-radius: 6px;
+       font-size: 13px;
+   }
+
+   a[href*="delete"]:hover {
+       background: rgba(220, 38, 38, 0.2);
+       text-decoration: none;
+   }
+
+   td a:first-child {
+       font-weight: 600;
+   }
+
+   body > a {
+       display: inline-block;
+       margin-top: 20px;
+       margin-right: 15px;
+       padding: 10px 18px;
+       background: #2563eb;
+       color: #ffffff;
+       border-radius: 8px;
+       font-weight: 500;
+       box-shadow: 0 6px 14px rgba(37, 99, 235, 0.3);
+   }
+
+   body > a:hover {
+       background: #1d4ed8;
+       text-decoration: none;
+   }
+
+   body > a[href="/"] {
+       background: #64748b;
+   }
+
+   body > a[href="/"]:hover {
+       background: #475569;
+   }
 </style>
 </head>
 <body>
@@ -61,6 +122,8 @@
         <th>Password</th>
         <th>Phone no</th>
         <th>User Name</th>
+        <th>Role Id</th>
+        <th>Roles Ids</th>
         <th>DELETE by jpa</th>
         <th>DELETE by jdbc</th>
 
@@ -79,12 +142,17 @@
             <td>${user.password}</td>
             <td>${user.phoneNo}</td>
             <td>${user.userName}</td>
+            <td>${user.roleId}</td>
+            <td>${user.roleListString}</td>
             <td><a href="/user/deleteByEmail/${user.email}">DELETE</a></td>
             <td><a href="/user/deleteByEmailJdbc/${user.email}">DELETE</a></td>
          </tr>
     </c:forEach>
 
 </Table>
+
+<a href="/user/register">Add User<a/><br>
+<a href="/">Home</a>
 </body>
 </html>
 

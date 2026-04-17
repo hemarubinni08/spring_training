@@ -1,6 +1,8 @@
 package com.ust.pos.web.controller;
 
+import com.ust.pos.dto.RoleDto;
 import com.ust.pos.dto.UserDto;
+import com.ust.pos.service.RoleService;
 import com.ust.pos.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
 
     @PostMapping("/register")
     public String userRegister(Model model, @ModelAttribute UserDto userDto) {
@@ -32,6 +37,8 @@ public class UserController {
 
     @GetMapping("/register")
     public String userRegister(Model model) {
+        List<RoleDto> roleDtoList = roleService.roleList();
+        model.addAttribute("roleDtoList",roleDtoList);
         model.addAttribute("userDto", new UserDto());
         return "register";
     }
@@ -87,16 +94,19 @@ public class UserController {
     }
     @GetMapping("/getUserByEmailJpa")
     public String getByEmailRequestParamsJpa(Model model, @RequestParam String email){
-        System.out.println(email);
         UserDto userDto = userService.getByEmailJpa(email );
-        model.addAttribute("user", userDto);
+        model.addAttribute("userDto", userDto);
+        List<RoleDto> roleDtoList = roleService.roleList();
+        model.addAttribute("roleDtoList",roleDtoList);
         return "profile";
     }
 
     @GetMapping("/getUserByEmailJpa/{email}")
     public String getByEmailPathVariableJpa(Model model, @PathVariable String email){
         UserDto userDto = userService.getByEmailJpa(email );
-        model.addAttribute("user", userDto);
+        model.addAttribute("userDto", userDto);
+        List<RoleDto> roleDtoList = roleService.roleList();
+        model.addAttribute("roleDtoList",roleDtoList);
         return "profile";
     }
 
@@ -115,8 +125,10 @@ public class UserController {
     @GetMapping("/getUserByIdJpa/{id}")
     public String getUserByIdJpa(Model model, @PathVariable Long id){
         UserDto userDto = userService.getUserByidJpa(id);
-        model.addAttribute("user", userDto);
-        model.addAttribute("userDto", new UserDto());
+        model.addAttribute("userDto", userDto);
+        //model.addAttribute("userDto", new UserDto());
+        List<RoleDto> roleDtoList = roleService.roleList();
+        model.addAttribute("roleDtoList",roleDtoList);
         return "profile";
     }
 
@@ -125,6 +137,8 @@ public class UserController {
         UserDto userDto = userService.getUserByidJdbc(id);
         model.addAttribute("userDto", new UserDto());
         model.addAttribute("user", userDto);
+        List<RoleDto> roleDtoList = roleService.roleList();
+        model.addAttribute("roleDtoList",roleDtoList);
         return "profile";
     }
 

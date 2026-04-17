@@ -2,77 +2,102 @@
 <html>
 <head>
     <title>Register</title>
-     <style>
-                body {
-                    font-family: Arial, Helvetica, sans-serif;
-                    background-color: #f4f6f8;
-                    margin: 0;
-                    padding: 0;
-                }
 
-                h2 {
-                    text-align: center;
-                    margin-top: 40px;
-                    color: #333;
-                }
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
 
-                form {
-                    width: 400px;
-                    margin: 30px auto;
-                    background: #ffffff;
-                    padding: 25px;
-                    border-radius: 8px;
-                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                }
+        h2 {
+            text-align: center;
+            margin-top: 40px;
+            color: #333;
+        }
 
-                form label {
-                    font-weight: bold;
-                    display: block;
-                    margin-top: 10px;
-                }
+        form {
+            width: 400px;
+            margin: 30px auto;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-                form input[type="text"],
-                form input[type="password"] {
-                    width: 100%;
-                    padding: 8px;
-                    margin-top: 5px;
-                    border: 1px solid #ccc;
-                    border-radius: 4px;
-                    box-sizing: border-box;
-                }
+        form label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
 
-                form input[type="submit"] {
-                    width: 100%;
-                    margin-top: 20px;
-                    padding: 10px;
-                    background-color: #007bff;
-                    border: none;
-                    color: #fff;
-                    font-size: 16px;
-                    border-radius: 4px;
-                    cursor: pointer;
-                }
+        form input[type="text"],
+        form input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
 
-                form input[type="submit"]:hover {
-                    background-color: #0056b3;
-                }
-            </style>
+        form input[type="submit"] {
+            width: 100%;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
+
 <body>
 
-<h2>User Registration</h2>
+    <h2>User Registration</h2>
 
-<form:form method="post" modelAttribute="userDto" action="/user/registerJdbc">
+    <form:form method="post" modelAttribute="userDto" action="/user/registerJdbc">
 
-    Name: <form:input path="name"/><br/><br/>
-    Email: <form:input path="email"/><br/><br/>
-    Phone: <form:input path="phoneNo"/><br/><br/>
-    Username: <form:input path="userName"/><br/><br/>
-    Password: <form:password path="password"/><br/><br/>
-    Age: <form:input path="age"/><br/><br/>
+        Name:
+        <form:input path="name" />
+        <br />
+        <br />
 
-    <input type="submit" value="Register"/>
-</form:form>
+        Email:
+        <form:input path="email" />
+        <br />
+        <br />
+
+        Phone:
+        <form:input path="phoneNo" />
+        <br />
+        <br />
+
+        Username:
+        <form:input path="userName" />
+        <br />
+        <br />
+
+        Password:
+        <form:password path="password" />
+        <br />
+        <br />
+
+        Age:
+        <form:input path="age" />
+        <br />
+        <br />
+
+        <input type="submit" value="Register" />
+    </form:form>
 
 </body>
 </html>
