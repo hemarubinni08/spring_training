@@ -9,13 +9,14 @@ import java.util.Date;
 @Setter
 public class UserDto {
     boolean isSuccess = true;
-    private int id;
+    private Long id;
     private String name;
+    private String userName;
+    private int age;
     private String email;
     private String phoneNo;
-    private String userName;
     private String password;
-    private int age;
     private Date dateOfBirth;
-
+    private String role;
+    private String roles;
 }

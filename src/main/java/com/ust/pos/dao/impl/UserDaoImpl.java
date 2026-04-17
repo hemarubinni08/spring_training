@@ -13,13 +13,10 @@ import java.util.List;
 
 @Component
 public class UserDaoImpl implements UserDao {
-
     @Autowired
     JdbcTemplate jdbcTemplate;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
-
 
     @Override
     public boolean saveUser(UserDto userDto) {
@@ -34,13 +31,36 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findByEmail(String email) {
-
         String sqlQ = "SELECT * FROM USER WHERE email = ?";
         List<User> userList = jdbcTemplate.query(
                 sqlQ,
                 new Object[]{email},
                 new BeanPropertyRowMapper(User.class));
+        return userList.isEmpty() ? null : userList.get(0);
+    }
 
+    @Override
+    public List<UserDto> getAllUserJdbc() {
+        String sqlQ = "SELECT id, name, email FROM user";
+        return jdbcTemplate.query(
+                sqlQ,
+                new BeanPropertyRowMapper(User.class));
+    }
+
+    @Override
+    public boolean deleteByEmailJdbc(String email) {
+        String sql = "DELETE FROM user WHERE email = ?";
+        int rows = jdbcTemplate.update(sql, email);
+        return rows > 0;
+    }
+
+    @Override
+    public UserDto getUserByIdJdbc(Long id) {
+        String sqlQ = "SELECT * FROM USER WHERE id = ?";
+        List<UserDto> userList = jdbcTemplate.query(
+                sqlQ,
+                new Object[]{(id)},
+                new BeanPropertyRowMapper(UserDto.class));
         return userList.isEmpty() ? null : userList.get(0);
     }
 }

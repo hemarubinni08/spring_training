@@ -9,8 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
 
@@ -39,7 +37,6 @@ public class PosApplication {
         return new JdbcTemplate(getDataSource());
     }
 
-
     @Bean
     DataSource getDataSource() {
         DriverManagerDataSource ds = new DriverManagerDataSource();
@@ -50,8 +47,8 @@ public class PosApplication {
         return ds;
     }
 
-    @Bean
-    PasswordEncoder PasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    PasswordEncoder PasswordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 }

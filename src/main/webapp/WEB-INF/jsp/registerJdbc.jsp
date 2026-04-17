@@ -6,31 +6,19 @@
     <title>Register</title>
 </head>
 <body>
-
     <h2>Registration Form</h2>
-
     <form action="/user/registerJdbc" method="post" modelAttribute="userDto">
         <label>Username:</label>
-
         <input type="text" name="username">
-
-
-
         <label>Email:</label>
-
         <input type="email" name="email">
-
-
-
         <label>Password:</label>
-
         <input type="password" name="password">
-
-
-
         <input type="submit" value="Register">
         <input type="reset" value="Clear">
+        <div class="back">
+            <a href="${pageContext.request.contextPath}/user/getAllUsersJdbc">← Back to List</a>
+        </div>
     </form>
-
 </body>
 </html>
