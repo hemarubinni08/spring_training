@@ -114,8 +114,7 @@ public class UserController {
         model.addAttribute("user", userDto);
         return "getProfileJdbc";
     }
-
-
+    
     @GetMapping("/editProfile")
     public String editProfile(@RequestParam long id, Model model) {
 
@@ -124,7 +123,6 @@ public class UserController {
         model.addAttribute("roles", roleService.getAllRoles());
         return "editProfile";
     }
-
 
     @PostMapping("/saveProfile")
     public String saveProfile(UserDto userDto, Model model) {
@@ -142,7 +140,6 @@ public class UserController {
         return "saved";
     }
 
-
     @GetMapping("/editProfileJdbc")
     public String editProfileJdbc(@RequestParam long id, Model model) {
 
@@ -150,7 +147,6 @@ public class UserController {
         model.addAttribute("user", userDto);
         return "editProfileJdbc";
     }
-
 
     @PostMapping("/saveProfileJdbc")
     public String saveProfileJdbc(UserDto userDto, Model model) {
@@ -166,5 +162,4 @@ public class UserController {
         model.addAttribute("savedUser", savedUser);
         return "savedJdbc";
     }
-
 }

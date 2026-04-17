@@ -1,7 +1,6 @@
 package com.ust.pos.service;
 
 import com.ust.pos.dto.RoleDto;
-
 import java.util.List;
 
 public interface RoleServiceInterface {

@@ -30,9 +30,6 @@ public class UserServiceImpl implements UserServiceInterface {
     @Autowired
     private ModelMapper modelMapper;
 
-    @Autowired
-    private RoleRepository roleRepository;
-
     @Override
     public String update(UserDto userDto) {
 

@@ -186,7 +186,6 @@ button:hover {
         </c:forEach>
     </select>
 
-    <!-- MULTI ROLES (CLEAN VERSION) -->
     <label>Additional Roles</label>
 
     <div class="role-list">

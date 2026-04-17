@@ -3,7 +3,6 @@ package com.ust.pos.service.impl;
 import com.ust.pos.dto.UserDto;
 import com.ust.pos.service.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,7 +20,7 @@ public class PosUserDetailsService implements UserDetailsService {
 
         UserDto userDto = userService.getUserProfileByEmail(username);
 
-        if(userDto == null) {
+        if (userDto == null) {
             throw new UsernameNotFoundException("User not found: " + username);
         }
 
@@ -29,6 +28,5 @@ public class PosUserDetailsService implements UserDetailsService {
                 .withUsername(userDto.getUserName())
                 .password(userDto.getPassword())
                 .build();
-
     }
 }

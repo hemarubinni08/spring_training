@@ -1,7 +1,6 @@
 package com.ust.pos.service;
 
 import com.ust.pos.dto.NodeDto;
-
 import java.util.List;
 
 public interface NodeServiceInterface {
@@ -15,6 +14,4 @@ public interface NodeServiceInterface {
     NodeDto getNodeById(long id);
 
     NodeDto updateNode(NodeDto nodeDto);
-
-
 }

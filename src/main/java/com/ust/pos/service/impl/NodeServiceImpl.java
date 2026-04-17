@@ -7,6 +7,7 @@ import com.ust.pos.service.NodeServiceInterface;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -19,7 +20,6 @@ public class NodeServiceImpl implements NodeServiceInterface {
     @Autowired
     private ModelMapper modelMapper;
 
-
     @Override
     public void addNode(NodeDto nodeDto) {
 
@@ -29,7 +29,7 @@ public class NodeServiceImpl implements NodeServiceInterface {
             throw new RuntimeException("Node name already exists!");
         }
 
-        nodeDto.setName(name); // optional but good practice
+        nodeDto.setName(name);
         Node node = modelMapper.map(nodeDto, Node.class);
         node.setRoles(nodeDto.getRoles());
         nodeRepository.save(node);
@@ -45,7 +45,9 @@ public class NodeServiceImpl implements NodeServiceInterface {
     }
 
     @Override
-    public void deleteById(long id) {nodeRepository.deleteById(id);}
+    public void deleteById(long id) {
+        nodeRepository.deleteById(id);
+    }
 
     @Override
     public NodeDto getNodeById(long id) {

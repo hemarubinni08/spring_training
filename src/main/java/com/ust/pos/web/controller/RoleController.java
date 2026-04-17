@@ -105,5 +105,4 @@ public class RoleController {
         roleService.deleteRoleJdbc(id);
         return "redirect:/role/showAllRolesJdbc";
     }
-
 }
