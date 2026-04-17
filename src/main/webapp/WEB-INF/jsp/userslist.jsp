@@ -13,16 +13,18 @@
           href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
 </head>
 
-<body class="bg-light">
+<body style="background-color:#EDE9E6;">
 <div class="container-fluid mt-4">
 
     <h3 class="mb-3">Users List</h3>
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <a href="/user/register" class="btn btn-primary">Add User</a>
+    <div class="d-flex justify-content-end mb-3">
+        <a href="/user/register" class="btn btn-success shadow-sm">
+            + Add User
+        </a>
     </div>
     <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover">
-            <thead class="thead-dark">
+            <thead style="background-color: #C9996B">
             <tr>
                 <th>ID (JPA)</th>
                 <th>ID (JDBC)</th>

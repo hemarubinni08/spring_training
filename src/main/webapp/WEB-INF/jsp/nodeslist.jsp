@@ -12,26 +12,28 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        body {
-            background-color: #f8f9fa;
-        }
         .table-container {
             margin-top: 50px;
+        }
+
+        .table thead th {
+            background-color: #C9996B !important;
+            color: #fff;
         }
     </style>
 </head>
 
-<body>
+<body style="background-color:#EDE9E6;">
 <div class="container table-container">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold">Node List</h2>
-        <a href="/node/addnode" class="btn btn-primary">+ Add Node</a>
+        <a href="/node/addnode" class="btn btn-success shadow-sm"> + Add Node</a>
     </div>
 
     <div class="card shadow-sm">
         <div class="card-body p-0">
-            <table class="table table-hover table-striped mb-0">
-                <thead class="table-dark">
+            <table class="table table-bordered table-hover table-striped mb-0">
+                <thead style="background-color: #C9996B">
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
@@ -52,11 +54,11 @@
                             <td class="text-muted">${node.path}</td>
                             <td>${node.roles}</td>
                             <td class="text-center">
-                                <a href="/node/editnode?id=${node.id}" class="btn btn-sm btn-outline-primary me-2">
+                                <a href="/node/editnode?id=${node.id}" class="btn btn-sm btn-primary me-2">
                                     Edit
                                 </a>
                                 <a href="/node/deletenode?id=${node.id}"
-                                   class="btn btn-sm btn-outline-danger"
+                                   class="btn btn-sm btn-danger"
                                    onclick="return confirm('Are you sure you want to delete this node?');">
                                     Delete
                                 </a>
