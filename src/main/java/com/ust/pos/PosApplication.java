@@ -51,9 +51,4 @@ public class PosApplication {
         ds.setDriverClassName(environment.getProperty("spring.datasource.driver-class-name"));
         return ds;
     }
-
-    @Bean
-    PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
 }

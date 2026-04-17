@@ -13,4 +13,10 @@ public interface UserDao {
     User findByEmail(String email);
 
     List<User> findAllUsersDao();
+
+    void deleteByEmailDao(String email);
+
+    User findByIdDao(Long id);
+
+    boolean updateUser(UserDto userDto);
 }

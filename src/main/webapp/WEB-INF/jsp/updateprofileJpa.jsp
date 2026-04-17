@@ -3,7 +3,7 @@
 
 <html>
 <head>
-    <title>User Registration</title>
+    <title>Update Profile</title>
 
     <style>
         body {
@@ -12,29 +12,29 @@
             font-family: "Segoe UI", Arial, sans-serif;
             min-height: 100vh;
             background: radial-gradient(
-                    circle,
-                    #ffffff 0%,
-                    #b8b4ff 35%,
-                    #1900c1 100%
+                circle,
+                #ffffff 0%,
+                #b8b4ff 35%,
+                #1900c1 100%
             );
 
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: flex-start; /* ✅ FIXED */
         }
 
-        .register-card {
+        .role-card {
             background: #ffffff;
-            width: 420px;
             padding: 30px 35px;
             border-radius: 12px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            width: 420px;
         }
 
         h2 {
-            text-align: center;
             margin-bottom: 25px;
             color: #1900c1;
+            text-align: center;
         }
 
         .form-group {
@@ -50,11 +50,12 @@
         }
 
         input[type="text"],
-        input[type="password"] {
+        input[type="password"],
+        input[type="number"] {
             width: 100%;
             padding: 10px 12px;
-            border: 1px solid #ccc;
             border-radius: 6px;
+            border: 1px solid #ccc;
             font-size: 14px;
             outline: none;
         }
@@ -81,6 +82,7 @@
             background: #005A9E;
         }
 
+        /* ✅ TOGGLE BUTTON GROUP */
         .role-buttons {
             display: flex;
             flex-wrap: wrap;
@@ -115,39 +117,41 @@
 
 <body>
 
-<div class="register-card">
-    <h2>User Registration</h2>
+<div class="role-card">
+    <h2>Update Profile</h2>
 
-    <form:form action="register" method="post" modelAttribute="userDto">
+    <form:form action="updateprofileJpa" method="post" modelAttribute="userDto">
+
+        <form:hidden path="id"/>
 
         <div class="form-group">
             <label>Name</label>
-            <form:input path="name"/>
+            <form:input path="name" />
         </div>
 
         <div class="form-group">
             <label>Email</label>
-            <form:input path="email"/>
+            <form:input path="email" />
         </div>
 
         <div class="form-group">
             <label>Phone Number</label>
-            <form:input path="phoneNo"/>
+            <form:input path="phoneNo" />
         </div>
 
         <div class="form-group">
             <label>Username</label>
-            <form:input path="userName"/>
+            <form:input path="userName" />
         </div>
 
         <div class="form-group">
             <label>Password</label>
-            <form:password path="password"/>
+            <form:password path="password" />
         </div>
 
         <div class="form-group">
             <label>Age</label>
-            <form:input path="age"/>
+            <form:input path="age" />
         </div>
 
         <div class="form-group">
@@ -162,7 +166,7 @@
             </div>
         </div>
 
-        <input type="submit" value="Register" class="btn-submit"/>
+        <input type="submit" value="Update" class="btn-submit"/>
 
     </form:form>
 </div>

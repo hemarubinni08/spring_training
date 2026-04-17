@@ -11,6 +11,7 @@
             justify-content: center;
             align-items: center;
 
+            /* Indigo-themed gradient */
             background: radial-gradient(
                 circle,
                 #ffffff 0%,
@@ -44,11 +45,10 @@
 
     <div class="card">
         <h2>${message}</h2>
-        <a href="register">Register another user</a>
         <br>
-        <a href="usersJpa">View usersJpa</a>
+                <a href="allrolesjpa">View all roles jpa</a>
         <br>
-        <a href="usersJdbc">View usersJdbc</a>
+                <a href="allrolesjdbc">View all roles jdbc</a>
     </div>
 
 </body>

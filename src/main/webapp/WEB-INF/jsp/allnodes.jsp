@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Users List</title>
+    <title>Nodes List</title>
 
     <style>
         body {
@@ -19,7 +19,8 @@
             );
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
+            padding-top: 40px;
         }
 
         .card {
@@ -27,8 +28,9 @@
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            width: 95%;
-            max-width: 1100px;
+            display: inline-block;
+            max-width: 95%;
+            overflow-x: auto;
         }
 
         h2 {
@@ -70,13 +72,9 @@
             background-color: #f9a825;
         }
 
-        .table-wrapper {
-            width: 100%;
-            overflow-x: auto;
-        }
-
         table {
-            width: 100%;
+            width: auto;
+            min-width: 700px;
             border-collapse: collapse;
         }
 
@@ -87,7 +85,7 @@
 
         th,
         td {
-            padding: 10px 12px;
+            padding: 10px 14px;
             text-align: left;
             white-space: nowrap;
         }
@@ -106,12 +104,6 @@
 
         tbody tr:hover {
             background-color: #e9ebff;
-        }
-
-        a {
-            color: #1900c1;
-            text-decoration: none;
-            font-weight: 500;
         }
 
         .delete-btn {
@@ -147,62 +139,46 @@
 <body>
 
 <div class="card">
-    <h2>User List</h2>
+    <h2>Nodes List</h2>
 
     <div class="action-buttons">
-        <a href="/home" class="home-btn">Home</a>
-        <a href="/user/register" class="add-btn">Register New User</a>
+        <a href="/" class="home-btn">Home</a>
+        <a href="/node/add" class="add-btn">Add New Node</a>
     </div>
 
-    <div class="table-wrapper">
-        <table>
-            <thead>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Node Name</th>
+            <th>Node Path</th>
+            <th>Roles</th>
+            <th>Delete</th>
+            <th>Update</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <c:forEach items="${nodeDtos}" var="nodeDto">
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email (Path Variable)</th>
-                <th>Email (Request Param)</th>
-                <th>Phone</th>
-                <th>Username</th>
-                <th>Age</th>
-                <th>Delete</th>
-                <th>Update</th>
+                <td>${nodeDto.id}</td>
+                <td>${nodeDto.name}</td>
+                <td>${nodeDto.path}</td>
+                <td>${nodeDto.roles}</td>
+                <td>
+                    <a href="/node/delete?id=${nodeDto.id}" class="delete-btn">
+                        Delete
+                    </a>
+                </td>
+                <td>
+                    <a href="/node/update?id=${nodeDto.id}" class="update-btn">
+                        Update
+                    </a>
+                </td>
             </tr>
-            </thead>
-
-            <tbody>
-            <c:forEach items="${users}" var="user">
-                <tr>
-                    <td>${user.id}</td>
-                    <td>${user.name}</td>
-                    <td>
-                        <a href="/user/getprofileJdbc/${user.email}">
-                            ${user.email}
-                        </a>
-                    </td>
-                    <td>
-                        <a href="/user/getprofileJdbc?email=${user.email}">
-                            ${user.email}
-                        </a>
-                    </td>
-                    <td>${user.phoneNo}</td>
-                    <td>${user.userName}</td>
-                    <td>${user.age}</td>
-                    <td>
-                        <a href="/user/deleteJdbc?email=${user.email}" class="delete-btn">
-                            Delete
-                        </a>
-                    </td>
-                    <td>
-                        <a href="/user/updateprofileJdbc?id=${user.id}" class="update-btn">
-                            Update
-                        </a>
-                    </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-    </div>
+        </c:forEach>
+        </tbody>
+    </table>
 </div>
 
 </body>

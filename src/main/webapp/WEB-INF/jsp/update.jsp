@@ -3,7 +3,7 @@
 
 <html>
 <head>
-    <title>User Registration</title>
+    <title>Update Node</title>
 
     <style>
         body {
@@ -12,23 +12,56 @@
             font-family: "Segoe UI", Arial, sans-serif;
             min-height: 100vh;
             background: radial-gradient(
-                    circle,
-                    #ffffff 0%,
-                    #b8b4ff 35%,
-                    #1900c1 100%
+                circle,
+                #ffffff 0%,
+                #b8b4ff 35%,
+                #1900c1 100%
             );
-
             display: flex;
             justify-content: center;
             align-items: flex-start;
         }
 
-        .register-card {
+        .role-card {
             background: #ffffff;
             width: 420px;
             padding: 30px 35px;
             border-radius: 12px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .top-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .home-btn {
+            padding: 8px 16px;
+            background-color: #1900c1;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .home-btn:hover {
+            background-color: #12008f;
+        }
+
+        .back-btn {
+            padding: 8px 16px;
+            background-color: #fbc02d;
+            color: #000000;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            background-color: #f9a825;
         }
 
         h2 {
@@ -49,14 +82,14 @@
             color: #333;
         }
 
-        input[type="text"],
-        input[type="password"] {
+        input[type="text"] {
             width: 100%;
             padding: 10px 12px;
             border: 1px solid #ccc;
             border-radius: 6px;
             font-size: 14px;
             outline: none;
+            box-sizing: border-box;
         }
 
         input:focus {
@@ -75,6 +108,7 @@
             border-radius: 8px;
             cursor: pointer;
             margin-top: 10px;
+            box-sizing: border-box;
         }
 
         .btn-submit:hover {
@@ -111,43 +145,31 @@
             color: #fff;
         }
     </style>
-</head>
 
+</head>
 <body>
 
-<div class="register-card">
-    <h2>User Registration</h2>
+<div class="role-card">
 
-    <form:form action="register" method="post" modelAttribute="userDto">
+    <div class="top-actions">
+        <a href="/" class="home-btn">Home</a>
+        <a href="/node/allnodes" class="back-btn">Back to Node List</a>
+    </div>
+
+    <h2>Update Node</h2>
+
+    <form:form action="/node/update" method="post" modelAttribute="nodeDto">
+
+        <form:hidden path="id"/>
 
         <div class="form-group">
-            <label>Name</label>
-            <form:input path="name"/>
+            <label>Node Name</label>
+            <form:input path="name" type="text"/>
         </div>
 
         <div class="form-group">
-            <label>Email</label>
-            <form:input path="email"/>
-        </div>
-
-        <div class="form-group">
-            <label>Phone Number</label>
-            <form:input path="phoneNo"/>
-        </div>
-
-        <div class="form-group">
-            <label>Username</label>
-            <form:input path="userName"/>
-        </div>
-
-        <div class="form-group">
-            <label>Password</label>
-            <form:password path="password"/>
-        </div>
-
-        <div class="form-group">
-            <label>Age</label>
-            <form:input path="age"/>
+            <label>Node Path</label>
+            <form:input path="path" type="text"/>
         </div>
 
         <div class="form-group">
@@ -162,9 +184,10 @@
             </div>
         </div>
 
-        <input type="submit" value="Register" class="btn-submit"/>
+        <input type="submit" value="Update Node" class="btn-submit"/>
 
     </form:form>
+
 </div>
 
 </body>

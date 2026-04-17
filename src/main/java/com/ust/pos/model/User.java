@@ -5,20 +5,19 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @Table
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private String name;
+public class User extends CommonFields {
     private String email;
     private String phoneNo;
     private String userName;
     private String password;
     private int age;
     private Date dateOfBirth;
+    private String role;
+    private List<String> roles;
 }

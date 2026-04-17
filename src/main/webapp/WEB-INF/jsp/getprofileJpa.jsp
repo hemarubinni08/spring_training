@@ -107,8 +107,8 @@
         <span class="value">${user.age}</span>
     </div>
 
-    <a href="${pageContext.request.contextPath}/usersJpa" class="back-btn">
-        ← Back to Users
+    <a href="${pageContext.request.contextPath}/user/usersJpa" class="back-btn">
+        Back to Users
     </a>
 </div>
 

@@ -1,15 +1,16 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Show All Users</title>
+    <title>Users List</title>
 
     <style>
         body {
             margin: 0;
             padding: 0;
             font-family: "Segoe UI", Arial, sans-serif;
-            height: 100vh;
+            min-height: 100vh;
             background: radial-gradient(
                 circle,
                 #ffffff 0%,
@@ -21,21 +22,63 @@
             align-items: center;
         }
 
-        /* Card container */
-        .register-card {
+        .card {
             background: #ffffff;
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            max-width: 900px;
-            width: 90%;
+            width: 95%;
+            max-width: 1100px;
         }
 
-        /* Table styling */
+        h2 {
+            margin-bottom: 15px;
+            color: #1900c1;
+            text-align: center;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .home-btn,
+        .add-btn {
+            padding: 8px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* HOME BUTTON - THEME BLUE */
+        .home-btn {
+            background-color: #1900c1;
+            color: #ffffff;
+        }
+
+        .home-btn:hover {
+            background-color: #12008f;
+        }
+
+        .add-btn {
+            background-color: #fbc02d;
+            color: #000000;
+        }
+
+        .add-btn:hover {
+            background-color: #f9a825;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
         }
 
         thead {
@@ -43,14 +86,15 @@
             color: #ffffff;
         }
 
-        th, td {
-            padding: 12px 14px;
+        th,
+        td {
+            padding: 10px 12px;
             text-align: left;
+            white-space: nowrap;
         }
 
         th {
             font-weight: 600;
-            letter-spacing: 0.5px;
         }
 
         tbody tr {
@@ -63,50 +107,111 @@
 
         tbody tr:hover {
             background-color: #e9ebff;
-            transition: background-color 0.2s ease-in-out;
-            cursor: pointer;
         }
 
-        h2 {
-            margin-bottom: 15px;
+        a {
             color: #1900c1;
-            text-align: center;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* DELETE BUTTON */
+        .delete-btn {
+            padding: 6px 12px;
+            background-color: #e53935;
+            color: #ffffff;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .delete-btn:hover {
+            background-color: #c62828;
+        }
+
+        .update-btn {
+            padding: 6px 12px;
+            background-color: #2e7d32;
+            color: #ffffff;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .update-btn:hover {
+            background-color: #1b5e20;
         }
     </style>
 </head>
 
 <body>
 
-<div class="register-card">
-    <h2>User List</h2>
+<div class="card">
+    <h2>Users List</h2>
 
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email Request Params</th>
-            <th>Email Path Variable</th>
-            <th>Phone</th>
-            <th>Username</th>
-            <th>Age</th>
-        </tr>
-        </thead>
+    <div class="action-buttons">
+        <a href="/" class="home-btn">Home</a>
+        <a href="/user/register" class="add-btn">Register New User</a>
+    </div>
 
-        <tbody>
-        <c:forEach items="${users}" var="user">
+    <div class="table-wrapper">
+        <table>
+            <thead>
             <tr>
-                <td>${user.id}</td>
-                <td>${user.name}</td>
-                <td><a href="/user/getprofileJpa?email=${user.email}"> ${user.email} </a></td>
-                <td><a href="/user/getprofileJpa/${user.email}">${user.email}</a></td>
-                <td>${user.phoneNo}</td>
-                <td>${user.userName}</td>
-                <td>${user.age}</td>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email (Request Param)</th>
+                <th>Email (Path Variable)</th>
+                <th>Phone</th>
+                <th>Username</th>
+                <th>Age</th>
+                <th>Roles</th>
+                <th>Delete</th>
+                <th>Update</th>
             </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+            </thead>
+
+            <tbody>
+            <c:forEach items="${users}" var="user">
+                <tr>
+                    <td>${user.id}</td>
+                    <td>${user.name}</td>
+
+                    <td>
+                        <a href="/user/getprofileJpa?email=${user.email}">
+                            ${user.email}
+                        </a>
+                    </td>
+
+                    <td>
+                        <a href="/user/getprofileJpa/${user.email}">
+                            ${user.email}
+                        </a>
+                    </td>
+
+                    <td>${user.phoneNo}</td>
+                    <td>${user.userName}</td>
+                    <td>${user.age}</td>
+                    <td>${user.roles}</td>
+
+                    <td>
+                        <a href="/user/deleteJpa?email=${user.email}" class="delete-btn">
+                            Delete
+                        </a>
+                    </td>
+
+                    <td>
+                        <a href="/user/updateprofileJpa?id=${user.id}" class="update-btn">
+                            Update
+                        </a>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 </body>

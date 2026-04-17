@@ -1,7 +1,6 @@
 package com.ust.pos.service;
 
 import com.ust.pos.dto.UserDto;
-import com.ust.pos.model.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,4 +18,18 @@ public interface UserService {
     UserDto getUserByEmail(String email);
 
     UserDto getUserByEmailJdbc(String email);
+
+    void deleteUserByEmailJpa(String email);
+
+    void deleteUserByEmailJdbc(String email);
+
+    UserDto getUserByIdJpa(Long id);
+
+    UserDto getUserByIdJdbc(Long id);
+
+    UserDto updateUserJdbc(UserDto userDto);
+
+    UserDto updateUserJpa(UserDto userDto);
+
+    UserDto getUserByUserName(String userName);
 }
