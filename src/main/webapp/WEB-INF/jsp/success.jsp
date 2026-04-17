@@ -78,7 +78,7 @@
         <span class="email">${email}</span>
     </p>
 
-    <a href="/user/login" class="home-btn">Go to Login</a>
+    <a href="/login" class="home-btn">Go to Login</a>
 </div>
 
 </body>

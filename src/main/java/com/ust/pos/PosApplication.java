@@ -9,8 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
 
@@ -38,19 +36,19 @@ public class PosApplication {
     }
 
     @Bean
-    ModelMapper getModelMapper(){
+    ModelMapper getModelMapper() {
 
         return new ModelMapper();
     }
 
     @Bean
-    public JdbcTemplate jdbcTemplate(){
+    public JdbcTemplate jdbcTemplate() {
 
         return new JdbcTemplate(getDataSource());
     }
 
     @Bean
-    DataSource getDataSource(){
+    DataSource getDataSource() {
 
         DriverManagerDataSource ds = new DriverManagerDataSource();
 
@@ -60,11 +58,5 @@ public class PosApplication {
         ds.setDriverClassName(environment.getProperty("spring.datasource.driver-class-name"));
 
         return ds;
-    }
-
-    @Bean
-    PasswordEncoder passwordEncoder(){
-
-        return new BCryptPasswordEncoder();
     }
 }

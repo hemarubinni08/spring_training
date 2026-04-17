@@ -1,57 +1,57 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Registration Failed</title>
+    <title>Registration Successful</title>
 
     <style>
         body {
             margin: 0;
             height: 100vh;
             font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #ff4e50, #f9d423);
+            background: linear-gradient(135deg, #43cea2, #185a9d);
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        .error-card {
+        .success-card {
             background: #ffffff;
             padding: 40px;
-            width: 430px;
+            width: 420px;
             border-radius: 12px;
             text-align: center;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
         }
 
-        .error-icon {
+        .success-icon {
             font-size: 60px;
-            color: #e74c3c;
+            color: #43cea2;
             margin-bottom: 15px;
         }
 
-        .error-card h2 {
+        .success-card h2 {
             color: #333;
             margin-bottom: 10px;
         }
 
-        .error-card p {
+        .success-card p {
             color: #666;
             font-size: 15px;
             margin-bottom: 25px;
         }
 
-        .email {
+        .success-card .email {
             font-weight: bold;
-            color: #e74c3c;
+            color: #185a9d;
         }
 
-        .retry-btn {
+        .home-btn {
             display: inline-block;
             padding: 12px 25px;
-            background: #e74c3c;
+            background: #185a9d;
             color: #ffffff;
             text-decoration: none;
             border-radius: 5px;
@@ -59,26 +59,26 @@
             transition: background 0.3s;
         }
 
-        .retry-btn:hover {
-            background: #c0392b;
+        .home-btn:hover {
+            background: #134e86;
         }
     </style>
 </head>
 
 <body>
 
-<div class="error-card">
-    <div class="error-icon">❌</div>
+<div class="success-card">
+    <div class="success-icon">###</div>
 
-    <h2>Registration Failed</h2>
+    <h2>Registration Successful!</h2>
 
     <p>
-        Sorry! We couldn’t complete your registration.<br>
-        Email already exists:
+        Welcome! Your account has been reseted successfully.<br>
+
         <span class="email">${message}</span>
     </p>
 
-    <a href="/user/register" class="retry-btn">Try Again</a>
+    <a href="${path}" class="home-btn">Go Back</a>
 </div>
 
 </body>

@@ -1,9 +1,10 @@
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
+<%@ taglib uri="jakarta.tags.functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>User Registration</title>
+    <title>Node Registration</title>
 
     <style>
         body {
@@ -91,67 +92,42 @@
 <body>
 
 <div class="register-container">
-    <h2>User Registration</h2>
+    <h2>Node Registration</h2>
 
-    <!-- Optional error message -->
-    <!--
-    <div class="error-message">
-        Email already exists
-    </div>
-    -->
-
-    <form action="/user/register" method="post">
+    <form action="/node/addnode" method="post">
 
         <div class="form-group">
-            <label>Name</label>
+            <label>Node Name</label>
             <input type="text" name="name" required>
         </div>
-
         <div class="form-group">
-            <label>Username</label>
-            <input type="text" name="userName" required>
+            <label>Node Path</label>
+            <input type="text" name="path" required>
         </div>
 
-        <div class="form-group">
-            <label>Email</label>
-            <input type="email" name="email" required>
-        </div>
-
-        <div class="form-group">
-            <label>Phone No</label>
-            <input type="text" name="phoneNo">
-        </div>
-
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" name="password" required>
-        </div>
-
-        <div class="form-group">
-            <label>Age</label>
-            <input type="number" name="age">
-        </div>
-
-        <div class="form-group">
-            <label>Date of Birth</label>
-            <input type="date" name="dateOfBirth">
-        </div>
-
-
-
-        <div class="form-group">
-           <label>Role</label>
-            <select name="roles" multiple required>
-                   <option value="">Select Role</option>
-                   <c:forEach var="role" items="${roles}">
-                     <option value="${role.name}">${role.name}</option>
+         <div class="form-group">
+              <label>Role</label>
+               <select name="role" required>
+                    <option value="">Select Role</option>
+                    <c:forEach var="role" items="${roles}">
+                    <option value="${role.name}">${role.name}</option>
                     </c:forEach>
                 </select>
-            </div>
+         </div>
 
+         <div class="form-group">
+               <label>Roles</label>
+               <select name="roles" multiple required>
+                    <option value="">Select Roles</option>
+                    <c:forEach var="role" items="${roles}">
+                    <option value="${role.name}">${role.name}</option>
+                    </c:forEach>
+               </select>
+         </div>
 
-        <button type="submit" class="register-btn">Register</button>
+        <button type="submit" class="register-btn">Add Node</button>
     </form>
+
 </div>
 
 </body>

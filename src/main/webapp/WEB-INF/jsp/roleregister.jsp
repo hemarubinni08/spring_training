@@ -1,9 +1,8 @@
-<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>User Registration</title>
+    <title>Role Registration</title>
 
     <style>
         body {
@@ -91,7 +90,7 @@
 <body>
 
 <div class="register-container">
-    <h2>User Registration</h2>
+    <h2>Role Registration</h2>
 
     <!-- Optional error message -->
     <!--
@@ -100,58 +99,16 @@
     </div>
     -->
 
-    <form action="/user/register" method="post">
+    <form action="/userrole/addrole" method="post">
 
         <div class="form-group">
-            <label>Name</label>
+            <label>Role Name</label>
             <input type="text" name="name" required>
         </div>
 
-        <div class="form-group">
-            <label>Username</label>
-            <input type="text" name="userName" required>
-        </div>
-
-        <div class="form-group">
-            <label>Email</label>
-            <input type="email" name="email" required>
-        </div>
-
-        <div class="form-group">
-            <label>Phone No</label>
-            <input type="text" name="phoneNo">
-        </div>
-
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" name="password" required>
-        </div>
-
-        <div class="form-group">
-            <label>Age</label>
-            <input type="number" name="age">
-        </div>
-
-        <div class="form-group">
-            <label>Date of Birth</label>
-            <input type="date" name="dateOfBirth">
-        </div>
-
-
-
-        <div class="form-group">
-           <label>Role</label>
-            <select name="roles" multiple required>
-                   <option value="">Select Role</option>
-                   <c:forEach var="role" items="${roles}">
-                     <option value="${role.name}">${role.name}</option>
-                    </c:forEach>
-                </select>
-            </div>
-
-
         <button type="submit" class="register-btn">Register</button>
     </form>
+
 </div>
 
 </body>
