@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,13 +49,14 @@
             text-transform: uppercase;
         }
 
-        .input-field {
+        .input-field, select {
             width: 100%;
             padding: 10px 12px;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
             font-size: 14px;
+            background-color: white;
         }
 
         .readonly-field {
@@ -62,6 +64,30 @@
             color: #999;
             cursor: not-allowed;
             border-style: dashed;
+        }
+
+        /* Added Missing Styles for Roles */
+        .role-selector {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+            max-height: 120px;
+            overflow-y: auto;
+            background: #fafafa;
+        }
+
+        .role-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            font-size: 14px;
+            text-transform: none !important; /* Prevents labels from being all caps */
+            font-weight: normal !important;
+        }
+
+        .role-option input {
+            margin-right: 10px;
+            width: auto;
         }
 
         .btn-container {
@@ -109,9 +135,10 @@
         <p class="subtitle">Modify record in SQL Database</p>
     </div>
 
-    <%-- Optional message from server --%>
-    <c:if test="${not empty u.message}">
-        <div class="status-msg" style="text-align: center;">${u.message}</div>
+    <c:if test="${not empty message}">
+        <div class="status-msg ${success ? '' : 'error'}" style="text-align: center; color: ${success ? '#27ae60' : '#e74c3c'}">
+            ${message}
+        </div>
     </c:if>
 
     <form action="/user/updateJdbc" method="POST">
@@ -134,6 +161,31 @@
         <div class="form-group">
             <label>Email Address</label>
             <input type="email" name="email" value="${u.email}" class="input-field" required>
+        </div>
+
+        <div class="form-group">
+            <label>Primary Role</label>
+            <select name="role" required>
+                <option value="" disabled>Select Role</option>
+                <c:forEach var="role" items="${roles}">
+                    <option value="${role.name}" ${role.name == u.role ? 'selected' : ''}>
+                        ${role.name}
+                    </option>
+                </c:forEach>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Additional Access Roles</label>
+            <div class="role-selector">
+                <c:forEach var="r" items="${roles}">
+                    <label class="role-option">
+                        <input type="checkbox" name="roles" value="${r.name}"
+                            ${fn:contains(u.roles, r.name) ? 'checked' : ''}>
+                        ${r.name}
+                    </label>
+                </c:forEach>
+            </div>
         </div>
 
         <div style="display: flex; gap: 15px;">

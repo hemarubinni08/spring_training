@@ -15,8 +15,6 @@ public interface UserService {
 
     UserDto findDetails(String email);
 
-    UserDto findDetailsId(Long id);
-
     UserDto findDetailsJdbc(String email);
 
     void deleteDetails(String email);

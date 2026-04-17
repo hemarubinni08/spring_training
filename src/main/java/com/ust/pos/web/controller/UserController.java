@@ -72,6 +72,7 @@ public class UserController {
     public String profilePageJdbc(Model model, @RequestParam String email) {
         UserDto userDto = userService.findDetailsJdbc(email);
         model.addAttribute("u", userDto);
+        model.addAttribute("roles", roleService.getRoles());
         return "profilePageJdbc";
     }
 

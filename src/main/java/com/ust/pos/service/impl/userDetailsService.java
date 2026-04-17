@@ -1,4 +1,4 @@
-package com.ust.pos;
+package com.ust.pos.service.impl;
 
 import com.ust.pos.dto.UserDto;
 import com.ust.pos.service.UserService;
