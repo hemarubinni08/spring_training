@@ -142,6 +142,5 @@
         Already have an account? Log in instead
     </div>
 </div>
-
 </body>
 </html>

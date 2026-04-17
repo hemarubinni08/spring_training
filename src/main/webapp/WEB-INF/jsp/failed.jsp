@@ -61,7 +61,7 @@
 <body>
 
 <div class="container">
-    <h2>Registration Failed ❌</h2>
+    <h2>Registration Failed</h2>
 
     <div class="error-message">
         ${errorMessage != null ? errorMessage : "Email already exists. Please try again."}
@@ -70,10 +70,6 @@
     <a href="${pageContext.request.contextPath}/user/register" class="btn">
         Try Again
     </a>
-
-    <a href="/user/login" class="btn">
-            Go to Login
-        </a>
 </div>
 
 </body>

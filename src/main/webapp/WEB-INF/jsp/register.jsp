@@ -1,32 +1,38 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>User Registration</title>
-
     <style>
         body {
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             min-height: 100vh;
             margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        .register-container {
+        .container {
             background-color: #ffffff;
-            width: 420px;
-            padding: 30px 35px;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            padding: 30px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            width: 400px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        .register-container h2 {
+        h2 {
+            margin-top: 0;
             text-align: center;
-            margin-bottom: 25px;
-            color: #333;
+            color: #333333;
+            border-bottom: 1px solid #eeeeee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         .form-group {
@@ -35,24 +41,22 @@
 
         label {
             display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
             font-size: 14px;
-            margin-bottom: 6px;
-            color: #555;
         }
 
-        input {
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="number"],
+        input[type="date"],
+        select {
             width: 100%;
-            padding: 10px 12px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+            padding: 8px;
+            border: 1px solid #cccccc;
+            border-radius: 3px;
+            box-sizing: border-box; /* Ensures padding doesn't push width over 100% */
         }
 
         .row {
@@ -66,81 +70,98 @@
 
         button {
             width: 100%;
-            padding: 12px;
-            font-size: 15px;
-            background-color: #667eea;
-            color: #ffffff;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 3px;
+            font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
             margin-top: 10px;
-            transition: background-color 0.3s ease;
         }
 
         button:hover {
-            background-color: #5a67d8;
+            background-color: #0056b3;
         }
 
-        .footer-text {
-            margin-top: 15px;
+        .footer {
             text-align: center;
+            margin-top: 15px;
             font-size: 13px;
-            color: #777;
+            color: #666666;
         }
     </style>
 </head>
 
 <body>
 
-<div class="register-container">
+<div class="container">
     <h2>Create Account</h2>
 
     <form action="/user/register" method="post">
 
         <div class="form-group">
-            <label for="name">Username</label>
-            <input type="text" id="name" name="name" autocomplete="off" placeholder="Enter username" required>
+            <label>Name</label>
+            <input type="text" name="name" placeholder="Full Name" required>
         </div>
 
         <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" placeholder="Enter email" required>
+            <label>Email</label>
+            <input type="email" name="email" placeholder="email@example.com" required>
         </div>
 
         <div class="form-group">
-            <label for="phone">Phone Number</label>
-            <input type="text" id="phone" name="phoneNo" placeholder="Enter phone number">
+            <label>Phone Number</label>
+            <input type="text" name="phoneNo" placeholder="Phone Number">
         </div>
 
         <div class="form-group">
-            <label for="userName">Login Username</label>
-            <input type="text" id="userName" name="userName" placeholder="Login username" required>
+            <label>Primary Role</label>
+            <select name="role" required>
+                <option value="">-- Select Role --</option>
+                <c:forEach var="role" items="${roles}">
+                    <option value="${role.name}">${role.name}</option>
+                </c:forEach>
+            </select>
         </div>
 
         <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Create password" required>
+            <label>Additional Roles (Hold Ctrl to select multiple)</label>
+            <select name="roles" multiple required style="height: 80px;">
+                <c:forEach var="role" items="${roles}">
+                    <option value="${role.name}">${role.name}</option>
+                </c:forEach>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Login Username</label>
+            <input type="text" name="userName" placeholder="Username for login" required>
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Create password" required>
         </div>
 
         <div class="row">
             <div class="form-group">
-                <label for="age">Age</label>
-                <input type="number" id="age" name="age" min="1">
+                <label>Age</label>
+                <input type="number" name="age" min="1">
             </div>
 
             <div class="form-group">
-                <label for="date">Date of Birth</label>
-                <input type="date" id="date" name="date">
+                <label>DOB</label>
+                <input type="date" name="date">
             </div>
         </div>
-
         <button type="submit">Register</button>
 
     </form>
-
-    <div class="footer-text">
-        Already have an account? Log in instead
-    </div>
+    <button class="btn-home" onclick="window.location.href='/user/display'">
+          Back to User List
+    </button>
 </div>
 
 </body>

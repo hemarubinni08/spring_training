@@ -1,106 +1,122 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Login Page</title>
+    <title>Login</title>
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f4f7;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        * {
             margin: 0;
-        }
-
-        .login-container {
-            background-color: #ffffff;
-            padding: 30px;
-            width: 320px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .login-container h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 14px;
-        }
-
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
+            padding: 0;
             box-sizing: border-box;
         }
 
-        .login-btn {
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            height: 100vh;
+            background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            background: #ffffff;
+            padding: 35px 30px;
+            border-radius: 12px;
+            width: 320px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .login-container h2 {
+            margin-bottom: 25px;
+            color: #1e293b;
+            font-weight: 600;
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 5px;
+            color: #475569;
+        }
+
+        .input-group input {
             width: 100%;
             padding: 10px;
-            background-color: #0078D7;
-            border: none;
-            color: white;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .login-btn:hover {
-            background-color: #005fa3;
-        }
-
-        .register-link {
-            text-align: center;
-            margin-top: 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
             font-size: 14px;
+            transition: 0.2s;
         }
 
-        .register-link a {
-            color: #0078D7;
-            text-decoration: none;
-            font-weight: bold;
+        .input-group input:focus {
+            border-color: #3b82f6;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
         }
 
-        .register-link a:hover {
-            text-decoration: underline;
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #3b82f6;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
         }
+
+        button:hover {
+            background: #2563eb;
+        }
+
+        .error-msg {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 8px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+
+        .success-msg {
+            background: #dcfce7;
+            color: #166534;
+            padding: 8px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+
     </style>
 </head>
+
 <body>
 
-    <div class="login-container">
-        <h2>Login</h2>
-        <form>
-            <div class="form-group">
-                <label for="email">Email ID</label>
-                <input type="email" id="email" placeholder="Enter your email" required>
-            </div>
+<div class="login-container">
+    <h2>POS Login</h2>
+    <form th:action="@{/login}" method="post">
 
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Enter your password" required>
-            </div>
+        <div class="input-group">
+            <label>Email</label>
+            <input type="text" name="username" required/>
+        </div>
 
-            <button type="submit" class="login-btn">Login</button>
-        </form>
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" name="password" required/>
+        </div>
 
-        <div class="register-link">
-           <a href="${pageContext.request.contextPath}/user/register" class="btn">
-                       Go to Registration
-                   </a>
-    </div>
+        <button type="submit">Login</button>
 
+    </form>
+</div>
 </body>
 </html>

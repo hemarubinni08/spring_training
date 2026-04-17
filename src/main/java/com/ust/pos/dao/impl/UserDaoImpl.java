@@ -40,5 +40,34 @@ public class UserDaoImpl implements UserDao {
                 new BeanPropertyRowMapper(User.class));
         return userlist.isEmpty() ? null : userlist.get(0);
     }
+
+    @Override
+    public List<User> retrieveAllRecords(UserDto userDto) {
+        String sqlQ = "SELECT * FROM user";
+        List<User> userList = jdbctemplate.query(sqlQ, new BeanPropertyRowMapper(User.class));
+        return userList;
+    }
+
+    @Override
+    public void deleteByEmailJdbc(String email) {
+        String sqlQ = "DELETE FROM user WHERE email = ? ";
+        jdbctemplate.update(sqlQ, email);
+
+    }
+
+    @Override
+    public User findByIdJdbc(long id) {
+        String sqlQ = "SELECT * FROM user WHERE id=?";
+        List<User> rolelist = jdbctemplate.query(sqlQ,
+                new Object[]{id},
+                new BeanPropertyRowMapper(User.class));
+        return rolelist.isEmpty() ? null : rolelist.get(0);
+    }
+
+    @Override
+    public Integer updateUserRecord(User user) {
+        String sqlQ = "UPDATE user SET name=? , email=? ,  phone_no=? , user_name=? , age=? WHERE id=?";
+        return jdbctemplate.update(sqlQ, user.getName(), user.getEmail(), user.getPhoneNo(), user.getUserName(), user.getAge(), user.getId());
+    }
 }
 

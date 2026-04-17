@@ -5,12 +5,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Registration Successful</title>
+    <title>Registration Failed</title>
 
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background: linear-gradient(135deg, #43cea2, #185a9d);
+            background: linear-gradient(135deg, #ee0979, #ff6a00);
             margin: 0;
             min-height: 100vh;
             display: flex;
@@ -28,13 +28,13 @@
         }
 
         h2 {
-            color: #2e7d32;
+            color: #d32f2f;
             margin-bottom: 15px;
         }
 
-        .success-message {
-            background-color: #e8f5e9;
-            color: #2e7d32;
+        .error-message {
+            background-color: #fdecea;
+            color: #d32f2f;
             padding: 14px;
             border-radius: 5px;
             font-size: 14px;
@@ -44,7 +44,7 @@
         .btn {
             display: inline-block;
             padding: 10px 25px;
-            background-color: #2e7d32;
+            background-color: #1976d2;
             color: #ffffff;
             text-decoration: none;
             border-radius: 5px;
@@ -53,23 +53,22 @@
         }
 
         .btn:hover {
-            background-color: #1b5e20;
+            background-color: #125aa1;
         }
     </style>
 </head>
 
 <body>
-
 <div class="container">
-    <h2>Registration Successful 🎉
-    ${message}</h2>
-
-    <div class="success-message">
-        ${successMessage != null ? successMessage : "Your account has been created successfully."}
+    <h2>Node Registration Failed</h2>
+    <div class="error-message">
+        ${errorMessage != null ? errorMessage : "Node Name already exists. Please try again."}
     </div>
-
-    <a href="${pageContext.request.contextPath}/user/display" class="btn">
-        Go back to User List
+    <a href="${pageContext.request.contextPath}/nodes/addnodes" class="btn">
+        Try Again
+    </a>
+    <a href="/nodes/displaynodes" class="btn">
+            Go to Node List
     </a>
 </div>
 </body>
