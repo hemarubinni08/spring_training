@@ -57,9 +57,35 @@
         }
 
         h2 {
-            margin-bottom: 18px;
+            margin-bottom: 10px;
             font-weight: 700;
             color: #111827;
+        }
+
+        /* HEADER ACTIONS */
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        /* ADD BUTTON */
+        .btn-add {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-add:hover {
+            background: #059669;
+            transform: translateY(-1px);
         }
 
         /* SEARCH */
@@ -104,10 +130,6 @@
             vertical-align: middle;
         }
 
-        tr {
-            transition: 0.2s;
-        }
-
         tr:hover {
             background: #f9fafb;
         }
@@ -122,7 +144,7 @@
             font-weight: 500;
         }
 
-        /* ACTION BUTTONS (FIXED ALIGNMENT) */
+        /* ACTION BUTTONS */
         .actions {
             display: flex;
             align-items: center;
@@ -153,7 +175,6 @@
 
         .btn-edit:hover {
             background: #2563eb;
-            transform: translateY(-1px);
         }
 
         .btn-delete {
@@ -163,7 +184,6 @@
 
         .btn-delete:hover {
             background: #dc2626;
-            transform: translateY(-1px);
         }
 
         /* MODAL */
@@ -186,40 +206,6 @@
             border-radius: 14px;
             width: 340px;
             text-align: center;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-            animation: fadeIn 0.25s ease;
-        }
-
-        @keyframes fadeIn {
-            from {opacity:0; transform:scale(0.95);}
-            to {opacity:1; transform:scale(1);}
-        }
-
-        .modal h3 {
-            margin-bottom: 10px;
-        }
-
-        .modal p {
-            font-size: 14px;
-            color: #6b7280;
-        }
-
-        .modal button {
-            margin: 10px 6px 0;
-            padding: 10px 14px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .btn-danger {
-            background: #ef4444;
-            color: white;
-        }
-
-        .btn-secondary {
-            background: #e5e7eb;
         }
     </style>
 </head>
@@ -231,12 +217,18 @@
 <div class="container">
     <div class="card">
 
-        <h2>User Management</h2>
+        <!-- HEADER -->
+        <div class="header-actions">
+            <h2>User Management</h2>
+            <button class="btn-add" onclick="goToRegister()">+ Add User</button>
+        </div>
 
+        <!-- SEARCH -->
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="Search users...">
         </div>
 
+        <!-- TABLE -->
         <table id="userTable">
             <thead>
             <tr>
@@ -270,16 +262,17 @@
                             </c:choose>
                         </span>
                     </td>
+
                     <td>
-                                            <span class="badge">
-                                                <c:choose>
-                                                    <c:when test="${not empty user.roles}">
-                                                        ${user.roles}
-                                                    </c:when>
-                                                    <c:otherwise>No Role</c:otherwise>
-                                                </c:choose>
-                                            </span>
-                                        </td>
+                        <span class="badge">
+                            <c:choose>
+                                <c:when test="${not empty user.roles}">
+                                    ${user.roles}
+                                </c:when>
+                                <c:otherwise>No Role</c:otherwise>
+                            </c:choose>
+                        </span>
+                    </td>
 
                     <td>
                         <div class="actions">
@@ -309,13 +302,17 @@
         <p>This action cannot be undone.</p>
 
         <form id="deleteForm" method="post">
-            <button type="submit" class="btn-danger">Yes, Delete</button>
-            <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
+            <button type="submit" class="btn-delete">Yes, Delete</button>
+            <button type="button" onclick="closeModal()">Cancel</button>
         </form>
     </div>
 </div>
 
 <script>
+    function goToRegister() {
+        window.location.href = "${pageContext.request.contextPath}/user/register";
+    }
+
     function openModal(email) {
         document.getElementById("deleteForm").action =
             "${pageContext.request.contextPath}/user/delete/" + email;

@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Dashboard</title>
+<title>User Management System</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -150,7 +150,7 @@ font-size:12px;
 
 <!-- SIDEBAR -->
 <div class="sidebar">
-<div class="sidebar-header">Dashboard</div>
+<div class="sidebar-header">User Management System</div>
 
 <c:forEach var="node" items="${nodes}">
 <a href="${pageContext.request.contextPath}${node.path}">
@@ -163,7 +163,7 @@ ${node.name}
 <div class="content">
 
 <div class="topbar">
-<div class="title">Home Dashboard</div>
+<div class="title">Dashboard</div>
 
 <a class="logout"
 href="${pageContext.request.contextPath}/login">
