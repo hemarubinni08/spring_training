@@ -9,6 +9,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -46,4 +51,84 @@ public class UserServiceImpl implements UserService {
             return false;
         }
     }
+
+    @Override
+    public List<UserDto> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream().map(user -> modelMapper.map(user, UserDto.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserDto> getAllUsersJdbc() {
+        return userDao.getAllUsersJdbc();
+    }
+
+    @Override
+    public UserDto findByEmailJpa(String email) {
+        User user = userRepository.findByEmail(email);
+        return modelMapper.map(user, UserDto.class);
+    }
+
+    @Override
+    public UserDto findByEmail(String email) {
+        User user = userDao.findByEmail(email);
+        return modelMapper.map(user, UserDto.class);
+    }
+
+    @Override
+    @Transactional
+    public void deleteByEmail(String email) {
+        userRepository.deleteByEmail(email);
+    }
+
+    @Override
+    public void deleteByEmailJdbc(String email) {
+        userDao.deleteByEmail(email);
+    }
+
+    @Override
+    public UserDto findById(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        return modelMapper.map(user, UserDto.class);
+    }
+
+    @Override
+    public UserDto findByIdJdbc(Long id) {
+        User user = userDao.findByIdJdbc(id);
+        return modelMapper.map(user, UserDto.class);
+    }
+
+    @Override
+    public UserDto updateDataJpa(UserDto userDto) {
+        Optional<User> optionalUser = userRepository.findById(userDto.getId());
+        if (!optionalUser.isPresent()) {
+            userDto.setMessage("Not Present in Server");
+            return null;
+        }
+        User existingUser = optionalUser.get();
+        String existingEmail = existingUser.getEmail();
+        String newEmail = userDto.getEmail();
+
+        if (!existingEmail.equals(newEmail)) {
+            if (userRepository.existsByEmail(newEmail)) {
+                userDto.setMessage("Email Already Exists");
+                return null;
+            }
+        }
+        modelMapper.map(userDto, existingUser);
+        userDto.setMessage("User updated successfully");
+        return modelMapper.map(userRepository.save(existingUser), UserDto.class);
+    }
+
+    @Override
+    public int updateDataJdbc(UserDto userDto) {
+        if (userDao.updateDataJdbc(userDto) < 1) {
+            userDto.setMessage("Failed Updating");
+            return 0;
+        }
+        userDto.setMessage("Successfull Updating");
+        return 1;
+    }
+
 }

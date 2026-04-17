@@ -17,5 +17,7 @@ public class UserDto {
     private String password;
     private int age;
     private Date dateOfBirth;
-
+    private String message;
+    private String role;
+    private String roles;
 }
