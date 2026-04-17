@@ -6,13 +6,11 @@
     <title>Register</title>
 
     <style>
-        /* ===== Ensure full height ===== */
         html, body {
             height: 100%;
             margin: 0;
         }
 
-        /* ===== Abstract DARK BLUE background ===== */
         body {
             font-family: "Segoe UI", Tahoma, sans-serif;
             display: flex;
@@ -26,7 +24,6 @@
             color: #e6e6e6;
         }
 
-        /* ===== Form box with BORDER + 3D ===== */
         .form-container {
             width: 360px;
             padding: 32px;
@@ -58,7 +55,6 @@
             color: #cdd9e5;
         }
 
-        /* ===== Input fields ===== */
         input[type="text"],
         input[type="email"],
         input[type="password"] {
@@ -81,7 +77,6 @@
                 inset 0 2px 4px rgba(0, 0, 0, 0.7);
         }
 
-        /* ===== Buttons ===== */
         .buttons {
             display: flex;
             justify-content: space-between;
@@ -125,7 +120,7 @@
         <!-- Spring MVC form -->
         <form action="/user/registerJdbc" method="post">
             <label>Username</label>
-            <input type="text" name="username" required>
+            <input type="text" name="userName" required>
 
             <label>Email</label>
             <input type="email" name="email" required>

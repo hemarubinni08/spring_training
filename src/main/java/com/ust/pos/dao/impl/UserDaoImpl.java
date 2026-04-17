@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-
 public class UserDaoImpl implements UserDao {
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -35,6 +34,31 @@ public class UserDaoImpl implements UserDao {
         List<User> userList = jdbcTemplate.query(
                 salQ,
                 new Object[]{email},
+                new BeanPropertyRowMapper(User.class));
+        return userList.isEmpty() ? null : userList.get(0);
+    }
+
+    @Override
+    public List<UserDto> fetchUser() {
+        String sql = "SELECT user_name, email, password FROM user";
+        return jdbcTemplate.query(
+                sql,
+                new BeanPropertyRowMapper<>(UserDto.class)
+        );
+    }
+
+    @Override
+    public void deleteByEmail(String email) {
+        String s1 = "DELETE FROM user WHERE email = ?";
+        jdbcTemplate.update(s1, email);
+    }
+
+    @Override
+    public User findByIdJdbc(Long id) {
+        String salQ = "SELECT * FROM user WHERE id = ?";
+        List<User> userList = jdbcTemplate.query(
+                salQ,
+                new Object[]{id},
                 new BeanPropertyRowMapper(User.class));
         return userList.isEmpty() ? null : userList.get(0);
     }

@@ -45,7 +45,7 @@
 <body>
 
     <div class="message-container">
-        <h2>${message}</h2>
+        <h2>${msg}</h2>
     </div>
 
 </body>

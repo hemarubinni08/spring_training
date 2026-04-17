@@ -1,100 +1,85 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Register</title>
+    <title>User Profile</title>
 
     <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
-
         body {
-            font-family: "Segoe UI", Tahoma, sans-serif;
+            background: linear-gradient(120deg,#0f2027,#203a43,#2c5364);
+            font-family: Arial;
+            color: #fff;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background:
-                radial-gradient(circle at 20% 20%, rgba(79, 172, 254, 0.18), transparent 40%),
-                radial-gradient(circle at 80% 30%, rgba(0, 242, 254, 0.15), transparent 45%),
-                radial-gradient(circle at 50% 80%, rgba(138, 43, 226, 0.14), transparent 50%),
-                linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            color: #e6e6e6;
         }
 
-        .form-container {
-            width: 360px;
-            padding: 32px;
-            border-radius: 16px;
-            background: linear-gradient(145deg, #1c2a32, #162129);
-            border: 1px solid rgba(130, 190, 255, 0.35);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
-        }
-
-        .back-link {
-            display: inline-block;
-            margin-bottom: 15px;
-            font-size: 13px;
-            color: #4da6ff;
-            text-decoration: none;
-        }
-
-        .back-link:hover {
-            color: #80c1ff;
-            text-decoration: underline;
+        .card {
+            width: 400px;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
         }
 
         h2 {
             text-align: center;
-            margin-bottom: 25px;
-            color: #ffffff;
         }
 
         label {
-            font-size: 13px;
-            color: #cdd9e5;
             display: block;
             margin-top: 10px;
+            color: #bbb;
         }
 
-        input[type="text"],
-        input[type="email"],
-        input[type="password"] {
+        input {
             width: 100%;
-            padding: 12px;
-            margin-top: 6px;
-            background: #223743;
-            border: 1px solid #34515d;
-            border-radius: 8px;
-            color: #ffffff;
-        }
-
-        .buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 15px;
-        }
-
-        input[type="submit"],
-        input[type="reset"] {
-            width: 48%;
-            padding: 11px;
-            border-radius: 8px;
+            padding: 8px;
+            margin-top: 4px;
+            background: #333;
             border: none;
+            color: white;
+        }
+
+        button {
+            margin-top: 15px;
+            width: 100%;
+            padding: 10px;
+            background: #4da6ff;
+            border: none;
+            color: white;
             cursor: pointer;
-            color: #ffffff;
         }
 
-        input[type="submit"] {
-            background: linear-gradient(145deg, #4facfe, #00c6ff);
+        .success {
+            margin-top: 10px;
+            text-align: center;
+            color: lightgreen;
         }
 
-        input[type="reset"] {
-            background: #3a4b55;
+        select {
+            width: 100%;
+            padding: 9px;
+            margin-top: 10px;
+            background: #2b2b2b;
+            border: 1px solid #444;
+            border-radius: 6px;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #4da6ff;
+            box-shadow: 0 0 6px rgba(77,166,255,0.6);
+        }
+
+        option {
+            background: #2b2b2b;
+            color: white;
         }
 
         .dropdown {
@@ -110,6 +95,11 @@
             border-radius: 8px;
             cursor: pointer;
             color: #fff;
+            user-select: none;
+        }
+
+        .dropdown-btn:hover {
+            background: #2b4a5b;
         }
 
         .dropdown-content {
@@ -121,7 +111,7 @@
             background: #2b2b2b;
             border: 1px solid #444;
             border-radius: 8px;
-            max-height: 160px;
+            max-height: 180px;
             overflow-y: auto;
             z-index: 1000;
             box-shadow: 0 12px 30px rgba(0,0,0,0.6);
@@ -131,7 +121,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 10px;
+            padding: 8px 12px;
             color: #ddd;
             cursor: pointer;
         }
@@ -143,32 +133,49 @@
         .dropdown-content input[type="checkbox"] {
             accent-color: #4da6ff;
         }
+
+        .update-btn:hover {
+            background: #66b3ff;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 12px;
+            color: #4da6ff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 
 <body>
 
-<div class="form-container">
+<div class="card">
 
-    <a class="back-link" href="${pageContext.request.contextPath}/user/users">
-        ← Back to Users
+    <a class="back" href="${pageContext.request.contextPath}/user/users">
+        ← Back
     </a>
 
-    <h2>Registration</h2>
+    <h2>User Profile</h2>
 
-    <c:if test="${not empty msg}">
-        <div class="message-box">${msg}</div>
-    </c:if>
+    <form action="/user/updateByEmail/${user.id}" method="post">
 
-    <form action="/user/register" method="post">
+        <input type="hidden" name="id" value="${user.id}" />
 
         <label>Username</label>
-        <input type="text" name="userName" required>
+        <input type="text" name="userName" value="${user.userName}" />
 
         <label>Email</label>
-        <input type="email" name="email" required>
+        <input type="email" name="email" value="${user.email}" />
 
-        <label>Role</label>
+        <label>Password</label>
+        <input type="password" name="password" value="${user.password}" />
+
+        <label>Primary Role</label>
         <div class="dropdown">
             <div class="dropdown-btn" id="primaryBtn"
                  onclick="toggleDropdown(event, 'primaryContent')">
@@ -179,7 +186,7 @@
                 <c:forEach var="role" items="${roles}">
                     <label>
                         <input type="checkbox"
-                               name="role"
+                               name="primaryRole"
                                value="${role.name}"
                                onchange="handleSingleRoleSelection(this)">
                         ${role.name}
@@ -191,15 +198,15 @@
         <label>Additional Roles</label>
         <div class="dropdown">
             <div class="dropdown-btn"
-                 onclick="toggleDropdown(event, 'additionalContent')">
-                Select Roles ▼
+                 onclick="toggleDropdown(event, 'multiContent')">
+                Select Additional Roles ▼
             </div>
 
-            <div class="dropdown-content" id="additionalContent">
+            <div class="dropdown-content" id="multiContent">
                 <c:forEach var="role" items="${roles}">
                     <label>
                         <input type="checkbox"
-                               name="roles"
+                               name="additionalRoles"
                                value="${role.name}">
                         ${role.name}
                     </label>
@@ -207,13 +214,11 @@
             </div>
         </div>
 
-        <label>Password</label>
-        <input type="password" name="password" required>
+        <button type="submit" class="update-btn">Update</button>
 
-        <div class="buttons">
-            <input type="submit" value="Register">
-            <input type="reset" value="Clear">
-        </div>
+        <c:if test="${not empty msg}">
+            <div class="success">${msg}</div>
+        </c:if>
 
     </form>
 </div>
@@ -253,3 +258,4 @@ document.addEventListener('click', () => {
 
 </body>
 </html>
+``
