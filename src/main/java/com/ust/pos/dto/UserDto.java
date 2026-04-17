@@ -3,11 +3,11 @@ package com.ust.pos.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
-public class UserDto {
-    private int id;
-    private String name;
+public class UserDto extends CommonDto {
     private String email;
     private String phoneNo;
     private String userName;
@@ -17,4 +17,6 @@ public class UserDto {
     private String message;
     private String colour;
     private String message2;
+    private String roleName;
+    private List<String> roleNames;
 }
