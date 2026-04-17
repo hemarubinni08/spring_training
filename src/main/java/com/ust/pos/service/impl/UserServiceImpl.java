@@ -18,13 +18,13 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     PasswordEncoder passwordEncoder;
     @Autowired
-    private ModelMapper modelMapper;
-    @Autowired
     UserDao userDao;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public String register(UserDto userDto) {
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> getUsers() {
+    public List<UserDto> getAllUsers() {
         List<User> users = userRepository.findAll();
         List<UserDto> usersDto = new ArrayList<>();
         for (User user : users) {

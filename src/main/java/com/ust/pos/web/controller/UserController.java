@@ -38,7 +38,7 @@ public class UserController {
         userService.registerUsingJdbc(userDto);
         ra.addFlashAttribute("message", userDto.getMessage());
         ra.addFlashAttribute("success", userDto.isSuccess());
-        return "redirect:/user/getAllUsers";
+        return "redirect:/user/getAllUsersJdbc";
     }
 
     @GetMapping("/registerJdbc")
@@ -48,7 +48,7 @@ public class UserController {
 
     @GetMapping("/getAllUsers")
     public String getAllUsers(Model model) {
-        List<UserDto> users = userService.getUsers();
+        List<UserDto> users = userService.getAllUsers();
         model.addAttribute("users", users);
         return "userDetails";
     }

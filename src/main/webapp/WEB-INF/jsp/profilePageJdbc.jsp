@@ -163,31 +163,6 @@
             <input type="email" name="email" value="${u.email}" class="input-field" required>
         </div>
 
-        <div class="form-group">
-            <label>Primary Role</label>
-            <select name="role" required>
-                <option value="" disabled>Select Role</option>
-                <c:forEach var="role" items="${roles}">
-                    <option value="${role.name}" ${role.name == u.role ? 'selected' : ''}>
-                        ${role.name}
-                    </option>
-                </c:forEach>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>Additional Access Roles</label>
-            <div class="role-selector">
-                <c:forEach var="r" items="${roles}">
-                    <label class="role-option">
-                        <input type="checkbox" name="roles" value="${r.name}"
-                            ${fn:contains(u.roles, r.name) ? 'checked' : ''}>
-                        ${r.name}
-                    </label>
-                </c:forEach>
-            </div>
-        </div>
-
         <div style="display: flex; gap: 15px;">
             <div class="form-group" style="flex: 1;">
                 <label>Age</label>

@@ -2,7 +2,6 @@ package com.ust.pos.service.impl;
 
 import com.ust.pos.dao.RoleDao;
 import com.ust.pos.dto.RoleDto;
-import com.ust.pos.model.*;
 import com.ust.pos.model.Role;
 import com.ust.pos.model.RoleRepository;
 import com.ust.pos.service.RoleService;
@@ -18,11 +17,11 @@ import java.util.Optional;
 @Service
 public class RoleServiceImpl implements RoleService {
     @Autowired
+    RoleDao roleDao;
+    @Autowired
     private RoleRepository roleRepository;
     @Autowired
     private ModelMapper modelMapper;
-    @Autowired
-    RoleDao roleDao;
 
     @Override
     public RoleDto addRole(RoleDto roleDto) {

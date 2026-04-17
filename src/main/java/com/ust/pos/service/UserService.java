@@ -9,7 +9,7 @@ public interface UserService {
 
     String registerUsingJdbc(UserDto userDto);
 
-    List<UserDto> getUsers();
+    List<UserDto> getAllUsers();
 
     List<UserDto> getUsersJdbc();
 
