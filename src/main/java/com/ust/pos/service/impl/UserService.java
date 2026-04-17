@@ -28,4 +28,6 @@ public interface UserService {
     UserDto UpdateData(UserDto userDto);
 
     UserDto UpdateUserJpa(UserDto userDto);
+
+    UserDto getUserbyUserName(String username);
 }

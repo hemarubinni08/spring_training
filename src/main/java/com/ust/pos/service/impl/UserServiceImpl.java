@@ -30,11 +30,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto findByUserName(String userName) {
-        UserDto userDto = new UserDto();
         User user = userRepository.findByUserName(userName);
-        userDto.setUserName(user.getUserName());
-        modelMapper.map(user, userDto);
-        return userDto;
+        return modelMapper.map(user, UserDto.class);
     }
 
     @Override
@@ -127,5 +124,11 @@ public class UserServiceImpl implements UserService {
             userDto.setSuccess(true);
             return modelMapper.map(user, UserDto.class);
         }
+    }
+
+    @Override
+    public UserDto getUserbyUserName(String username) {
+        User user= userRepository.findByUserName(username);
+        return modelMapper.map(user, UserDto.class);
     }
 }

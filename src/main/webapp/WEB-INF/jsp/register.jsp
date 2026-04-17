@@ -90,6 +90,10 @@
                 <form:label path="name">Full Name</form:label>
                 <form:input path="name"/>
             </div>
+            <div class="form-group">
+                            <form:label path="userName">Full userName</form:label>
+                            <form:input path="userName"/>
+                        </div>
 
             <div class="form-group">
                 <form:label path="email">E-mail</form:label>

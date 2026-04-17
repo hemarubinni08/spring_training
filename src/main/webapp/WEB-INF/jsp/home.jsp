@@ -66,6 +66,7 @@
         <a href="/user/registeruserList">Users</a>
         <a href="/role/allRoles">Roles</a>
         <a href="/node/nodeList">Nodes</a>
+        <a href="/logout">Logout</a>
 
     </div>
 
