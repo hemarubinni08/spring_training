@@ -14,107 +14,129 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: #f6f7f9;
+            color: #1f2937;
         }
 
         .profile-card {
             width: 440px;
             background: #ffffff;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
             overflow: hidden;
         }
 
+        /* ===== HEADER ===== */
         .header {
-            background: linear-gradient(135deg, #4CAF50, #2E7D32);
-            color: white;
+            background-color: #f1f5f9;
             text-align: center;
-            padding: 30px 20px;
+            padding: 26px 20px 22px;
             position: relative;
+            border-bottom: 1px solid #e2e8f0;
         }
 
-        /* ✅ TOP NAV BUTTONS */
+        /* ✅ BACK BUTTON (LEFT) */
         .top-nav {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 8px;
+            top: 18px;
+            left: 18px;
         }
 
         .nav-btn {
             padding: 6px 14px;
-            background: rgba(255,255,255,0.2);
-            color: white;
+            background-color: #eef0f3;
+            color: #374151;
             text-decoration: none;
-            border-radius: 20px;
+            border-radius: 6px;
             font-size: 13px;
             font-weight: 600;
-            transition: background 0.3s ease;
+            border: 1px solid #d1d5db;
         }
 
         .nav-btn:hover {
-            background: rgba(255,255,255,0.35);
+            background-color: #e5e7eb;
         }
 
         .avatar {
-            width: 100px;
-            height: 100px;
-            background: white;
-            color: #4CAF50;
+            width: 90px;
+            height: 90px;
+            background-color: #e0e7ff;
+            color: #1d4ed8;
             border-radius: 50%;
-            margin: 0 auto 10px;
-            font-size: 40px;
-            font-weight: bold;
+            margin: 0 auto 12px;
+            font-size: 36px;
+            font-weight: 600;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
+        .header h2 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .header .username {
+            margin-top: 4px;
+            font-size: 14px;
+            color: #475569;
+        }
+
+        /* ===== FORM BODY ===== */
         .body {
-            padding: 25px;
+            padding: 22px;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 14px;
         }
 
         .form-group label {
             display: block;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
-            color: #555;
-            margin-bottom: 5px;
+            color: #475569;
+            margin-bottom: 4px;
         }
 
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 10px 12px;
+            padding: 9px 11px;
             font-size: 14px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
+            background-color: #ffffff;
+            color: #1f2937;
         }
 
         .form-group input[readonly] {
-            background: #f3f4f6;
+            background-color: #f9fafb;
         }
 
+        /* ===== FOOTER ===== */
         .footer {
-            background: #f9fafb;
-            padding: 15px;
+            background-color: #f9fafb;
+            padding: 14px;
             text-align: center;
+            border-top: 1px solid #e5e7eb;
         }
 
         .btn {
-            padding: 10px 25px;
-            background: #4f46e5;
-            color: white;
+            padding: 9px 26px;
+            background-color: #2563eb;
+            color: #ffffff;
             border: none;
-            border-radius: 25px;
+            border-radius: 20px;
             font-weight: 600;
+            font-size: 14px;
             cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #1d4ed8;
         }
     </style>
 </head>
@@ -126,17 +148,17 @@
     <!-- HEADER -->
     <div class="header">
 
-        <!-- ✅ HOME + BACK BUTTON -->
+        <!-- ✅ BACK BUTTON ONLY -->
         <div class="top-nav">
-            <a href="/" class="nav-btn">Home</a>
-            <a href="/user/display" class="nav-btn">Users</a>
+            <a href="/user/display" class="nav-btn">Back</a>
         </div>
 
         <div class="avatar">
             ${user.name.substring(0,1)}
         </div>
+
         <h2>${user.name}</h2>
-        <div>@${user.userName}</div>
+        <div class="username">@${user.userName}</div>
     </div>
 
     <!-- EDIT FORM -->
@@ -179,10 +201,7 @@
                 <input type="text" name="dateOfBirth" value="${user.dateOfBirth}" />
             </div>
 
-            <div class="form-group">
-                <label>Password</label>
-                <input type="text" name="password" value="${user.password}" />
-            </div>
+            <!-- ✅ PASSWORD REMOVED -->
 
             <!-- SINGLE ROLE -->
             <div class="form-group">

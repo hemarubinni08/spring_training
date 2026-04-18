@@ -8,56 +8,52 @@
     <style>
         body {
             margin: 0;
-            height: 100vh;
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #22c55e, #16a34a);
+            min-height: 100vh;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: #f6f7f9;
             display: flex;
             align-items: center;
             justify-content: center;
+            color: #1f2937;
         }
 
         .success-card {
-            background: #ffffff;
-            padding: 45px;
-            border-radius: 18px;
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+            background-color: #ffffff;
+            padding: 36px 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
             text-align: center;
             max-width: 420px;
             width: 90%;
         }
 
-        .success-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
-
         h2 {
             margin: 10px 0;
             color: #16a34a;
-            font-size: 26px;
+            font-size: 22px;
+            font-weight: 600;
         }
 
         p {
-            color: #555;
-            font-size: 15px;
-            margin-bottom: 30px;
+            color: #4b5563;
+            font-size: 14px;
+            margin-bottom: 26px;
         }
 
         .btn-group {
             display: flex;
             justify-content: center;
-            gap: 14px;
+            gap: 12px;
         }
 
         .btn {
             display: inline-block;
-            padding: 12px 22px;
-            border-radius: 10px;
+            padding: 9px 22px;
+            border-radius: 20px;
             text-decoration: none;
             font-weight: 600;
             font-size: 14px;
             color: #ffffff;
-            transition: background-color 0.3s ease;
         }
 
         .btn-primary {
@@ -69,11 +65,13 @@
         }
 
         .btn-secondary {
-            background-color: #16a34a;
+            background-color: #eef0f3;
+            color: #374151;
+            border: 1px solid #d1d5db;
         }
 
         .btn-secondary:hover {
-            background-color: #15803d;
+            background-color: #e5e7eb;
         }
     </style>
 </head>
@@ -81,17 +79,21 @@
 <body>
 
 <div class="success-card">
-    <div class="success-icon">✅</div>
     <h2>Path Added Successfully</h2>
-    <p>The new path has been saved and is now available.</p>
+
+    <p>
+        The new path has been saved and is now available in the system.
+    </p>
 
     <!-- ✅ ACTION BUTTONS -->
     <div class="btn-group">
-        <a href="${pageContext.request.contextPath}/node/displayNode" class="btn btn-primary">
+        <a href="${pageContext.request.contextPath}/node/displayNode"
+           class="btn btn-primary">
             Back to Paths
         </a>
 
-        <a href="${pageContext.request.contextPath}/node/addNode" class="btn btn-secondary">
+        <a href="${pageContext.request.contextPath}/node/addNode"
+           class="btn btn-secondary">
             Add Another Path
         </a>
     </div>

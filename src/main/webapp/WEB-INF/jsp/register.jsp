@@ -22,7 +22,6 @@
             position: relative;
         }
 
-        /* ✅ BACK BUTTON */
         .back-btn {
             position: absolute;
             top: 15px;
@@ -42,7 +41,6 @@
 
         h2 {
             text-align: center;
-            color: #333;
             margin-bottom: 25px;
         }
 
@@ -79,7 +77,6 @@
 
 <div class="container">
 
-    <!-- ✅ BACK TO USER DISPLAY -->
     <a href="/user/display" class="back-btn">← Back</a>
 
     <h2>User Registration</h2>
@@ -87,34 +84,45 @@
     <form action="/user/register" method="POST">
 
         <label>Name</label>
-        <input type="text" name="name" required>
+        <input type="text" name="name" required />
 
         <label>Email</label>
-        <input type="email" name="email" required>
+        <input
+            type="email"
+            name="email"
+            required
+            placeholder="example@mail.com"
+        />
 
         <label>Phone Number</label>
-        <input type="text" name="phoneNo" required>
+        <input
+            type="tel"
+            name="phoneNo"
+            required
+            pattern="[0-9]{10}"
+            maxlength="10"
+            title="Phone number must be exactly 10 digits"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+        />
 
         <label>Username</label>
-        <input type="text" name="userName" required>
+        <input type="text" name="userName" required />
 
         <label>Password</label>
-        <input type="password" name="password" required>
+        <input type="password" name="password" required />
 
         <label>Age</label>
-        <input type="number" name="age" required>
+        <input type="number" name="age" required min="1" />
 
         <label>Date of Birth</label>
-        <input type="date" name="dateOfBirth" required>
+        <input type="date" name="dateOfBirth" required />
 
         <!-- ✅ SINGLE ROLE -->
         <label>Role</label>
         <select name="roleName" required>
             <option value="">-- Select Role --</option>
             <c:forEach var="role" items="${roles}">
-                <option value="${role.name}">
-                    ${role.name}
-                </option>
+                <option value="${role.name}">${role.name}</option>
             </c:forEach>
         </select>
 
@@ -122,9 +130,7 @@
         <label>Roles</label>
         <select name="roleNames" multiple required size="4">
             <c:forEach var="role" items="${roles}">
-                <option value="${role.name}">
-                    ${role.name}
-                </option>
+                <option value="${role.name}">${role.name}</option>
             </c:forEach>
         </select>
 

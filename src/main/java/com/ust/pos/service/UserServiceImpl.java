@@ -133,13 +133,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto edit(UserDto userDto) {
         User existingUserWithEmail = userRepository.findByEmail(userDto.getEmail());
-
+        String existingPassword=existingUserWithEmail.getPassword();
         if (existingUserWithEmail != null &&
                 existingUserWithEmail.getId() != userDto.getId()) {
             return userDto;
         }
+
         User user = modelMapper.map(userDto, User.class);
-//        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setPassword(existingPassword);
         userRepository.save(user);
 
         return userDto;
@@ -183,4 +184,5 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUserName(userName);
         return modelMapper.map(user,UserDto.class);
     }
+
 }

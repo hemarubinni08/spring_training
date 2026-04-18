@@ -8,61 +8,84 @@
 
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f4f7;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: #f6f7f9;
+            color: #1f2937;
         }
 
         .container {
             width: 380px;
-            margin: 80px auto;
-            padding: 25px;
+            padding: 24px;
             background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 0 12px rgba(0,0,0,0.15);
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        /* ✅ BACK BUTTON (LEFT, CONSISTENT) */
+        .back-btn {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            padding: 6px 14px;
+            background-color: #eef0f3;
+            color: #374151;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid #d1d5db;
+        }
+
+        .back-btn:hover {
+            background-color: #e5e7eb;
         }
 
         h2 {
             text-align: center;
-            margin-bottom: 20px;
+            margin: 12px 0 22px;
+            font-size: 22px;
+            font-weight: 600;
         }
 
         label {
-            font-weight: bold;
             display: block;
-            margin-top: 12px;
+            margin-top: 14px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #475569;
         }
 
         input, select {
             width: 100%;
-            padding: 8px;
+            padding: 9px 11px;
             margin-top: 6px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
+            font-size: 14px;
+            color: #1f2937;
         }
 
         button {
-            margin-top: 20px;
+            margin-top: 22px;
             width: 100%;
             padding: 10px;
             background-color: #2563eb;
             color: #ffffff;
             border: none;
-            border-radius: 4px;
+            border-radius: 20px;
             font-weight: 600;
+            font-size: 14px;
             cursor: pointer;
         }
 
         button:hover {
             background-color: #1d4ed8;
-        }
-
-        .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 15px;
-            text-decoration: none;
-            font-weight: 600;
-            color: #2563eb;
         }
     </style>
 </head>
@@ -70,6 +93,12 @@
 <body>
 
 <div class="container">
+
+    <!-- ✅ BACK TO NODE LIST -->
+    <a href="${pageContext.request.contextPath}/node/displayNode"
+       class="back-btn">
+        Back
+    </a>
 
     <h2>Add Node</h2>
 
@@ -84,7 +113,7 @@
         <label>Path</label>
         <input type="text" name="path" required />
 
-        <!-- ✅ ADDED: MULTI-SELECT DROPDOWN (DYNAMIC FROM roles) -->
+        <!-- ✅ ROLES -->
         <label>Roles</label>
         <select name="roleNames" multiple required>
             <c:forEach var="role" items="${roles}">
@@ -96,12 +125,6 @@
 
         <button type="submit">Save Node</button>
     </form>
-
-    <!-- ✅ BACK TO LIST PAGE -->
-    <a class="back-link"
-       href="${pageContext.request.contextPath}/node/displayNode">
-        ← Back to Node List
-    </a>
 
 </div>
 

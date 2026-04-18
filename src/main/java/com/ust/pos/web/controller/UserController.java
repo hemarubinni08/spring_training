@@ -32,7 +32,7 @@ public class UserController {
         model.addAttribute("colour", resultDto.getColour());
         model.addAttribute("status2", resultDto.getMessage2());
 
-        return "success";
+        return "redirect:/login";
     }
 
     @GetMapping("/registerJdbc")

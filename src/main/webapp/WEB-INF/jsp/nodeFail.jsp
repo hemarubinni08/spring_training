@@ -5,54 +5,59 @@
 <head>
     <title>Name Already Exists</title>
 
+    <!-- ✅ Auto redirect after 5 seconds -->
     <meta http-equiv="refresh" content="5;URL=${pageContext.request.contextPath}/node/displayNode">
 
     <style>
         body {
             margin: 0;
-            height: 100vh;
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f97316, #ef4444);
+            min-height: 100vh;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: #f6f7f9;
             display: flex;
             align-items: center;
             justify-content: center;
+            color: #1f2937;
         }
 
         .card {
-            background: white;
-            padding: 40px;
-            border-radius: 16px;
+            background-color: #ffffff;
+            padding: 32px 28px;
+            border-radius: 12px;
             text-align: center;
-            box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
             max-width: 420px;
             width: 90%;
         }
 
         h2 {
             color: #dc2626;
+            font-size: 20px;
+            font-weight: 600;
             margin-bottom: 10px;
         }
 
         p {
-            color: #444;
-            font-size: 15px;
-            margin-bottom: 25px;
+            color: #374151;
+            font-size: 14px;
+            margin-bottom: 20px;
         }
 
         small {
-            color: #666;
+            color: #6b7280;
             font-size: 13px;
         }
 
         .btn {
             display: inline-block;
-            margin-top: 15px;
-            padding: 10px 18px;
+            margin-top: 18px;
+            padding: 8px 18px;
             background-color: #2563eb;
-            color: white;
+            color: #ffffff;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 20px;
             font-weight: 600;
+            font-size: 14px;
         }
 
         .btn:hover {
@@ -64,7 +69,7 @@
 <body>
 
 <div class="card">
-    <h2>⚠ Name Already Exists</h2>
+    <h2>Name Already Exists</h2>
 
     <p>
         The name you are trying to add already exists in the system.
@@ -75,3 +80,11 @@
     </small>
 
     <br><br>
+
+    <a href="${pageContext.request.contextPath}/node/displayNode" class="btn">
+        Go Back Now
+    </a>
+</div>
+
+</body>
+</html>

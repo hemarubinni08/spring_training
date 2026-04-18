@@ -7,71 +7,84 @@
 
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f4f7;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: #f6f7f9;
+            color: #1f2937;
         }
 
         .container {
             width: 360px;
-            margin: 80px auto;
-            padding: 25px;
+            padding: 24px;
             background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 0 12px rgba(0,0,0,0.15);
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
             position: relative;
         }
 
-        /* ✅ BACK BUTTON */
+        /* ✅ BACK BUTTON (LEFT, CONSISTENT) */
         .back-btn {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 18px;
+            left: 18px;
             padding: 6px 14px;
-            background-color: #6b7280;
-            color: #ffffff;
+            background-color: #eef0f3;
+            color: #374151;
             text-decoration: none;
-            border-radius: 20px;
-            font-size: 12px;
+            border-radius: 6px;
+            font-size: 13px;
             font-weight: 600;
+            border: 1px solid #d1d5db;
         }
 
         .back-btn:hover {
-            background-color: #4b5563;
+            background-color: #e5e7eb;
         }
 
         h2 {
             text-align: center;
-            margin-bottom: 20px;
+            margin: 12px 0 22px;
+            font-size: 22px;
+            font-weight: 600;
         }
 
         label {
-            font-weight: bold;
             display: block;
-            margin-top: 12px;
+            margin-top: 14px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #475569;
         }
 
         input {
             width: 100%;
-            padding: 8px;
+            padding: 9px 11px;
             margin-top: 6px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
+            font-size: 14px;
+            color: #1f2937;
         }
 
         input[readonly] {
-            background-color: #e5e7eb;
+            background-color: #f9fafb;
             cursor: not-allowed;
         }
 
         button {
-            margin-top: 20px;
+            margin-top: 22px;
             width: 100%;
             padding: 10px;
             background-color: #2563eb;
             color: #ffffff;
             border: none;
-            border-radius: 4px;
+            border-radius: 20px;
             font-weight: 600;
+            font-size: 14px;
             cursor: pointer;
         }
 
@@ -88,7 +101,7 @@
     <!-- ✅ BACK TO ROLE DISPLAY -->
     <a href="${pageContext.request.contextPath}/role/display"
        class="back-btn">
-        ← Back
+        Back
     </a>
 
     <h2>Edit Role</h2>
@@ -101,14 +114,14 @@
         <input type="text"
                name="id"
                value="${roleDto.id}"
-               readonly>
+               readonly />
 
         <!-- ROLE NAME -->
         <label>Role Name</label>
         <input type="text"
                name="name"
                value="${roleDto.name}"
-               required>
+               required />
 
         <button type="submit">Update Role</button>
 

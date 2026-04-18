@@ -5,32 +5,50 @@
 <head>
     <title>Login</title>
 
-    <!-- ✅ Font (Clean, Professional) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-
     <style>
         body {
             margin: 0;
-            height: 100vh;
+            min-height: 100vh;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: #f6f7f9;
+            color: #1f2937;
+        }
+
+        .topbar {
+            height: 56px;
+            background-color: #020617;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            border-bottom: 1px solid #1e293b;
+            color: #e5e7eb;
+        }
+
+        .top-title {
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+        }
+
+        .page-wrapper {
+            min-height: calc(100vh - 56px);
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea, #764ba2);
         }
 
         .login-card {
-            background: #ffffff;
+            background-color: #ffffff;
             width: 360px;
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+            padding: 28px 26px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
         }
 
         .login-card h2 {
             text-align: center;
             margin-bottom: 24px;
-            color: #1f2937;
+            font-size: 22px;
             font-weight: 600;
         }
 
@@ -40,66 +58,88 @@
 
         .form-group label {
             display: block;
-            margin-bottom: 6px;
-            font-size: 14px;
+            margin-bottom: 4px;
+            font-size: 12px;
             font-weight: 600;
-            color: #374151;
+            color: #475569;
         }
 
         .form-group input {
             width: 100%;
-            padding: 10px 12px;
-            border-radius: 8px;
+            padding: 9px 11px;
+            border-radius: 6px;
             border: 1px solid #d1d5db;
             font-size: 14px;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #6366f1;
+            color: #1f2937;
         }
 
         .login-btn {
             width: 100%;
-            padding: 12px;
-            margin-top: 10px;
-            background: #4f46e5;
-            color: white;
+            padding: 10px;
+            margin-top: 8px;
+            background-color: #2563eb;
+            color: #ffffff;
             border: none;
-            border-radius: 10px;
-            font-size: 15px;
+            border-radius: 20px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s ease;
         }
 
-        .login-btn:hover {
-            background: #4338ca;
+        .register-btn {
+            width: 100%;
+            padding: 10px;
+            margin-top: 12px;
+            background-color: #eef0f3;
+            color: #374151;
+            border: 1px solid #d1d5db;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
         }
     </style>
 </head>
 
 <body>
 
-<div class="login-card">
-    <h2>Login</h2>
-
-    <form action="${pageContext.request.contextPath}/login" method="post">
-
-        <div class="form-group">
-            <label>Username</label>
-            <input type="text" name="username" required />
-        </div>
-
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" name="password" required />
-        </div>
-
-        <button type="submit" class="login-btn">Login</button>
-
-    </form>
+<div class="topbar">
+    <div class="top-title">POS Application</div>
 </div>
+
+<div class="page-wrapper">
+
+    <div class="login-card">
+        <h2>Login</h2>
+
+        <form action="${pageContext.request.contextPath}/login" method="post">
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="username" required />
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" required />
+            </div>
+
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+
+        <form action="${pageContext.request.contextPath}/user/register" method="get">
+            <button type="submit" class="register-btn">Register</button>
+        </form>
+    </div>
+
+</div>
+
+<!-- ✅ LOGIN ERROR POPUP -->
+<c:if test="${not empty param.error}">
+    <script>
+        alert("Invalid credentials. User does not exist or password is incorrect.");
+    </script>
+</c:if>
 
 </body>
 </html>

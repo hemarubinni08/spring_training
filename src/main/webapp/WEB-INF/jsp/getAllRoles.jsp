@@ -10,93 +10,105 @@
         body {
             margin: 0;
             min-height: 100vh;
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: #f6f7f9;
+            color: #1f2937;
         }
 
         .page-title {
             text-align: center;
-            padding: 30px 0;
-            color: #ffffff;
-            font-size: 32px;
+            padding: 18px 0 10px;
+            font-size: 26px;
             font-weight: 600;
+            color: #1f2937;
         }
 
         .card {
             width: 95%;
             max-width: 700px;
-            margin: 0 auto 40px;
+            margin: 10px auto 24px;
             background: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+            padding: 22px;
         }
 
-        /* ✅ TOP ACTION BAR */
+        /* TOP ACTIONS */
         .top-actions {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 15px;
+            align-items: center;
+            margin-bottom: 12px;
         }
 
         .home-btn {
-            display: inline-block;
-            padding: 10px 18px;
-            background: #374151;
-            color: white;
+            padding: 7px 14px;
+            background-color: #eef0f3;
+            color: #374151;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 6px;
+            font-size: 14px;
             font-weight: 600;
+            border: 1px solid #d1d5db;
         }
 
         .home-btn:hover {
-            background: #1f2937;
+            background-color: #e5e7eb;
         }
 
         .add-role-btn {
-            display: inline-block;
-            padding: 10px 18px;
-            background: #16a34a;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-        }
-
-        .add-role-btn:hover {
-            background: #15803d;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        thead {
-            background: linear-gradient(90deg, #4CAF50, #43A047);
-            color: white;
-        }
-
-        th, td {
-            padding: 14px;
-            text-align: center;
-        }
-
-        tbody tr:nth-child(even) {
-            background-color: #f9fafb;
-        }
-
-        tbody tr:hover {
-            background-color: #eef2ff;
-        }
-
-        .edit-link {
-            display: inline-block;
-            padding: 6px 14px;
+            padding: 7px 14px;
             background-color: #2563eb;
             color: #ffffff;
             text-decoration: none;
             border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .add-role-btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 13.5px;
+        }
+
+        thead {
+            background-color: #f1f5f9;
+        }
+
+        th {
+            padding: 12px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #475569;
+            border-bottom: 1px solid #cbd5e1;
+            text-align: center;
+        }
+
+        td {
+            padding: 12px;
+            text-align: center;
+            color: #1f2937;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .edit-link {
+            padding: 5px 12px;
+            background-color: #2563eb;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 13px;
             font-weight: 600;
         }
 
@@ -105,12 +117,12 @@
         }
 
         .delete-link {
-            display: inline-block;
-            padding: 6px 14px;
+            padding: 5px 12px;
             background-color: #dc2626;
             color: #ffffff;
             text-decoration: none;
-            border-radius: 6px;
+            border-radius: 5px;
+            font-size: 13px;
             font-weight: 600;
             margin-left: 6px;
         }
@@ -120,27 +132,26 @@
         }
 
         .footer {
-            text-align: right;
             margin-top: 10px;
-            color: #555;
-            font-size: 14px;
+            text-align: right;
+            font-size: 13.5px;
+            color: #6b7280;
         }
     </style>
 </head>
 
 <body>
 
-<div class="page-title">🔐 Role Dashboard</div>
+<div class="page-title">Role Dashboard</div>
 
 <div class="card">
 
-    <!-- ✅ HOME + ADD ROLE -->
     <div class="top-actions">
-        <a href="/" class="home-btn">🏠 Home</a>
+        <a href="/" class="home-btn">Home</a>
 
         <a class="add-role-btn"
            href="${pageContext.request.contextPath}/role/addRole">
-            ➕ Add Role
+            Add Role
         </a>
     </div>
 

@@ -10,120 +10,142 @@
         body {
             margin: 0;
             min-height: 100vh;
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: #f6f7f9;
+            color: #1f2937;
         }
 
         .page-title {
             text-align: center;
-            padding: 25px 0;
-            color: #ffffff;
-            font-size: 32px;
+            padding: 18px 0 10px;
+            font-size: 26px;
             font-weight: 600;
+            color: #1f2937;
         }
 
         .container {
             width: 95%;
             max-width: 1000px;
-            margin: 0 auto 40px;
+            margin: 10px auto 24px;
             background: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+            padding: 22px;
         }
 
         /* ✅ TOP BAR */
         .top-bar {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 15px;
+            align-items: center;
+            margin-bottom: 12px;
         }
 
         .home-btn {
-            padding: 10px 18px;
-            background-color: #374151;
-            color: white;
+            padding: 7px 14px;
+            background-color: #eef0f3;
+            color: #374151;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 6px;
+            font-size: 14px;
             font-weight: 600;
+            border: 1px solid #d1d5db;
         }
 
         .home-btn:hover {
-            background-color: #1f2937;
+            background-color: #e5e7eb;
         }
 
         .add-btn {
-            padding: 10px 18px;
-            background-color: #16a34a;
-            color: white;
+            padding: 7px 14px;
+            background-color: #2563eb;
+            color: #ffffff;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 6px;
+            font-size: 14px;
             font-weight: 600;
         }
 
         .add-btn:hover {
-            background-color: #15803d;
+            background-color: #1d4ed8;
         }
 
         table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 13.5px;
         }
 
         thead {
-            background: linear-gradient(90deg, #0ea5e9, #0284c7);
-            color: white;
+            background-color: #f1f5f9;
         }
 
-        th, td {
+        th {
             padding: 12px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #475569;
+            border-bottom: 1px solid #cbd5e1;
             text-align: center;
         }
 
-        tbody tr:nth-child(even) {
-            background-color: #f9fafb;
+        td {
+            padding: 12px;
+            text-align: center;
+            color: #1f2937;
+            border-bottom: 1px solid #e2e8f0;
         }
 
         tbody tr:hover {
-            background-color: #eef2ff;
+            background-color: #f8fafc;
         }
 
         .action-link {
-            padding: 6px 12px;
-            border-radius: 6px;
+            padding: 5px 12px;
+            border-radius: 5px;
             text-decoration: none;
             font-weight: 600;
-            color: white;
+            font-size: 13px;
+            color: #ffffff;
+            display: inline-block;
         }
 
         .edit {
             background-color: #2563eb;
         }
 
+        .edit:hover {
+            background-color: #1d4ed8;
+        }
+
         .delete {
             background-color: #dc2626;
             margin-left: 6px;
+        }
+
+        .delete:hover {
+            background-color: #b91c1c;
         }
     </style>
 </head>
 
 <body>
 
-<div class="page-title">🧭 Node Management</div>
+<div class="page-title">Node Management</div>
 
 <div class="container">
 
-    <!-- ✅ HOME + ADD BUTTONS -->
     <div class="top-bar">
-        <a href="/" class="home-btn">🏠 Home</a>
+        <a href="/" class="home-btn">Home</a>
 
         <a href="${pageContext.request.contextPath}/node/addNode"
            class="add-btn">
-            ➕ Add Node
+            Add Node
         </a>
     </div>
 
-    <!-- ✅ TABLE -->
     <table>
         <thead>
         <tr>

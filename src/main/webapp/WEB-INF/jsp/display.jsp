@@ -7,128 +7,124 @@
     <title>User Dashboard</title>
 
     <style>
+        /* ===== GLOBAL ===== */
         body {
             margin: 0;
             min-height: 100vh;
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: #f6f7f9;
+            color: #1f2937;
         }
 
+        /* ===== PAGE TITLE ===== */
         .page-title {
             text-align: center;
-            padding: 30px 0;
-            color: #ffffff;
-            font-size: 32px;
+            padding: 18px 0 10px;
+            font-size: 26px;
             font-weight: 600;
+            color: #1f2937;
         }
 
+        /* ===== CARD ===== */
         .card {
             width: 95%;
             max-width: 1200px;
-            margin: 0 auto 40px;
-            background: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-            padding: 25px;
+            margin: 10px auto 24px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+            padding: 22px;
         }
 
-        /* ✅ TOP ACTIONS BAR */
+        /* ===== TOP ACTIONS ===== */
         .top-actions {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 15px;
+            align-items: center;
+            margin-bottom: 12px;
         }
 
-        .home-btn {
-            display: inline-block;
-            padding: 10px 18px;
-            background: #374151;
-            color: #ffffff;
-            text-decoration: none;
-            border-radius: 8px;
+        .action-btn {
+            padding: 7px 14px;
+            font-size: 14px;
             font-weight: 600;
-        }
-
-        .home-btn:hover {
-            background: #1f2937;
-        }
-
-        .add-user-btn {
-            display: inline-block;
-            padding: 10px 18px;
-            background: #16a34a;
-            color: #ffffff;
+            border-radius: 6px;
             text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
+            border: 1px solid transparent;
         }
 
-        .add-user-btn:hover {
-            background: #15803d;
+        .btn-home {
+            background-color: #eef0f3;
+            color: #374151;
+            border: 1px solid #d1d5db;
         }
 
+        .btn-home:hover {
+            background-color: #e5e7eb;
+        }
+
+        /* ===== TABLE ===== */
         table {
             width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 13.5px;
         }
 
         thead {
-            background: linear-gradient(90deg, #4CAF50, #43A047);
-            color: white;
+            background-color: #f1f5f9;
         }
 
         th {
-            padding: 14px;
+            padding: 12px;
+            font-size: 12px;
             text-transform: uppercase;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.05em;
+            color: #475569;
+            border-bottom: 1px solid #cbd5e1;
         }
 
         td {
             padding: 12px;
             text-align: center;
-            color: #333;
-        }
-
-        tbody tr {
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        tbody tr:nth-child(even) {
-            background-color: #f9fafb;
+            color: #1f2937;
+            border-bottom: 1px solid #e2e8f0;
         }
 
         tbody tr:hover {
-            background-color: #eef2ff;
+            background-color: #f8fafc;
+        }
+
+        /* ===== LINKS ===== */
+        a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            text-decoration: underline;
         }
 
         .username {
             font-weight: 600;
-            color: #4f46e5;
+            color: #1d4ed8;
         }
 
+        /* ===== ACTION BUTTONS ===== */
+        .edit-link,
         .delete-link {
-            display: inline-block;
-            padding: 6px 14px;
-            background-color: #dc2626;
-            color: #ffffff;
-            text-decoration: none;
-            border-radius: 6px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 13px;
             font-weight: 600;
-        }
-
-        .delete-link:hover {
-            background-color: #b91c1c;
+            text-decoration: none;
+            color: #ffffff;
+            display: inline-block;
         }
 
         .edit-link {
-            display: inline-block;
-            padding: 6px 14px;
             background-color: #2563eb;
-            color: #ffffff;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 600;
             margin-right: 6px;
         }
 
@@ -136,28 +132,32 @@
             background-color: #1d4ed8;
         }
 
+        .delete-link {
+            background-color: #dc2626;
+        }
+
+        .delete-link:hover {
+            background-color: #b91c1c;
+        }
+
+        /* ===== FOOTER ===== */
         .footer {
-            text-align: right;
             margin-top: 10px;
-            color: #555;
-            font-size: 14px;
+            text-align: right;
+            font-size: 13.5px;
+            color: #6b7280;
         }
     </style>
 </head>
 
 <body>
 
-<div class="page-title">👤 User Dashboard</div>
+<div class="page-title">User Dashboard</div>
 
 <div class="card">
 
-    <!-- ✅ HOME + REGISTER BUTTONS -->
     <div class="top-actions">
-        <a href="/" class="home-btn">🏠 Home</a>
-
-        <a href="/user/register" class="add-user-btn">
-            ➕ Register New User
-        </a>
+        <a href="/" class="action-btn btn-home">Home</a>
     </div>
 
     <table>
@@ -169,7 +169,7 @@
             <th>Username</th>
             <th>Age</th>
             <th>Role</th>
-            <th>RoleNames</th>
+            <th>Roles</th>
             <th>Actions</th>
         </tr>
         </thead>
